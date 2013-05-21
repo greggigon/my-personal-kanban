@@ -47,7 +47,7 @@
                     equals(result, true, "Menu should be invisible as number of columns to large");
                 });
 
-                module("Before number of columns is selected and selection");
+                module("Before number of columns is selected");
 
                 test("menu content and button should be invisible until columns are selected", function() {
                     var isMenuVisible = $("#menu")[0].classList.contains("noDisplay");
@@ -160,8 +160,10 @@
                 module("Card moving buttons and functions");
 
                 test("Should not add move left button if card is in the first column", function() {
+                    var column = $("#column0");
+                    m.addCardToColumn(column[0], "New card");
                     var card = $("#column0 li")[0];
-                    var result = $("a.moveLeft").length;
+                    var result = $("a.moveLeft", column).length;
 
                     equals(result, 0, "there should be no move left button");
                 });
@@ -224,7 +226,7 @@
         <div id="menuContent">
             <p>Menu content</p>
         </div>
-        <button id="openCloseMenu"><i class="icon-arrow-down"></i>O/C</button>
+        <button id="openCloseMenu"><i class="icon-arrow-down"></i> Menu</button>
     </section>
     <section id="kanban">
         <div id="columns">
@@ -232,16 +234,30 @@
         </div>
     </section>
     <div id="templates" class="noDisplay">
-        <div id="card-template">
-            <li draggable="true" class="card">
-                <span class="title"></span>
-                <div class="cardButtons">
-                    <a href="#removeCard" class="remove">remove</a>
-                </div>
-            </li>
-        </div>
-        <div id="button-move-left">
-            <a href="#moveLeft" class="moveLeft" title="Move this card left"><i class="icon-arrow-left"></i>&nbsp;</a>
+        <div id="column-template">
+                <ul class="column">
+                    <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
+                    <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
+                    <h3 contenteditable="true"></h3>
+                </ul>
+            </div>
+            <div id="card-template">
+                <li draggable="true" class="card">
+                    <span class="title"></span>
+                    <div class="cardButtons">
+                        <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
+                    </div>
+                </li>
+            </div>
+            <div id="button-remove">
+                <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+            </div>
+            <div id="button-move-left">
+                <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+            </div>
+            <div id="button-move-right">
+                <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+            </div>
         </div>
     </div>
 </div>

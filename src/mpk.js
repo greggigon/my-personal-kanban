@@ -1,0 +1,427 @@
+var mpk = mpk || {
+    isNullOrUndefined : function(thing) {
+        return ((typeof thing == "undefined") || (thing == null));
+    }
+};
+
+mpk.Columns = function(doc, numberOfColumnsFieldId, confirmButtonId, columnsContentId, menu) {
+    this.MINIMUM_NUMBER_OF_COLUMNS = 2;
+    this.MAXIMUM_NUMBER_OF_COLUMNS = 9;
+    this.numberOfColumns = 0;
+    this.numberOfColumnsField = doc.getElementById(numberOfColumnsFieldId);
+    this.confirmButton = doc.getElementById(confirmButtonId);
+    this.columnsContent = doc.getElementById(columnsContentId);
+
+    this.menu = doc.getElementById(menu);
+    this.closeMenuButton = doc.getElementById("openCloseMenu");
+    this.menuContent = doc.getElementById("menuContent");
+
+    this.initiliseColumns();
+    return this;
+};
+
+mpk.Columns.prototype = {
+
+    initiliseColumns: function() {
+        var self = this;
+        this.confirmButton.onclick = function() {
+            self.initColumnsForFirstTime();
+            return false;
+        };
+
+        this.closeMenuButton.onclick = function() {
+            self.toggleMenu();
+            return false;
+        };
+    },
+
+    initColumnsForFirstTime: function() {
+        var numberOfColumns = this.getNumberOfColumns();
+
+        if (numberOfColumns < this.MINIMUM_NUMBER_OF_COLUMNS || numberOfColumns > this.MAXIMUM_NUMBER_OF_COLUMNS) {
+            this.numberOfColumnsField.classList.add("error");
+            this.numberOfColumnsField.setAttribute("title", "Minimum number of columns is 2 and maximum is 9")
+            return;
+        }
+        this.numberOfColumns = numberOfColumns;
+        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+
+        for (var i = 0; i < numberOfColumns; i++) {
+            var element = this.createColumnElement(i, "Column name");
+            mpk.DM.add(this.columnsContent, element);
+        }
+
+        this.showMenuAndHideColumnsSelection();
+        this.confirmButton.onclick = null;
+    },
+
+    updateNumberOfColumnsStyle : function(numberOfColumns) {
+        var style = "-webkit-column-count:" + numberOfColumns + ";-moz-column-count:" + numberOfColumns + ";column-count:" + numberOfColumns + ";";
+        this.columnsContent.setAttribute("style", style);
+    },
+
+    appendColumnAtEnd : function(columnTitle) {
+        this.addColumn(columnTitle, this.numberOfColumns, mpk.DM.add, this.columnsContent);
+    },
+
+    addColumnAtPosition : function(columnTitle, position) {
+        if (position > this.numberOfColumns) {
+            this.appendColumnAtEnd(columnTitle);
+            return;
+        }
+        var oldColumn = document.getElementById("column" + (position - 1));
+        this.addColumn(columnTitle, position, mpk.DM.addBefore, oldColumn);
+    },
+
+    addColumn : function(columnTitle, position, appendFunction, where) {
+        if (mpk.isNullOrUndefined(columnTitle) || columnTitle == "" || (this.numberOfColumns + 1 > this.MAXIMUM_NUMBER_OF_COLUMNS)) {
+            return;
+        }
+        var newColumn = this.createColumnElement(position, columnTitle);
+        this.numberOfColumns++;
+        appendFunction(where, newColumn);
+        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+        this.updateColumnIds();
+        this.updateCardLinkInAllColumns();
+        return newColumn;
+    },
+
+    removeColumn : function(column) {
+        if (this.MINIMUM_NUMBER_OF_COLUMNS > (this.numberOfColumns - 1)) {
+            return;
+        }
+        column.parentNode.removeChild(column);
+        this.numberOfColumns--;
+        this.rearrangeColumnNumbers();
+        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+        this.updateCardLinkInAllColumns();
+    },
+
+    updateColumnIds : function() {
+        for (var i = 0; i < this.numberOfColumns; i++) {
+            var column = this.columnsContent.children[i];
+            column.setAttribute("id", "column" + i);
+            column.setAttribute("data-columnNumber", i);
+        }
+    },
+
+    updateCardLinkInAllColumns : function() {
+        for (var i = 0; i < this.numberOfColumns; i++) {
+            var column = document.getElementById("column" + i);
+            var cards = this.getCardsIn(column);
+            for (var j = 0; j < cards.length; j++) {
+                this.reAddMoveButtons(column, cards[j]);
+            }
+        }
+    },
+
+    rearrangeColumnNumbers : function() {
+        for (var i = 0; i < this.numberOfColumns; i++) {
+            var column = this.columnsContent.children[i];
+            column.setAttribute("id", "column" + i);
+            column.setAttribute("data-columnNumber", i);
+        }
+    },
+
+    createColumnElement : function(columnNumber, columnTitle) {
+        var columnId = "column" + columnNumber;
+        var column = document.getElementById('column-template').children[0].cloneNode(true);
+        column.setAttribute("id", columnId);
+        column.setAttribute("data-columnNumber", columnNumber);
+
+        var header = column.getElementsByTagName('h3')[0];
+        header.setAttribute("contentEditable", "true");
+        header.innerHTML = columnTitle;
+
+        var addButton = column.getElementsByClassName('addCard')[0];
+
+        var self = this;
+        var deleteColumnButton = column.getElementsByClassName('deleteColumn')[0];
+
+        addButton.onclick = function() {
+            var cardTitle = prompt("what?");
+            self.addCardToColumn(column, cardTitle);
+            return false;
+        };
+
+        deleteColumnButton.onclick = function() {
+            if (confirm("Are you sure? All cards within the columns will be gone.")) {
+                self.removeColumn(column);
+                return false;
+            }
+        };
+
+        return column;
+    },
+
+    addCardToColumn : function(column, cardTitle) {
+        if (mpk.isNullOrUndefined(cardTitle) || (cardTitle == "")) {
+            return;
+        }
+        //TODO: hardcoded the template ID for the time, change it
+        var card = document.getElementById('card-template').children[0].cloneNode(true);
+        var title = card.getElementsByClassName('title')[0];
+        title.innerHTML = cardTitle;
+
+        mpk.DM.add(card,  title);
+
+        this.setupRemoveButton(column, card);
+        this.addMoveButtons(column, card);
+
+        mpk.DM.add(column, card);
+    },
+
+    setupRemoveButton : function(column, card) {
+        var self = this;
+        var removeButton = card.getElementsByClassName('remove')[0];
+        removeButton.onclick = function() {
+            if (confirm("Really ???")) {
+                self.removeCard(card);
+            }
+            return false;
+        };
+    },
+
+    addMoveButtons: function(column, card) {
+        var columnPosition = parseInt(column.getAttribute("data-columnNumber"));
+        if (columnPosition != 0) {
+            this.addMoveLeftButton(column, card);
+        }
+        if ((columnPosition + 1) != this.numberOfColumns) {
+            this.addMoveRightButton(column, card);
+        }
+    },
+
+    reAddMoveButtons : function(column, card) {
+        this.removeMoveButtons(card);
+        this.addMoveButtons(column, card);
+    },
+
+    removeMoveButtons : function(card) {
+        var cardButtons = card.getElementsByClassName('cardButtons')[0];
+        var button = cardButtons.getElementsByClassName('moveLeft')[0];
+
+        if (button){
+            button.onclick = null;
+            cardButtons.removeChild(button);
+        }
+        button = cardButtons.getElementsByClassName('moveRight')[0];
+        if (button){
+            button.onclick = null;
+            cardButtons.removeChild(button);
+        }
+    },
+
+    addMoveLeftButton : function(column, card) {
+        var moveLeft = document.getElementById('button-move-left').children[0].cloneNode(true);
+        var self = this;
+
+        moveLeft.onclick = function() {
+            self.moveCardLeft(card, column);
+            return false;
+        };
+        mpk.DM.add(card.getElementsByClassName('cardButtons')[0], moveLeft);
+    },
+
+    addMoveRightButton : function(column, card) {
+        var moveRight = document.getElementById('button-move-right').children[0].cloneNode(true);
+        var self = this;
+
+        moveRight.onclick = function() {
+            self.moveCardRight(card, column);
+            return false;
+        };
+        mpk.DM.add(card.getElementsByClassName('cardButtons')[0], moveRight);
+    },
+
+    moveCardRight : function(card, column) {
+        var nextPosition = parseInt(column.getAttribute("data-columnNumber")) + 1;
+        this.moveCardToColumn(card, nextPosition);
+    },
+
+    moveCardLeft : function(card, column) {
+        var nextPosition = parseInt(column.getAttribute("data-columnNumber")) - 1;
+        this.moveCardToColumn(card, nextPosition);
+    },
+
+    moveCardToColumn : function(card, columnNumber) {
+        var newColumn = document.getElementById("column" + columnNumber);
+        card.parentNode.removeChild(card);
+
+        this.reAddMoveButtons(newColumn, card);
+        mpk.DM.add(newColumn, card);
+    },
+
+    showMenuAndHideColumnsSelection : function() {
+        this.numberOfColumnsField.parentNode.classList.add("noDisplay");
+        this.menu.classList.remove("noDisplay");
+    },
+
+    toggleMenu : function() {
+        var classList = this.menuContent.classList;
+        var iconClassList = this.closeMenuButton.children[0].classList;
+        if (classList.contains("noDisplay")) {
+            classList.remove("noDisplay");
+            iconClassList.remove('icon-arrow-down');
+            iconClassList.add('icon-arrow-up');
+        } else {
+            classList.add("noDisplay");
+            iconClassList.remove('icon-arrow-up');
+            iconClassList.add('icon-arrow-down');
+        }
+    },
+
+    removeCard : function(card) {
+        card.parentNode.removeChild(card);
+    },
+
+    getNumberOfColumns : function() {
+        if (this.numberOfColumnsField.value == "") return 0;
+        return parseInt(this.numberOfColumnsField.value);
+    },
+
+    getCardsIn :function(column) {
+        var cards = [];
+        for (var i = 0; i < column.children.length; i++) {
+            if (column.children[i].hasAttribute("class") && column.children[i].getAttribute("class").toUpperCase() == "CARD") {
+                cards.push(column.children[i]);
+            }
+        }
+        return cards;
+    }
+
+};
+
+mpk.Menu = function(columns, menuSelector) {
+    this.columns = columns;
+    this.menu = document.getElementById(menuSelector);
+    this.initiliseColumns();
+    return this;
+};
+
+mpk.Menu.prototype = {
+    initiliseColumns : function() {
+        this.attachActionToAddColumnAtTheEndButton();
+        this.attachActionToAddColumnAtAnyPosition();
+        this.attachSave();
+    },
+
+    attachActionToAddColumnAtTheEndButton : function() {
+        var self = this;
+        var handle = function() {
+            var columnTitle = prompt("What name should it have?");
+            if (!mpk.isNullOrUndefined(columnTitle)) {
+                self.columns.appendColumnAtEnd(columnTitle);
+            }
+            return false;
+        }
+        document.getElementById("addColumnAtTheEnd").onclick = handle;
+    },
+
+    attachActionToAddColumnAtAnyPosition : function() {
+        var self = this;
+        var handle = function() {
+            var columnTitle = prompt("What name should it have?");
+            if (!mpk.isNullOrUndefined(columnTitle)) {
+                var position = parseInt(document.getElementById("newColumnPosition").value);
+                self.columns.addColumnAtPosition(columnTitle, position);
+            }
+            return false;
+        };
+        document.getElementById("addColumnAtPosition").onclick = handle;
+    },
+
+    attachSave : function(){
+        var handle = function() {
+            var kanban = document.getElementById("kanban");
+            var serialized = new mpk.Serializer(document.getElementById("kanbanName").innerHTML).serialize(kanban);
+            localStorage.setItem("mpk", serialized);
+            return false;
+        };
+        document.getElementById("saveKanban").onclick = handle;
+    }
+};
+
+mpk.DM = {
+    add : function(where, what) {
+        where.appendChild(what);
+    },
+
+    addBefore : function(where, what) {
+        where.parentNode.insertBefore(what, where);
+    },
+
+    removeAllElementsFrom : function(whereFrom) {
+        if (whereFrom.hasChildNodes()) {
+            while (whereFrom.childNodes.length >= 1) {
+                whereFrom.removeChild(whereFrom.firstChild);
+            }
+        }
+    }
+};
+
+mpk.Serializer = function(kanbanName) {
+    this.kanbanName = kanbanName;
+    return this;
+};
+
+mpk.Serializer.prototype = {
+
+    serialize : function(kanban) {
+        var serialized = {};
+        serialized.name = this.kanbanName;
+        var columns = kanban.getElementsByClassName("column");
+        serialized.numberOfColumns = columns.length;
+        serialized.columns = [];
+        for (var i = 0; i < serialized.numberOfColumns; i++) {
+            serialized.columns.push(this.serializeColumn(columns[i]));
+        }
+        return JSON.stringify(serialized);
+    },
+
+    serializeColumn : function(column) {
+        var serializedColumn = {};
+        serializedColumn.name = column.getElementsByTagName("h3")[0].innerHTML;
+        var cards = column.getElementsByClassName("card");
+        serializedColumn.numberOfCards = cards.length;
+        serializedColumn.cards = [];
+        for(var i=0;i<serializedColumn.numberOfCards;i++){
+           serializedColumn.cards.push(this.serializeCard(cards[i]));
+        }
+        return serializedColumn;
+    },
+
+    serializeCard : function(card){
+        var serializedCard = {};
+        serializedCard.title = card.getElementsByTagName("span")[0].innerHTML;
+        return serializedCard;
+    }
+};
+
+mpk.Deserializer = function(mpkColumns){
+    this.columns = mpkColumns;
+    return this;
+};
+
+mpk.Deserializer.prototype = {
+    deserialize : function(serializedKanban, whereTo){
+        var kanbanObject = JSON.parse(serializedKanban);
+        for(var i=0;i<kanbanObject.numberOfColumns;i++){
+            this.deserializeColumn(kanbanObject.columns[i], whereTo, i);
+        }
+        this.columns.numberOfColumns = kanbanObject.numberOfColumns;
+        this.columns.updateNumberOfColumnsStyle(kanbanObject.numberOfColumns);
+        return kanbanObject.name;
+    },
+
+    deserializeColumn : function(column, where, position){
+        var newColumn = this.columns.addColumn(column.name, position, mpk.DM.add, where);
+        for(var i=0;i<column.numberOfCards;i++){
+            this.deserializeCard(newColumn, column.cards[i]);
+        }
+    },
+
+    deserializeCard : function(column, card){
+        this.columns.addCardToColumn(column, card.title);
+    }
+};

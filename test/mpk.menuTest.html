@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="../src/mpk.js"></script>
+    <script src="../src/jquery-1.4.4.min.js"></script>
+    <script src="qunit.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="qunit.css"/>
+    <script>window.onload = (function() {
+        try {
+//            var doc = document;
+//            var m = new mpk.Columns(doc, "numberOfColumns", "confirmColumns", "columns", "menu");
+            $(document).ready(function() {
+                var MpkMock = function(){
+                    this.wasItCalled = false;
+                    return this;
+                };
+
+                MpkMock.prototype = {
+                    wasAddColumnAtTheEndCalled : function(){
+                        return this.wasItCalled;
+                    },
+                    appendColumnAtEnd : function(){
+                        this.wasItCalled = true;
+                    }
+                };
+                var mpkMock = new MpkMock();
+
+                var menu = new mpk.Menu(mpkMock, "menu");
+                
+                module("Columns operations");
+
+                test("When add column at the end clicked should call MPK to add column", function(){
+                    $("#addColumnAtTheEnd").trigger("click");
+                    equals(mpkMock.wasAddColumnAtTheEndCalled(), true, "mock should be called");
+                });
+
+            });
+
+        } catch(e) {
+        }
+        $("#fixture").hide();
+    });
+    </script>
+
+</head>
+<body>
+<h1 id="qunit-header">Columns tests</h1>
+
+<h2 id="qunit-banner"></h2>
+
+<div id="qunit-testrunner-toolbar">
+</div>
+<ol id="qunit-tests">
+</ol>
+<div id="fixture">
+    <section id="content" class="noDisplay">
+        <input type="text" id="numberOfColumns" value="3"/>
+        <input type="button" name="confirmColumns" id="confirmColumns" value="confirm"/>
+    </section>
+    <section id="menu">
+        <div id="menuContent">
+             <a href="#addColumnAtTheEnd" id="addColumnAtTheEnd">Add column at the end</a>
+        </div>
+        <button id="openCloseMenu">O/C</button>
+    </section>
+    <section id="kanban">
+        <div id="columns">
+
+        </div>
+    </section>
+</div>
+</body>
+</html>

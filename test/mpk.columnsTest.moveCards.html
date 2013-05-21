@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="../src/mpk.js"></script>
+    <script src="../src/jquery-1.4.4.min.js"></script>
+    <script src="qunit.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="qunit.css"/>
+    <script>window.onload = (function() {
+        try {
+            var doc = document;
+            var m = new mpk.Columns(doc, "numberOfColumns", "confirmColumns", "columns", "menu");
+            $(document).ready(function() {
+
+                // Setting up columns
+                $("#numberOfColumns").val("3");
+                $("#confirmColumns").trigger("click");
+
+                module("Moving cards from left column to right");
+
+                test("should move card in first left column to right", function() {
+                    var column = $("#column0")[0];
+                    m.addCardToColumn(column, "Test too");
+                    var result = $("#column1 li").length;
+                    equals(result, 0, "There should be no cards in second columns");
+
+                    $("a.moveRight", column).trigger('click');
+
+                    equals($("#column0 li").length, 0, "There should be no card in first column");
+                });
+
+                test("card that is moved to the right from first column should have left button added", function() {
+                    equals($("#column1 li a.moveLeft").length, 1, "there should be move left button when moved");
+                });
+
+                test("when card moved to the last column should not have move right button", function() {
+                    $("#column1 li a.moveRight").trigger("click");
+                    equals($("#column2 li a.moveRight").length, 0, "Move right button should be gone");
+                });
+
+                test("should move card left when left button is clicked", function() {
+                    $("#column2 li a.moveLeft").trigger("click");
+                    equals($("#column2 li").length, 0, "card should be gone from here");
+
+                    equals($("#column1 li").length, 1, "there should be card in here");
+                });
+
+                test("should remove card when remove is clicked", function() {
+                    m.removeCard($("#column1 li")[0]);
+                    equals($("#column1 li").length, 0, "there should be no card in here");
+                });
+
+            });
+
+        } catch(e) {
+        }
+        $("#fixture").hide();
+    });
+    </script>
+
+</head>
+<body>
+<h1 id="qunit-header">Moving cards between columns tests</h1>
+
+<h2 id="qunit-banner"></h2>
+
+<div id="qunit-testrunner-toolbar">
+</div>
+<ol id="qunit-tests">
+</ol>
+<div id="fixture">
+    <section id="content">
+        <input type="text" id="numberOfColumns" value="3"/>
+        <input type="button" name="confirmColumns" id="confirmColumns" value="confirm"/>
+    </section>
+    <section id="menu" class="noDisplay">
+        <div id="menuContent">
+            <p>Menu content</p>
+        </div>
+        <button id="openCloseMenu">O/C</button>
+    </section>
+    <section id="kanban">
+        <div id="columns">
+
+        </div>
+    </section>
+</div>
+</body>
+</html>

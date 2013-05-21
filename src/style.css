@@ -1,0 +1,9 @@
+#columns { display: box; box-orient: horizontal; }
+#columns ul { height: 400px; background-color: #e7ffe9; list-style-type: none; padding: 10px; margin: 0 0 0px 10px; box-shadow: 2px 2px 1px #888888;}
+#columns ul li { cursor: move; float: left; padding: 10px; margin: 2px; }
+
+.noDisplay { display: none; }
+.error { border-color: red;}
+a { padding-left: 2px; padding-right: 2px;}
+
+.card { background-color: #FFFF9E; box-shadow: 2px 2px 1px #758808;}

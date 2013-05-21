@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="../src/mpk.js"></script>
+    <script src="../src/jquery-1.4.4.min.js"></script>
+    <script src="qunit.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="qunit.css"/>
+    <script>window.onload = (function() {
+        try {
+            var doc = document;
+            var m = new mpk.Columns(doc, "numberOfColumns", "confirmColumns", "columns", "menu");
+            $(document).ready(function() {
+
+
+                module("Column, reading number of columns");
+
+                test("should read number of columns from text field with numberOfColumns id", function() {
+                    $("#numberOfColumns").val("2");
+                    var columns = m.getNumberOfColumns();
+
+                    equals(2, columns, "Number of columns should be 2");
+                });
+
+                test("should return 0 if number of columns empty", function() {
+                    $("#numberOfColumns").val("");
+                    var columns = m.getNumberOfColumns();
+
+                    strictEqual(0, columns, "Number of columns should be 0");
+                });
+
+                test("should allow minimum of 2 columns", function() {
+                    $("#numberOfColumns").val("1");
+                    $("#confirmColumns").trigger("click");
+
+                    var result = $("#menu")[0].classList.contains("noDisplay");
+
+                    equals(result, true, "Menu should be invisible as number of columns to small");
+                });
+
+                test("should allow maximum of 9 columns", function() {
+                    $("#numberOfColumns").val("10");
+                    $("#confirmColumns").trigger("click");
+
+                    var result = $("#menu")[0].classList.contains("noDisplay");
+
+                    equals(result, true, "Menu should be invisible as number of columns to large");
+                });
+
+                module("Before number of columns is selected and selection");
+
+                test("menu content and button should be invisible until columns are selected", function() {
+                    var isMenuVisible = $("#menu")[0].classList.contains("noDisplay");
+                    equals(isMenuVisible, true, "Should be invisible before columns were created");
+                });
+
+                test("should create three lists when confirm button is clicked", function() {
+                    $("#numberOfColumns").val("3");
+                    $("#confirmColumns").trigger("click");
+
+                    var numberOfColumns = $("#columns ul").length;
+                    equals(numberOfColumns, 3, "Should contain 3 columns");
+                });
+
+                module("After number of columns was selected");
+
+                test("should remove click event after initial number of columns selected", function() {
+                    $("#numberOfColumns").val("5");
+                    $("#confirmColumns").trigger("click");
+
+                    var numberOfColumns = $("#columns ul").length;
+                    equals(numberOfColumns, 3, "Should still contain 3 columns");
+                });
+
+                test("created columns should have column class", function(){
+                    equals($("#column0").attr("class"), "column", "should have column class")
+                });
+
+                test("menu content and button should be visible after columns are selected", function() {
+                    var isMenuVisible = $("#menu")[0].classList.contains("noDisplay");
+                    equals(isMenuVisible, false, "Should be visible now when columns were created");
+                });
+
+                test("columns should be labeled with ids from 0 to n", function() {
+                    var columns = $("#columns ul");
+                    for (var i = 0; i < columns.length; i++) {
+                        equals(columns[i].getAttribute("id"), "column" + i, "This column should have id of 'column" + i + "'");
+                    }
+                });
+
+                test("should have remove buttons in each column", function(){
+                   var columns = $("#columns ul");
+                    for (var i = 0; i < columns.length; i++) {
+                        equals($("a.deleteColumn", columns[i]).length, 1 , "this column should have a delete button as well");
+                    }
+
+                });
+
+                module("Menu operations");
+
+                test("should hide columns selection section when number of columns selected after first time", function() {
+                    var hasClassNoDisplay = $("#content")[0].classList.contains("noDisplay");
+                    equals(hasClassNoDisplay, true, "this content should be hidden");
+                });
+
+                test("should close menu when o/c button clicked and menu opened", function() {
+                    $("#openCloseMenu").click();
+                    var hasClassNoDisplay = $("#menuContent")[0].classList.contains("noDisplay");
+                    equals(hasClassNoDisplay, true, "this content should not be visible");
+                });
+
+                test("should open menu when o/c button clicked and menu closed", function() {
+                    $("#openCloseMenu").click();
+                    var hasClassNoDisplay = $("#menuContent")[0].classList.contains("noDisplay");
+                    equals(hasClassNoDisplay, false, "this content should be visible");
+                });
+
+                module("Adding cards to columns");
+
+                test("Should add new card to column", function() {
+                    var column = $("#column0")[0];
+                    m.addCardToColumn(column, "Test");
+                    var numberOfCardsInColumn = $("li", column).length;
+
+                    equals(numberOfCardsInColumn, 1, "there should be one column");
+                });
+
+                test("new created card should have class card", function(){
+                    equals($("#column0 li").attr("class"), "card", "Should have card class");
+                });
+
+                test("new created card should have text within a span element", function(){
+                    equals($("#column0 li span").text(), "Test", "Should be span around card title");
+                });
+
+                test("Should remove added card", function() {
+                    var column = $("#column0");
+                    m.removeCard($("li", column)[0]);
+                    var numberOfCardsInColumn = $("li", column).length;
+
+                    equals(numberOfCardsInColumn, 0, "there should be no cards in column");
+                });
+
+                test("Should not create new card if name is empty", function() {
+                    var column = $("#column0")[0];
+                    m.addCardToColumn(column, "");
+
+                    var numberOfCardsInColumn = $("li", column).length;
+                    equals(numberOfCardsInColumn, 0, "there should be no cards in the column");
+
+                    m.addCardToColumn(column, null);
+                    numberOfCardsInColumn = $("li", column).length;
+                    equals(numberOfCardsInColumn, 0, "there should be no cards in the column");
+
+                    m.addCardToColumn(column, undefined);
+                    numberOfCardsInColumn = $("li", column).length;
+                    equals(numberOfCardsInColumn, 0, "there should be no cards in the column");
+                });
+
+                module("Card moving buttons and functions");
+
+                test("Should not add move left button if card is in the first column", function() {
+                    var card = $("#column0 li")[0];
+                    var result = $("a.moveLeft").length;
+
+                    equals(result, 0, "there should be no move left button");
+                });
+
+                test("Should not add move right button if card is in the last column", function() {
+                    var column = $("#column2")[0];
+                    m.addCardToColumn(column, "Test too");
+                    var result = $("li a.moveRight", column).length;
+
+                    equals(result, 0, "there should be no move right button");
+                });
+
+                test("Should add move right and left button if card is in the middle column", function() {
+                    var column = $("#column1")[0];
+                    m.addCardToColumn(column, "Test too");
+                    var result1 = $("li a.moveRight", column).length;
+                    var result2 = $("li a.moveLeft", column).length;
+
+                    equals(result1, 1, "there should be right button");
+                    equals(result2, 1, "there should be left button");
+                });
+
+                module("Helper functions tests");
+
+                test("Should return list of cards in column", function(){
+                    var column = $("#column1")[0];
+                    var cardList = m.getCardsIn(column);
+                    equals(cardList.length, 1, "Should have one card");
+
+                    m.addCardToColumn(column, "another one");
+                    m.addCardToColumn(column, "another one 2");
+                    cardList = m.getCardsIn(column);
+                    equals(cardList.length, 3, "Should contain three cards");
+
+                });
+            });
+
+        } catch(e) {
+        }
+        $("#fixture").hide();
+    });
+    </script>
+
+</head>
+<body>
+<h1 id="qunit-header">Columns tests</h1>
+
+<h2 id="qunit-banner"></h2>
+
+<div id="qunit-testrunner-toolbar">
+</div>
+<ol id="qunit-tests">
+</ol>
+<div id="fixture">
+    <section id="content">
+        <input type="text" id="numberOfColumns" value="3"/>
+        <input type="button" name="confirmColumns" id="confirmColumns" value="confirm"/>
+    </section>
+    <section id="menu" class="noDisplay">
+        <div id="menuContent">
+            <p>Menu content</p>
+        </div>
+        <button id="openCloseMenu"><i class="icon-arrow-down"></i>O/C</button>
+    </section>
+    <section id="kanban">
+        <div id="columns">
+
+        </div>
+    </section>
+    <div id="templates" class="noDisplay">
+        <div id="card-template">
+            <li draggable="true" class="card">
+                <span class="title"></span>
+                <div class="cardButtons">
+                    <a href="#removeCard" class="remove">remove</a>
+                </div>
+            </li>
+        </div>
+        <div id="button-move-left">
+            <a href="#moveLeft" class="moveLeft" title="Move this card left"><i class="icon-arrow-left"></i>&nbsp;</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

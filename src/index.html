@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>My Personal Kanban</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.css" type="text/css"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <script src="mpk.js"></script>
+</head>
+<body>
+<header class="navbar navbar-inverse navbar-fixed-top">
+     <div class="navbar-inner">
+        <div class="container">
+            <div class="brand">Kanban <span id="kanbanName" contentEditable="true">kanban name</span></div>
+        </div>
+     </div>
+
+</header>
+<div class="container" style="margin-top: 45px">
+    <section id="columnSelection" class="row">
+        <fieldset class="form-inline">
+            <label for="numberOfColumns">How many columns in your Kanban would you like to start with?</label>
+            <input type="number" value="3" min="2" max="9" id="numberOfColumns" pattern="[0-9]{1}" class="input-mini"/>
+            <input type="button" id="confirmColumns" value="confirm" class="btn btn-primary"/>
+        </fieldset>
+    </section>
+    <section id="menu" class="noDisplay row">
+        <div id="menuContent" class="noDisplay">
+            <fieldset class="form-inline">
+                <a href="#addColumnAtTheEnd" id="addColumnAtTheEnd" class="btn btn-success btn-small">Add column at the end</a>
+                <a href="#addColumnAtPosition" id="addColumnAtPosition" class="btn btn-small btn-success">Add column at position:</a>
+                <input type="number" value="4" min="9" id="newColumnPosition" class="input-mini"/>
+                <a href="#saveKanban" id="saveKanban" class="btn btn-mini btn-primary">Save board</a>
+            </fieldset>
+        </div>
+        <div>
+            <a id="openCloseMenu"><i class="icon-arrow-down"></i>Menu</a>
+        </div>
+    </section>
+    <section id="kanban" class="row" style="margin-top: 10px">
+        <div id="columns">
+        </div>
+    </section>
+</div>
+<footer>
+</footer>
+<div id="templates" class="noDisplay">
+    <div id="column-template">
+        <ul class="column">
+            <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
+            <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
+            <h3 contenteditable="true"></h3>
+        </ul>
+    </div>
+    <div id="card-template">
+        <li draggable="true" class="card">
+            <span class="title"></span>
+            <div class="cardButtons">
+                <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
+            </div>
+        </li>
+    </div>
+    <div id="button-remove">
+        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+    </div>
+    <div id="button-move-left">
+        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+    </div>
+    <div id="button-move-right">
+        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+    </div>
+</div>
+<script>
+    var savedKanban = localStorage.getItem("mpk");
+    var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "menu");
+    var menu = new mpk.Menu(columns, "menu");
+    if (savedKanban) {
+        document.getElementById("menu").setAttribute("class", "");
+        document.getElementById("columnSelection").setAttribute("class", "noDisplay");
+        new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
+    }
+</script>
+</body>
+</html>

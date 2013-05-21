@@ -77,7 +77,8 @@
     if (savedKanban) {
         document.getElementById("menu").setAttribute("class", "");
         document.getElementById("columnSelection").setAttribute("class", "noDisplay");
-        new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
+        var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
+        document.getElementById('kanbanName').innerHTML = kanbanName;
     }
 </script>
 </body>

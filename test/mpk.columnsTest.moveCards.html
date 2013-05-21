@@ -6,11 +6,11 @@
     <script src="qunit.js"></script>
 
     <link rel="stylesheet" type="text/css" href="qunit.css"/>
-    <script>window.onload = (function() {
+    <script>window.onload = (function () {
         try {
             var doc = document;
             var m = new mpk.Columns(doc, "numberOfColumns", "confirmColumns", "columns", "menu");
-            $(document).ready(function() {
+            $(document).ready(function () {
 
                 // Setting up columns
                 $("#numberOfColumns").val("3");
@@ -18,7 +18,7 @@
 
                 module("Moving cards from left column to right");
 
-                test("should move card in first left column to right", function() {
+                test("should move card in first left column to right", function () {
                     var column = $("#column0")[0];
                     m.addCardToColumn(column, "Test too");
                     var result = $("#column1 li").length;
@@ -29,30 +29,30 @@
                     equals($("#column0 li").length, 0, "There should be no card in first column");
                 });
 
-                test("card that is moved to the right from first column should have left button added", function() {
+                test("card that is moved to the right from first column should have left button added", function () {
                     equals($("#column1 li a.moveLeft").length, 1, "there should be move left button when moved");
                 });
 
-                test("when card moved to the last column should not have move right button", function() {
+                test("when card moved to the last column should not have move right button", function () {
                     $("#column1 li a.moveRight").trigger("click");
                     equals($("#column2 li a.moveRight").length, 0, "Move right button should be gone");
                 });
 
-                test("should move card left when left button is clicked", function() {
+                test("should move card left when left button is clicked", function () {
                     $("#column2 li a.moveLeft").trigger("click");
                     equals($("#column2 li").length, 0, "card should be gone from here");
 
                     equals($("#column1 li").length, 1, "there should be card in here");
                 });
 
-                test("should remove card when remove is clicked", function() {
+                test("should remove card when remove is clicked", function () {
                     m.removeCard($("#column1 li")[0]);
                     equals($("#column1 li").length, 0, "there should be no card in here");
                 });
 
             });
 
-        } catch(e) {
+        } catch (e) {
         }
         $("#fixture").hide();
     });
@@ -84,6 +84,39 @@
 
         </div>
     </section>
+    <div id="templates" class="noDisplay">
+        <div id="column-template">
+            <ul class="column">
+                <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
+                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i
+                        class="icon-remove"></i></a>
+
+                <h3 contenteditable="true"></h3>
+            </ul>
+        </div>
+        <div id="card-template">
+            <li draggable="true" class="card">
+                <span class="title"></span>
+
+                <div class="cardButtons">
+                    <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
+                </div>
+            </li>
+        </div>
+        <div id="button-remove">
+            <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                    class="icon-arrow-left"></i></a>
+        </div>
+        <div id="button-move-left">
+            <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                    class="icon-arrow-left"></i></a>
+        </div>
+        <div id="button-move-right">
+            <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i
+                    class="icon-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

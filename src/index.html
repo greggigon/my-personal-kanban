@@ -2,16 +2,30 @@
 <html>
 <head>
     <title>My Personal Kanban</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"/>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.css" type="text/css"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="style.css" type="text/css"/>
-    <script src="mpk.js"></script>
+    <script src="mpk.js" type="text/javascript"></script>
+
+    <script src="jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top">
      <div class="navbar-inner">
         <div class="container">
             <div class="brand">Kanban <span id="kanbanName" contentEditable="true">kanban name</span></div>
+            <ul class="nav">
+                <li><a href="#">Save Kanban</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Add column to the beginning</a></li>
+                        <li><a href="#">Add column at the end</a></li>
+                        <li><a href="#">Add column at position</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
      </div>
 

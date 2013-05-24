@@ -39,10 +39,9 @@ mpk.Columns.prototype = {
             return;
         }
         this.numberOfColumns = numberOfColumns;
-//        this.updateNumberOfColumnsStyle(this.numberOfColumns);
 
         for (var i = 0; i < numberOfColumns; i++) {
-            var element = this.createColumnElement(i, "Column name");
+            var element = this.createColumnElement(i, "Column name", numberOfColumns);
             mpk.DM.add(this.columnsContent, element);
         }
 

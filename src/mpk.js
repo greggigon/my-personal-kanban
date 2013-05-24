@@ -28,11 +28,6 @@ mpk.Columns.prototype = {
             self.initColumnsForFirstTime();
             return false;
         };
-
-        this.closeMenuButton.onclick = function() {
-            self.toggleMenu();
-            return false;
-        };
     },
 
     initColumnsForFirstTime: function() {
@@ -44,7 +39,7 @@ mpk.Columns.prototype = {
             return;
         }
         this.numberOfColumns = numberOfColumns;
-        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+//        this.updateNumberOfColumnsStyle(this.numberOfColumns);
 
         for (var i = 0; i < numberOfColumns; i++) {
             var element = this.createColumnElement(i, "Column name");
@@ -60,6 +55,12 @@ mpk.Columns.prototype = {
         this.columnsContent.setAttribute("style", style);
     },
 
+    updateColumnSize : function() {
+        var columns = $('.column');
+        var maxHeight = Math.max.apply(Math, columns.map(function(){ return $(this).height();}).get());
+        columns.height(maxHeight);
+    },
+
     appendColumnAtEnd : function(columnTitle) {
         this.addColumn(columnTitle, this.numberOfColumns, mpk.DM.add, this.columnsContent);
     },
@@ -73,14 +74,14 @@ mpk.Columns.prototype = {
         this.addColumn(columnTitle, position, mpk.DM.addBefore, oldColumn);
     },
 
-    addColumn : function(columnTitle, position, appendFunction, where) {
+    addColumn : function(columnTitle, position, appendFunction, where, totalColumns) {
         if (mpk.isNullOrUndefined(columnTitle) || columnTitle == "" || (this.numberOfColumns + 1 > this.MAXIMUM_NUMBER_OF_COLUMNS)) {
             return;
         }
-        var newColumn = this.createColumnElement(position, columnTitle);
+        var newColumn = this.createColumnElement(position, columnTitle, totalColumns);
         this.numberOfColumns++;
         appendFunction(where, newColumn);
-        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+//        this.updateNumberOfColumnsStyle(new, totalColumns);
         this.updateColumnIds();
         this.updateCardLinkInAllColumns();
         return newColumn;
@@ -93,7 +94,7 @@ mpk.Columns.prototype = {
         column.parentNode.removeChild(column);
         this.numberOfColumns--;
         this.rearrangeColumnNumbers();
-        this.updateNumberOfColumnsStyle(this.numberOfColumns);
+//        this.updateNumberOfColumnsStyle(this.numberOfColumns);
         this.updateCardLinkInAllColumns();
     },
 
@@ -123,11 +124,12 @@ mpk.Columns.prototype = {
         }
     },
 
-    createColumnElement : function(columnNumber, columnTitle) {
+    createColumnElement : function(columnNumber, columnTitle, totalColumns) {
         var columnId = "column" + columnNumber;
         var column = document.getElementById('column-template').children[0].cloneNode(true);
         column.setAttribute("id", columnId);
         column.setAttribute("data-columnNumber", columnNumber);
+        $(column).addClass('span' + 12 / totalColumns)
 
         var header = column.getElementsByTagName('h3')[0];
         header.setAttribute("contentEditable", "true");
@@ -294,8 +296,7 @@ mpk.Columns.prototype = {
 
 mpk.Menu = function(columns, menuSelector) {
     this.columns = columns;
-    this.menu = document.getElementById(menuSelector);
-    this.initiliseColumns();
+//    this.initiliseColumns();
     return this;
 };
 
@@ -407,15 +408,15 @@ mpk.Deserializer.prototype = {
     deserialize : function(serializedKanban, whereTo){
         var kanbanObject = JSON.parse(serializedKanban);
         for(var i=0;i<kanbanObject.numberOfColumns;i++){
-            this.deserializeColumn(kanbanObject.columns[i], whereTo, i);
+            this.deserializeColumn(kanbanObject.columns[i], whereTo, i, kanbanObject.numberOfColumns);
         }
         this.columns.numberOfColumns = kanbanObject.numberOfColumns;
-        this.columns.updateNumberOfColumnsStyle(kanbanObject.numberOfColumns);
+        this.columns.updateColumnSize();
         return kanbanObject.name;
     },
 
-    deserializeColumn : function(column, where, position){
-        var newColumn = this.columns.addColumn(column.name, position, mpk.DM.add, where);
+    deserializeColumn : function(column, where, position, allColumns){
+        var newColumn = this.columns.addColumn(column.name, position, mpk.DM.add, where, allColumns);
         for(var i=0;i<column.numberOfCards;i++){
             this.deserializeCard(newColumn, column.cards[i]);
         }

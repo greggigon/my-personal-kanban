@@ -14,15 +14,21 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
      <div class="navbar-inner">
         <div class="container">
-            <div class="brand">Kanban <span id="kanbanName" contentEditable="true">kanban name</span></div>
-            <ul class="nav">
-                <li><a href="#">Save Kanban</a></li>
+            <div class="brand"><span id="kanbanName" contentEditable="true">Kanban name</span></div>
+            <ul class="nav pull-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
+                    <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add column to the beginning</a></li>
+                        <li><a href="#">Save Kanban</a></li>
+                        <li><a href="#">Remove previously saved Kanban</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Columns <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Add column at the beginning</a></li>
                         <li><a href="#">Add column at the end</a></li>
-                        <li><a href="#">Add column at position</a></li>
+                        <li><a href="#">Add column at position ...</a></li>
                     </ul>
                 </li>
             </ul>
@@ -34,25 +40,19 @@
     <section id="columnSelection" class="row">
         <fieldset class="form-inline">
             <label for="numberOfColumns">How many columns in your Kanban would you like to start with?</label>
-            <input type="number" value="3" min="2" max="9" id="numberOfColumns" pattern="[0-9]{1}" class="input-mini"/>
+            <select name="numberOfColumns" id="numberOfColumns" class="input-mini">
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>6</option>
+                <option>12</option>
+            </select>
             <input type="button" id="confirmColumns" value="confirm" class="btn btn-primary"/>
         </fieldset>
     </section>
-    <section id="menu" class="noDisplay row">
-        <div id="menuContent" class="noDisplay">
-            <fieldset class="form-inline">
-                <a href="#addColumnAtTheEnd" id="addColumnAtTheEnd" class="btn btn-success btn-small">Add column at the end</a>
-                <a href="#addColumnAtPosition" id="addColumnAtPosition" class="btn btn-small btn-success">Add column at position:</a>
-                <input type="number" value="4" min="9" id="newColumnPosition" class="input-mini"/>
-                <a href="#saveKanban" id="saveKanban" class="btn btn-mini btn-primary">Save board</a>
-            </fieldset>
-        </div>
-        <div>
-            <a id="openCloseMenu"><i class="icon-arrow-down"></i>Menu</a>
-        </div>
-    </section>
-    <section id="kanban" class="row" style="margin-top: 10px">
-        <div id="columns">
+    <section id="kanban" style="margin-top: 10px">
+        <div id="columns" class="row">
+
         </div>
     </section>
 </div>
@@ -89,8 +89,6 @@
     var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "menu");
     var menu = new mpk.Menu(columns, "menu");
     if (savedKanban) {
-        document.getElementById("menu").setAttribute("class", "");
-        document.getElementById("columnSelection").setAttribute("class", "noDisplay");
         var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
         document.getElementById('kanbanName').innerHTML = kanbanName;
     }

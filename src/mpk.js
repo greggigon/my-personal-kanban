@@ -53,66 +53,6 @@ mpk.Columns.prototype = {
         columns.height(maxHeight);
     },
 
-    appendColumnAtEnd : function(columnTitle) {
-        this.addColumn(columnTitle, this.numberOfColumns, mpk.DM.add, this.columnsContent);
-    },
-
-    addColumnAtPosition : function(columnTitle, position) {
-        if (position > this.numberOfColumns) {
-            this.appendColumnAtEnd(columnTitle);
-            return;
-        }
-        var oldColumn = document.getElementById("column" + (position - 1));
-        this.addColumn(columnTitle, position, mpk.DM.addBefore, oldColumn);
-    },
-
-    addColumn : function(columnTitle, position, appendFunction, where, totalColumns) {
-        if (mpk.isNullOrUndefined(columnTitle) || columnTitle == "" || (this.numberOfColumns + 1 > this.MAXIMUM_NUMBER_OF_COLUMNS)) {
-            return;
-        }
-        var newColumn = this.createColumnElement(position, columnTitle, totalColumns);
-        this.numberOfColumns++;
-        appendFunction(where, newColumn);
-        this.updateColumnIds();
-        this.updateCardLinkInAllColumns();
-        return newColumn;
-    },
-
-    removeColumn : function(column) {
-        if (this.MINIMUM_NUMBER_OF_COLUMNS > (this.numberOfColumns - 1)) {
-            return;
-        }
-        column.parentNode.removeChild(column);
-        this.numberOfColumns--;
-        this.rearrangeColumnNumbers();
-        this.updateCardLinkInAllColumns();
-    },
-
-    updateColumnIds : function() {
-        for (var i = 0; i < this.numberOfColumns; i++) {
-            var column = this.columnsContent.children[i];
-            column.setAttribute("id", "column" + i);
-            column.setAttribute("data-columnNumber", i);
-        }
-    },
-
-    updateCardLinkInAllColumns : function() {
-        for (var i = 0; i < this.numberOfColumns; i++) {
-            var column = document.getElementById("column" + i);
-            var cards = this.getCardsIn(column);
-            for (var j = 0; j < cards.length; j++) {
-                this.reAddMoveButtons(column, cards[j]);
-            }
-        }
-    },
-
-    rearrangeColumnNumbers : function() {
-        for (var i = 0; i < this.numberOfColumns; i++) {
-            var column = this.columnsContent.children[i];
-            column.setAttribute("id", "column" + i);
-            column.setAttribute("data-columnNumber", i);
-        }
-    },
 
     createColumnElement : function(columnNumber, columnTitle, totalColumns) {
         var columnId = "column" + columnNumber;

@@ -6,14 +6,13 @@ var mpk = mpk || {
 
 mpk.Columns = function(doc, numberOfColumnsFieldId, confirmButtonId, columnsContentId, menu) {
     this.MINIMUM_NUMBER_OF_COLUMNS = 2;
-    this.MAXIMUM_NUMBER_OF_COLUMNS = 9;
+    this.MAXIMUM_NUMBER_OF_COLUMNS = 12;
     this.numberOfColumns = 0;
     this.numberOfColumnsField = doc.getElementById(numberOfColumnsFieldId);
     this.confirmButton = doc.getElementById(confirmButtonId);
     this.columnsContent = doc.getElementById(columnsContentId);
 
     this.menu = doc.getElementById(menu);
-    this.closeMenuButton = doc.getElementById("openCloseMenu");
     this.menuContent = doc.getElementById("menuContent");
 
     this.initiliseColumns();
@@ -45,13 +44,7 @@ mpk.Columns.prototype = {
             mpk.DM.add(this.columnsContent, element);
         }
 
-        this.showMenuAndHideColumnsSelection();
         this.confirmButton.onclick = null;
-    },
-
-    updateNumberOfColumnsStyle : function(numberOfColumns) {
-        var style = "-webkit-column-count:" + numberOfColumns + ";-moz-column-count:" + numberOfColumns + ";column-count:" + numberOfColumns + ";";
-        this.columnsContent.setAttribute("style", style);
     },
 
     updateColumnSize : function() {
@@ -80,7 +73,6 @@ mpk.Columns.prototype = {
         var newColumn = this.createColumnElement(position, columnTitle, totalColumns);
         this.numberOfColumns++;
         appendFunction(where, newColumn);
-//        this.updateNumberOfColumnsStyle(new, totalColumns);
         this.updateColumnIds();
         this.updateCardLinkInAllColumns();
         return newColumn;
@@ -93,7 +85,6 @@ mpk.Columns.prototype = {
         column.parentNode.removeChild(column);
         this.numberOfColumns--;
         this.rearrangeColumnNumbers();
-//        this.updateNumberOfColumnsStyle(this.numberOfColumns);
         this.updateCardLinkInAllColumns();
     },
 
@@ -130,26 +121,17 @@ mpk.Columns.prototype = {
         column.setAttribute("data-columnNumber", columnNumber);
         $(column).addClass('span' + 12 / totalColumns)
 
-        var header = column.getElementsByTagName('h3')[0];
-        header.setAttribute("contentEditable", "true");
+        var header = column.getElementsByClassName('columnName')[0];
         header.innerHTML = columnTitle;
 
         var addButton = column.getElementsByClassName('addCard')[0];
 
         var self = this;
-        var deleteColumnButton = column.getElementsByClassName('deleteColumn')[0];
 
         addButton.onclick = function() {
             var cardTitle = prompt("what?");
             self.addCardToColumn(column, cardTitle);
             return false;
-        };
-
-        deleteColumnButton.onclick = function() {
-            if (confirm("Are you sure? All cards within the columns will be gone.")) {
-                self.removeColumn(column);
-                return false;
-            }
         };
 
         return column;
@@ -251,25 +233,6 @@ mpk.Columns.prototype = {
 
         this.reAddMoveButtons(newColumn, card);
         mpk.DM.add(newColumn, card);
-    },
-
-    showMenuAndHideColumnsSelection : function() {
-        this.numberOfColumnsField.parentNode.classList.add("noDisplay");
-        this.menu.classList.remove("noDisplay");
-    },
-
-    toggleMenu : function() {
-        var classList = this.menuContent.classList;
-        var iconClassList = this.closeMenuButton.children[0].classList;
-        if (classList.contains("noDisplay")) {
-            classList.remove("noDisplay");
-            iconClassList.remove('icon-arrow-down');
-            iconClassList.add('icon-arrow-up');
-        } else {
-            classList.add("noDisplay");
-            iconClassList.remove('icon-arrow-up');
-            iconClassList.add('icon-arrow-down');
-        }
     },
 
     removeCard : function(card) {

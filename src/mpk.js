@@ -1,10 +1,10 @@
 var mpk = mpk || {
-    isNullOrUndefined : function(thing) {
+    isNullOrUndefined: function (thing) {
         return ((typeof thing == "undefined") || (thing == null));
     }
 };
 
-mpk.Columns = function(doc, numberOfColumnsFieldId, confirmButtonId, columnsContentId, menu) {
+mpk.Columns = function (doc, numberOfColumnsFieldId, confirmButtonId, columnsContentId, numberOfColumnsSection) {
     this.MINIMUM_NUMBER_OF_COLUMNS = 2;
     this.MAXIMUM_NUMBER_OF_COLUMNS = 12;
     this.numberOfColumns = 0;
@@ -12,7 +12,7 @@ mpk.Columns = function(doc, numberOfColumnsFieldId, confirmButtonId, columnsCont
     this.confirmButton = doc.getElementById(confirmButtonId);
     this.columnsContent = doc.getElementById(columnsContentId);
 
-    this.menu = doc.getElementById(menu);
+    this.numberOfColumnsSection = doc.getElementById(numberOfColumnsSection);
     this.menuContent = doc.getElementById("menuContent");
 
     this.initiliseColumns();
@@ -21,15 +21,16 @@ mpk.Columns = function(doc, numberOfColumnsFieldId, confirmButtonId, columnsCont
 
 mpk.Columns.prototype = {
 
-    initiliseColumns: function() {
+    initiliseColumns: function () {
         var self = this;
-        this.confirmButton.onclick = function() {
+        $(this.confirmButton).click(function () {
             self.initColumnsForFirstTime();
+            $(self.numberOfColumnsSection).hide();
             return false;
-        };
+        });
     },
 
-    initColumnsForFirstTime: function() {
+    initColumnsForFirstTime: function () {
         var numberOfColumns = this.getNumberOfColumns();
 
         if (numberOfColumns < this.MINIMUM_NUMBER_OF_COLUMNS || numberOfColumns > this.MAXIMUM_NUMBER_OF_COLUMNS) {
@@ -47,14 +48,16 @@ mpk.Columns.prototype = {
         this.confirmButton.onclick = null;
     },
 
-    updateColumnSize : function() {
+    updateColumnSize: function () {
         var columns = $('.column');
-        var maxHeight = Math.max.apply(Math, columns.map(function(){ return $(this).height();}).get());
+        var maxHeight = Math.max.apply(Math, columns.map(function () {
+            return $(this).height();
+        }).get());
         columns.height(maxHeight);
     },
 
 
-    createColumnElement : function(columnNumber, columnTitle, totalColumns) {
+    createColumnElement: function (columnNumber, columnTitle, totalColumns) {
         var columnId = "column" + columnNumber;
         var column = document.getElementById('column-template').children[0].cloneNode(true);
         column.setAttribute("id", columnId);
@@ -68,7 +71,7 @@ mpk.Columns.prototype = {
 
         var self = this;
 
-        addButton.onclick = function() {
+        addButton.onclick = function () {
             var cardTitle = prompt("what?");
             self.addCardToColumn(column, cardTitle);
             return false;
@@ -77,7 +80,7 @@ mpk.Columns.prototype = {
         return column;
     },
 
-    addCardToColumn : function(column, cardTitle) {
+    addCardToColumn: function (column, cardTitle) {
         if (mpk.isNullOrUndefined(cardTitle) || (cardTitle == "")) {
             return;
         }
@@ -86,7 +89,7 @@ mpk.Columns.prototype = {
         var title = card.getElementsByClassName('title')[0];
         title.innerHTML = cardTitle;
 
-        mpk.DM.add(card,  title);
+        mpk.DM.add(card, title);
 
         this.setupRemoveButton(column, card);
         this.addMoveButtons(column, card);
@@ -94,10 +97,10 @@ mpk.Columns.prototype = {
         mpk.DM.add(column, card);
     },
 
-    setupRemoveButton : function(column, card) {
+    setupRemoveButton: function (column, card) {
         var self = this;
         var removeButton = card.getElementsByClassName('remove')[0];
-        removeButton.onclick = function() {
+        removeButton.onclick = function () {
             if (confirm("Really ???")) {
                 self.removeCard(card);
             }
@@ -105,7 +108,7 @@ mpk.Columns.prototype = {
         };
     },
 
-    addMoveButtons: function(column, card) {
+    addMoveButtons: function (column, card) {
         var columnPosition = parseInt(column.getAttribute("data-columnNumber"));
         if (columnPosition != 0) {
             this.addMoveLeftButton(column, card);
@@ -115,59 +118,59 @@ mpk.Columns.prototype = {
         }
     },
 
-    reAddMoveButtons : function(column, card) {
+    reAddMoveButtons: function (column, card) {
         this.removeMoveButtons(card);
         this.addMoveButtons(column, card);
     },
 
-    removeMoveButtons : function(card) {
+    removeMoveButtons: function (card) {
         var cardButtons = card.getElementsByClassName('cardButtons')[0];
         var button = cardButtons.getElementsByClassName('moveLeft')[0];
 
-        if (button){
+        if (button) {
             button.onclick = null;
             cardButtons.removeChild(button);
         }
         button = cardButtons.getElementsByClassName('moveRight')[0];
-        if (button){
+        if (button) {
             button.onclick = null;
             cardButtons.removeChild(button);
         }
     },
 
-    addMoveLeftButton : function(column, card) {
+    addMoveLeftButton: function (column, card) {
         var moveLeft = document.getElementById('button-move-left').children[0].cloneNode(true);
         var self = this;
 
-        moveLeft.onclick = function() {
+        moveLeft.onclick = function () {
             self.moveCardLeft(card, column);
             return false;
         };
         mpk.DM.add(card.getElementsByClassName('cardButtons')[0], moveLeft);
     },
 
-    addMoveRightButton : function(column, card) {
+    addMoveRightButton: function (column, card) {
         var moveRight = document.getElementById('button-move-right').children[0].cloneNode(true);
         var self = this;
 
-        moveRight.onclick = function() {
+        moveRight.onclick = function () {
             self.moveCardRight(card, column);
             return false;
         };
         mpk.DM.add(card.getElementsByClassName('cardButtons')[0], moveRight);
     },
 
-    moveCardRight : function(card, column) {
+    moveCardRight: function (card, column) {
         var nextPosition = parseInt(column.getAttribute("data-columnNumber")) + 1;
         this.moveCardToColumn(card, nextPosition);
     },
 
-    moveCardLeft : function(card, column) {
+    moveCardLeft: function (card, column) {
         var nextPosition = parseInt(column.getAttribute("data-columnNumber")) - 1;
         this.moveCardToColumn(card, nextPosition);
     },
 
-    moveCardToColumn : function(card, columnNumber) {
+    moveCardToColumn: function (card, columnNumber) {
         var newColumn = document.getElementById("column" + columnNumber);
         card.parentNode.removeChild(card);
 
@@ -175,16 +178,16 @@ mpk.Columns.prototype = {
         mpk.DM.add(newColumn, card);
     },
 
-    removeCard : function(card) {
+    removeCard: function (card) {
         card.parentNode.removeChild(card);
     },
 
-    getNumberOfColumns : function() {
+    getNumberOfColumns: function () {
         if (this.numberOfColumnsField.value == "") return 0;
         return parseInt(this.numberOfColumnsField.value);
     },
 
-    getCardsIn :function(column) {
+    getCardsIn: function (column) {
         var cards = [];
         for (var i = 0; i < column.children.length; i++) {
             if (column.children[i].hasAttribute("class") && column.children[i].getAttribute("class").toUpperCase() == "CARD") {
@@ -196,22 +199,22 @@ mpk.Columns.prototype = {
 
 };
 
-mpk.Menu = function(columns, menuSelector) {
+mpk.Menu = function (columns, menuSelector) {
     this.columns = columns;
 //    this.initiliseColumns();
     return this;
 };
 
 mpk.Menu.prototype = {
-    initiliseColumns : function() {
+    initiliseColumns: function () {
         this.attachActionToAddColumnAtTheEndButton();
         this.attachActionToAddColumnAtAnyPosition();
         this.attachSave();
     },
 
-    attachActionToAddColumnAtTheEndButton : function() {
+    attachActionToAddColumnAtTheEndButton: function () {
         var self = this;
-        var handle = function() {
+        var handle = function () {
             var columnTitle = prompt("What name should it have?");
             if (!mpk.isNullOrUndefined(columnTitle)) {
                 self.columns.appendColumnAtEnd(columnTitle);
@@ -221,9 +224,9 @@ mpk.Menu.prototype = {
         document.getElementById("addColumnAtTheEnd").onclick = handle;
     },
 
-    attachActionToAddColumnAtAnyPosition : function() {
+    attachActionToAddColumnAtAnyPosition: function () {
         var self = this;
-        var handle = function() {
+        var handle = function () {
             var columnTitle = prompt("What name should it have?");
             if (!mpk.isNullOrUndefined(columnTitle)) {
                 var position = parseInt(document.getElementById("newColumnPosition").value);
@@ -234,8 +237,8 @@ mpk.Menu.prototype = {
         document.getElementById("addColumnAtPosition").onclick = handle;
     },
 
-    attachSave : function(){
-        var handle = function() {
+    attachSave: function () {
+        var handle = function () {
             var kanban = document.getElementById("kanban");
             var serialized = new mpk.Serializer(document.getElementById("kanbanName").innerHTML).serialize(kanban);
             localStorage.setItem("mpk", serialized);
@@ -246,15 +249,15 @@ mpk.Menu.prototype = {
 };
 
 mpk.DM = {
-    add : function(where, what) {
+    add: function (where, what) {
         where.appendChild(what);
     },
 
-    addBefore : function(where, what) {
+    addBefore: function (where, what) {
         where.parentNode.insertBefore(what, where);
     },
 
-    removeAllElementsFrom : function(whereFrom) {
+    removeAllElementsFrom: function (whereFrom) {
         if (whereFrom.hasChildNodes()) {
             while (whereFrom.childNodes.length >= 1) {
                 whereFrom.removeChild(whereFrom.firstChild);
@@ -263,14 +266,14 @@ mpk.DM = {
     }
 };
 
-mpk.Serializer = function(kanbanName) {
+mpk.Serializer = function (kanbanName) {
     this.kanbanName = kanbanName;
     return this;
 };
 
 mpk.Serializer.prototype = {
 
-    serialize : function(kanban) {
+    serialize: function (kanban) {
         var serialized = {};
         serialized.name = this.kanbanName;
         var columns = kanban.getElementsByClassName("column");
@@ -282,34 +285,34 @@ mpk.Serializer.prototype = {
         return JSON.stringify(serialized);
     },
 
-    serializeColumn : function(column) {
+    serializeColumn: function (column) {
         var serializedColumn = {};
         serializedColumn.name = column.getElementsByTagName("h3")[0].innerHTML;
         var cards = column.getElementsByClassName("card");
         serializedColumn.numberOfCards = cards.length;
         serializedColumn.cards = [];
-        for(var i=0;i<serializedColumn.numberOfCards;i++){
-           serializedColumn.cards.push(this.serializeCard(cards[i]));
+        for (var i = 0; i < serializedColumn.numberOfCards; i++) {
+            serializedColumn.cards.push(this.serializeCard(cards[i]));
         }
         return serializedColumn;
     },
 
-    serializeCard : function(card){
+    serializeCard: function (card) {
         var serializedCard = {};
         serializedCard.title = card.getElementsByTagName("span")[0].innerHTML;
         return serializedCard;
     }
 };
 
-mpk.Deserializer = function(mpkColumns){
+mpk.Deserializer = function (mpkColumns) {
     this.columns = mpkColumns;
     return this;
 };
 
 mpk.Deserializer.prototype = {
-    deserialize : function(serializedKanban, whereTo){
+    deserialize: function (serializedKanban, whereTo) {
         var kanbanObject = JSON.parse(serializedKanban);
-        for(var i=0;i<kanbanObject.numberOfColumns;i++){
+        for (var i = 0; i < kanbanObject.numberOfColumns; i++) {
             this.deserializeColumn(kanbanObject.columns[i], whereTo, i, kanbanObject.numberOfColumns);
         }
         this.columns.numberOfColumns = kanbanObject.numberOfColumns;
@@ -317,14 +320,14 @@ mpk.Deserializer.prototype = {
         return kanbanObject.name;
     },
 
-    deserializeColumn : function(column, where, position, allColumns){
+    deserializeColumn: function (column, where, position, allColumns) {
         var newColumn = this.columns.addColumn(column.name, position, mpk.DM.add, where, allColumns);
-        for(var i=0;i<column.numberOfCards;i++){
+        for (var i = 0; i < column.numberOfCards; i++) {
             this.deserializeCard(newColumn, column.cards[i]);
         }
     },
 
-    deserializeCard : function(column, card){
+    deserializeCard: function (column, card) {
         this.columns.addCardToColumn(column, card.title);
     }
 };

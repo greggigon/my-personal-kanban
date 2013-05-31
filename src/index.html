@@ -43,7 +43,7 @@
             <label for="numberOfColumns">How many columns in your Kanban would you like to start with?</label>
             <select name="numberOfColumns" id="numberOfColumns" class="input-mini">
                 <option>2</option>
-                <option>3</option>
+                <option selected="selected">3</option>
                 <option>4</option>
                 <option>6</option>
                 <option>12</option>
@@ -63,8 +63,13 @@
     <div id="column-template">
         <ul class="column">
             <a href="#addCard" class="addCard pull-right" title="Add new card to column"><i class="icon-plus"></i></a>
-            <a href="#modifyCoumn" class="modifyColumn" title="Modify column settings"><i class="icon-wrench"></i></a>
-            <h4 class="columnName"></h4>
+            <span class="dropdown">
+                <a href="#modifyCoumn" class="modifyColumn dropdown-toggle" data-toggle="dropdown" title="Modify column settings"><i class="icon-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="#">Change column name</a></li>
+                </ul>
+            </span>
+            <h4 class="columnName" contenteditable="true"></h4>
         </ul>
     </div>
     <div id="card-template">
@@ -87,7 +92,7 @@
 </div>
 <script>
     var savedKanban = localStorage.getItem("mpk");
-    var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "menu");
+    var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "columnSelection");
     var menu = new mpk.Menu(columns, "menu");
     if (savedKanban) {
         var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));

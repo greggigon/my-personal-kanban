@@ -195,20 +195,49 @@ mpk.Columns.prototype = {
             }
         }
         return cards;
+    },
+
+    addColumn : function(columnTitle, position, appendFunction, where, totalColumns) {
+        if (mpk.isNullOrUndefined(columnTitle) || columnTitle == "" || (this.numberOfColumns + 1 > this.MAXIMUM_NUMBER_OF_COLUMNS)) {
+            return;
+        }
+        var newColumn = this.createColumnElement(position, columnTitle, totalColumns);
+        this.numberOfColumns++;
+        appendFunction(where, newColumn);
+        this.updateColumnIds();
+//        this.updateCardLinkInAllColumns();
+        return newColumn;
+    },
+    updateColumnIds : function() {
+        for (var i = 0; i < this.numberOfColumns; i++) {
+            var column = this.columnsContent.children[i];
+            column.setAttribute("id", "column" + i);
+            column.setAttribute("data-columnNumber", i);
+        }
+    },
+
+    updateCardLinkInAllColumns : function() {
+        for (var i = 0; i < this.numberOfColumns; i++) {
+            var column = document.getElementById("column" + i);
+            var cards = this.getCardsIn(column);
+            for (var j = 0; j < cards.length; j++) {
+                this.reAddMoveButtons(column, cards[j]);
+            }
+        }
     }
 
 };
 
 mpk.Menu = function (columns, menuSelector) {
     this.columns = columns;
-//    this.initiliseColumns();
+    this.menu = $(menuSelector);
+
+    this.initializeMenu();
     return this;
 };
 
 mpk.Menu.prototype = {
-    initiliseColumns: function () {
-        this.attachActionToAddColumnAtTheEndButton();
-        this.attachActionToAddColumnAtAnyPosition();
+    initializeMenu: function () {
         this.attachSave();
     },
 
@@ -238,13 +267,11 @@ mpk.Menu.prototype = {
     },
 
     attachSave: function () {
-        var handle = function () {
-            var kanban = document.getElementById("kanban");
-            var serialized = new mpk.Serializer(document.getElementById("kanbanName").innerHTML).serialize(kanban);
+        $('a.mpkSave', this.menu).click(function () {
+            var serialized = new mpk.Serializer($("#kanbanName").text()).serialize($("#kanban"));
             localStorage.setItem("mpk", serialized);
-            return false;
-        };
-        document.getElementById("saveKanban").onclick = handle;
+            return true;
+        });
     }
 };
 
@@ -276,7 +303,7 @@ mpk.Serializer.prototype = {
     serialize: function (kanban) {
         var serialized = {};
         serialized.name = this.kanbanName;
-        var columns = kanban.getElementsByClassName("column");
+        var columns = $(".column:visible", kanban);
         serialized.numberOfColumns = columns.length;
         serialized.columns = [];
         for (var i = 0; i < serialized.numberOfColumns; i++) {
@@ -287,8 +314,8 @@ mpk.Serializer.prototype = {
 
     serializeColumn: function (column) {
         var serializedColumn = {};
-        serializedColumn.name = column.getElementsByTagName("h3")[0].innerHTML;
-        var cards = column.getElementsByClassName("card");
+        serializedColumn.name = $(".columnName", column).text();
+        var cards = $(".card", column);
         serializedColumn.numberOfCards = cards.length;
         serializedColumn.cards = [];
         for (var i = 0; i < serializedColumn.numberOfCards; i++) {
@@ -299,7 +326,7 @@ mpk.Serializer.prototype = {
 
     serializeCard: function (card) {
         var serializedCard = {};
-        serializedCard.title = card.getElementsByTagName("span")[0].innerHTML;
+        serializedCard.title = $(".title", card).text();
         return serializedCard;
     }
 };

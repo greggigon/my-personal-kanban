@@ -15,13 +15,14 @@
      <div class="navbar-inner">
         <div class="container">
             <div class="brand"><span id="kanbanName" contentEditable="true">Kanban name</span></div>
-            <ul class="nav pull-right">
+            <ul class="nav pull-right" id="menu">
                 <li class="dropdown">
                     <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-hdd"></i> Save</a></li>
-                        <li><a href="#"><i class="icon-pencil"></i> Change name</a></li>
-                        <li><a href="#"><i class="icon-remove-sign"></i> Delete</a></li>
+                        <li><a href="#save" class="mpkSave"><i class="icon-hdd"></i> Save</a></li>
+                        <li><a href="#changeName"><i class="icon-pencil"></i> Change name</a></li>
+                        <li><a href="#startNew"><i class="icon-briefcase"></i> Start new</a></li>
+                        <li><a href="#delete"><i class="icon-remove-sign"></i> Delete</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -40,7 +41,7 @@
 <div class="container" style="margin-top: 45px">
     <section id="columnSelection" class="row">
         <fieldset class="form-inline">
-            <label for="numberOfColumns">How many columns in your Kanban would you like to start with?</label>
+            <label for="numberOfColumns">How many columns in your Kanban to start with?</label>
             <select name="numberOfColumns" id="numberOfColumns" class="input-mini">
                 <option>2</option>
                 <option selected="selected">3</option>
@@ -93,10 +94,12 @@
 <script>
     var savedKanban = localStorage.getItem("mpk");
     var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "columnSelection");
-    var menu = new mpk.Menu(columns, "menu");
+    var menu = new mpk.Menu(columns, "#menu");
     if (savedKanban) {
+        $('#columnSelection').hide();
         var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
-        document.getElementById('kanbanName').innerHTML = kanbanName;
+        $('#kanbanName').text(kanbanName);
+
     }
 </script>
 </body>

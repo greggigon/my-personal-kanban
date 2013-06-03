@@ -197,7 +197,7 @@ mpk.Columns.prototype = {
         return cards;
     },
 
-    addColumn : function(columnTitle, position, appendFunction, where, totalColumns) {
+    addColumn: function (columnTitle, position, appendFunction, where, totalColumns) {
         if (mpk.isNullOrUndefined(columnTitle) || columnTitle == "" || (this.numberOfColumns + 1 > this.MAXIMUM_NUMBER_OF_COLUMNS)) {
             return;
         }
@@ -208,7 +208,8 @@ mpk.Columns.prototype = {
 //        this.updateCardLinkInAllColumns();
         return newColumn;
     },
-    updateColumnIds : function() {
+
+    updateColumnIds: function () {
         for (var i = 0; i < this.numberOfColumns; i++) {
             var column = this.columnsContent.children[i];
             column.setAttribute("id", "column" + i);
@@ -216,7 +217,7 @@ mpk.Columns.prototype = {
         }
     },
 
-    updateCardLinkInAllColumns : function() {
+    updateCardLinkInAllColumns: function () {
         for (var i = 0; i < this.numberOfColumns; i++) {
             var column = document.getElementById("column" + i);
             var cards = this.getCardsIn(column);
@@ -239,31 +240,7 @@ mpk.Menu = function (columns, menuSelector) {
 mpk.Menu.prototype = {
     initializeMenu: function () {
         this.attachSave();
-    },
-
-    attachActionToAddColumnAtTheEndButton: function () {
-        var self = this;
-        var handle = function () {
-            var columnTitle = prompt("What name should it have?");
-            if (!mpk.isNullOrUndefined(columnTitle)) {
-                self.columns.appendColumnAtEnd(columnTitle);
-            }
-            return false;
-        }
-        document.getElementById("addColumnAtTheEnd").onclick = handle;
-    },
-
-    attachActionToAddColumnAtAnyPosition: function () {
-        var self = this;
-        var handle = function () {
-            var columnTitle = prompt("What name should it have?");
-            if (!mpk.isNullOrUndefined(columnTitle)) {
-                var position = parseInt(document.getElementById("newColumnPosition").value);
-                self.columns.addColumnAtPosition(columnTitle, position);
-            }
-            return false;
-        };
-        document.getElementById("addColumnAtPosition").onclick = handle;
+        this.attachDelete();
     },
 
     attachSave: function () {
@@ -271,6 +248,14 @@ mpk.Menu.prototype = {
             var serialized = new mpk.Serializer($("#kanbanName").text()).serialize($("#kanban"));
             localStorage.setItem("mpk", serialized);
             return true;
+        });
+    },
+
+    attachDelete: function () {
+        $('a.mpkDelete', this.menu).click(function () {
+            if (window.confirm("Are you sure? Your Kanban board will be removed from local storage.")){
+                localStorage.removeItem('mpk');
+            }
         });
     }
 };

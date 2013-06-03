@@ -70,7 +70,7 @@ mpk.Columns.prototype = {
         var self = this;
 
         addButton.onclick = function () {
-            var cardTitle = prompt("what?");
+            var cardTitle = prompt("What's on a card?");
             self.addCardToColumn(column, cardTitle, self.numberOfColumns);
             self.updateColumnSize();
             return false;
@@ -83,7 +83,6 @@ mpk.Columns.prototype = {
         if (mpk.isNullOrUndefined(cardTitle) || (cardTitle == "")) {
             return;
         }
-        //TODO: hardcoded the template ID for the time, change it
         var card = $('#card-template>li')[0].cloneNode(true);
         var title = $('.title', card).text(cardTitle);
 
@@ -201,7 +200,6 @@ mpk.Columns.prototype = {
         this.numberOfColumns++;
         appendFunction(where, newColumn);
         this.updateColumnIds();
-//        this.updateCardLinkInAllColumns();
         return newColumn;
     },
 
@@ -211,18 +209,7 @@ mpk.Columns.prototype = {
             column.setAttribute("id", "column" + i);
             column.setAttribute("data-columnNumber", i);
         }
-    },
-
-    updateCardLinkInAllColumns: function () {
-        for (var i = 0; i < this.numberOfColumns; i++) {
-            var column = document.getElementById("column" + i);
-            var cards = this.getCardsIn(column);
-            for (var j = 0; j < cards.length; j++) {
-                this.reAddMoveButtons(column, cards[j]);
-            }
-        }
     }
-
 };
 
 mpk.Menu = function (columns, menuSelector) {
@@ -259,10 +246,6 @@ mpk.Menu.prototype = {
 mpk.DM = {
     add: function (where, what) {
         where.appendChild(what);
-    },
-
-    addBefore: function (where, what) {
-        where.parentNode.insertBefore(what, where);
     },
 
     removeAllElementsFrom: function (whereFrom) {

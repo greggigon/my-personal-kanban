@@ -74,11 +74,11 @@
         </ul>
     </div>
     <div id="card-template">
-        <li draggable="true" class="card">
-            <span class="title"></span>
+        <li class="card">
             <div class="cardButtons">
                 <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
             </div>
+            <span class="title"></span>
         </li>
     </div>
     <div id="button-remove">
@@ -99,7 +99,6 @@
         $('#columnSelection').hide();
         var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
         $('#kanbanName').text(kanbanName);
-
     }
 </script>
 </body>

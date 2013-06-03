@@ -50,9 +50,7 @@ mpk.Columns.prototype = {
 
     updateColumnSize: function () {
         var columns = $('.column');
-        var maxHeight = Math.max.apply(Math, columns.map(function () {
-            return $(this).height();
-        }).get());
+        var maxHeight = $('#kanban').height();
         columns.height(maxHeight);
     },
 
@@ -73,26 +71,24 @@ mpk.Columns.prototype = {
 
         addButton.onclick = function () {
             var cardTitle = prompt("what?");
-            self.addCardToColumn(column, cardTitle);
+            self.addCardToColumn(column, cardTitle, self.numberOfColumns);
+            self.updateColumnSize();
             return false;
         };
 
         return column;
     },
 
-    addCardToColumn: function (column, cardTitle) {
+    addCardToColumn: function (column, cardTitle, numberOfColumns) {
         if (mpk.isNullOrUndefined(cardTitle) || (cardTitle == "")) {
             return;
         }
         //TODO: hardcoded the template ID for the time, change it
-        var card = document.getElementById('card-template').children[0].cloneNode(true);
-        var title = card.getElementsByClassName('title')[0];
-        title.innerHTML = cardTitle;
-
-        mpk.DM.add(card, title);
+        var card = $('#card-template>li')[0].cloneNode(true);
+        var title = $('.title', card).text(cardTitle);
 
         this.setupRemoveButton(column, card);
-        this.addMoveButtons(column, card);
+        this.addMoveButtons(column, card, numberOfColumns);
 
         mpk.DM.add(column, card);
     },
@@ -108,19 +104,19 @@ mpk.Columns.prototype = {
         };
     },
 
-    addMoveButtons: function (column, card) {
+    addMoveButtons: function (column, card, numberOfColumns) {
         var columnPosition = parseInt(column.getAttribute("data-columnNumber"));
         if (columnPosition != 0) {
             this.addMoveLeftButton(column, card);
         }
-        if ((columnPosition + 1) != this.numberOfColumns) {
+        if ((columnPosition + 1) != numberOfColumns) {
             this.addMoveRightButton(column, card);
         }
     },
 
     reAddMoveButtons: function (column, card) {
         this.removeMoveButtons(card);
-        this.addMoveButtons(column, card);
+        this.addMoveButtons(column, card, this.numberOfColumns);
     },
 
     removeMoveButtons: function (card) {
@@ -335,11 +331,11 @@ mpk.Deserializer.prototype = {
     deserializeColumn: function (column, where, position, allColumns) {
         var newColumn = this.columns.addColumn(column.name, position, mpk.DM.add, where, allColumns);
         for (var i = 0; i < column.numberOfCards; i++) {
-            this.deserializeCard(newColumn, column.cards[i]);
+            this.deserializeCard(newColumn, column.cards[i], allColumns);
         }
     },
 
-    deserializeCard: function (column, card) {
-        this.columns.addCardToColumn(column, card.title);
+    deserializeCard: function (column, card, numberOfColumns) {
+        this.columns.addCardToColumn(column, card.title, numberOfColumns);
     }
 };

@@ -44,8 +44,6 @@ mpk.Columns.prototype = {
             var element = this.createColumnElement(i, "Column name", numberOfColumns);
             mpk.DM.add(this.columnsContent, element);
         }
-
-        this.confirmButton.onclick = null;
     },
 
     updateColumnSize: function () {
@@ -223,6 +221,7 @@ mpk.Menu = function (columns, menuSelector) {
 mpk.Menu.prototype = {
     initializeMenu: function () {
         this.attachSave();
+        this.attachRestart();
         this.attachDelete();
     },
 
@@ -236,8 +235,19 @@ mpk.Menu.prototype = {
 
     attachDelete: function () {
         $('a.mpkDelete', this.menu).click(function () {
-            if (window.confirm("Are you sure? Your Kanban board will be removed from local storage.")){
+            if (window.confirm("Are you sure? Your Kanban board will be removed from local storage.")) {
                 localStorage.removeItem('mpk');
+            }
+        });
+    },
+    attachRestart: function () {
+        var self = this;
+        $('a.mpkRestart', this.menu).click(function () {
+            if (window.confirm("Are you sure? Your Kanban will be remove from local storage and your Board will be cleared!")) {
+                localStorage.removeItem('mpk');
+                $('#kanbanName').text('Kanban name');
+                $('#columns>ul').remove();
+                $(self.columns.numberOfColumnsSection).show();
             }
         });
     }

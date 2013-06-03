@@ -1,5 +1,5 @@
 #columns { display: box; box-orient: horizontal; }
-#columns ul { background-color: #e7ffe9; list-style-type: none; padding: 10px; margin: 0 0 0px 10px; box-shadow: 2px 2px 1px #888888;}
+#columns ul { background-color: #CCFFFF; list-style-type: none; padding: 10px; margin: 0 0 0px 10px; box-shadow: 2px 2px 1px #888888;}
 #columns ul.dropdown-menu { background-color: #ffffff;}
 #columns ul.dropdown-menu li { padding: 2px; }
 #columns ul li { float: left; padding: 10px; margin: 2px; }

@@ -6,76 +6,74 @@
     <script src="qunit.js"></script>
 
     <link rel="stylesheet" type="text/css" href="qunit.css"/>
-    <script>window.onload = (function() {
+    <script>window.onload = (function () {
         try {
 
-            $(document).ready(function() {
+            $(document).ready(function () {
 
                 var columnsSection = $("#columns")[0];
                 var originalSerialized = new mpk.Serializer("gregs kanban").serialize(columnsSection);
                 var serialized = JSON.parse(originalSerialized);
-                
+
                 module("Serializing the kanban");
 
-                test("serialized object should have Kanban name", function() {
+                test("serialized object should have Kanban name", function () {
                     equals(serialized.name, "gregs kanban", "should be there");
                 });
 
-                test("should contain number of columns", function(){
+                test("should contain number of columns", function () {
                     equals(serialized.numberOfColumns, 3, "should have 3 as number");
                 })
 
-                test("should contain columns array", function(){
+                test("should contain columns array", function () {
                     equals(serialized.columns.length, 3, "should be three elements in it");
                 });
 
-                test("each columns should have a name", function(){
-                   equals(serialized.columns[0].name, "Ready for action", "name should come from h3 tag");
-                   equals(serialized.columns[1].name, "In progress", "name should come from h3 tag");
-                   equals(serialized.columns[2].name, "Done", "name should come from h3 tag"); 
+                test("each columns should have a name", function () {
+                    equals(serialized.columns[0].name, "Ready for action", "name should come from title class");
+                    equals(serialized.columns[1].name, "In progress", "name should come from title class");
+                    equals(serialized.columns[2].name, "Done", "name should come from title class");
                 });
 
-                test("column should contain number of cards information", function(){
+                test("column should contain number of cards information", function () {
                     equals(serialized.columns[0].numberOfCards, 2, "should count number of cards with class card");
                     equals(serialized.columns[1].numberOfCards, 1, "should count number of cards with class card");
                     equals(serialized.columns[2].numberOfCards, 2, "should count number of cards with class card");
                 });
 
-                test("serialized column should have cards array", function(){
-                   equals(serialized.columns[0].cards.length, 2, "Should have two cards in there"); 
-                   equals(serialized.columns[1].cards.length, 1, "Should have two cards in there");
-                   equals(serialized.columns[2].cards.length, 2, "Should have two cards in there"); 
+                test("serialized column should have cards array", function () {
+                    equals(serialized.columns[0].cards.length, 2, "Should have two cards in there");
+                    equals(serialized.columns[1].cards.length, 1, "Should have two cards in there");
+                    equals(serialized.columns[2].cards.length, 2, "Should have two cards in there");
                 });
 
-                test("serialized card should have card title", function(){
-                   equals(serialized.columns[0].cards[0].title,  "Learn chacha", "should learn the chacha"); 
+                test("serialized card should have card title", function () {
+                    equals(serialized.columns[0].cards[0].title, "Learn chacha", "should learn the chacha");
                 });
 
                 module("Deserializing kanban");
 
                 var mpkCol = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "deserializedColumns", "");
                 var deserialized = $("#deserializedColumns");
-                try{
+                try {
                     var kanbanName = new mpk.Deserializer(mpkCol).deserialize(originalSerialized, deserialized[0]);
-                }catch(exception){console.log(exception);}
+                } catch (exception) {
+                    console.log(exception);
+                }
 
-                test("deserializer should return a name", function(){
-                   equals(kanbanName, "gregs kanban", "Should have valid deserialized name");
+                test("deserializer should return a name", function () {
+                    equals(kanbanName, "gregs kanban", "Should have valid deserialized name");
                 });
 
-                test("deserialized Html should contain three columns", function(){
+                test("deserialized Html should contain three columns", function () {
                     equals($("ul.column", deserialized).length, 3, "Should have three columns")
                 });
 
-                test("each column should habe h3 element with column name", function(){
-                    equals($("ul.column h3")[0].innerHTML,  "Ready for action", "Should have same name as before serialization");
+                test("each column should habe h3 element with column name", function () {
+                    equals($("ul.column h3")[0].innerHTML, "Ready for action", "Should have same name as before serialization");
                 });
 
-                test("columns content should have update columns style", function(){
-                   equals(deserialized.attr("style"), "-webkit-column-count:3;-moz-column-count:3;column-count:3;", "should be updated style");
-                });
-
-                test("deserialized column should have cards", function(){
+                test("deserialized column should have cards", function () {
                     var cards = $("ul.column li.card span", deserialized);
                     equals(cards.length, 5, "Should have two cards");
                     equals(cards[0].innerHTML, "Learn chacha", "Should have card title");
@@ -83,7 +81,7 @@
                 });
             });
 
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
         $("#fixture").hide();
@@ -101,6 +99,9 @@
 <ol id="qunit-tests">
 </ol>
 <div id="fixture">
+    <header>
+        <div class="brand"><span id="kanbanName" contentEditable="true">gregs kanban</span></div>
+    </header>
     <section id="content" class="noDisplay">
         <input type="text" id="numberOfColumns" value="3"/>
         <input type="button" name="confirmColumns" id="confirmColumns" value="confirm"/>
@@ -115,55 +116,69 @@
         <div id="columns" style="-moz-column-count: 3;">
             <ul id="column0" data-columnnumber="0" class="column">
                 <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
-                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
+                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i
+                        class="icon-remove"></i></a>
 
-                <h3 contenteditable="true">Ready for action</h3>
-                <li draggable="true" class="card">
-                    <span>Learn chacha</span>
+                <h3 contenteditable="true" class="columnName">Ready for action</h3>
+                <li class="card">
+                    <span class="title">Learn chacha</span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i
+                                class="icon-arrow-right"></i></a>
                     </div>
                 </li>
                 <li draggable="true" class="card">
-                    <span>Write blog post</span>
+                    <span class="title">Write blog post</span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i
+                                class="icon-arrow-right"></i></a>
                     </div>
                 </li>
             </ul>
             <ul id="column1" data-columnnumber="1" class="column">
                 <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
-                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
+                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i
+                        class="icon-remove"></i></a>
 
-                <h3 contenteditable="true">In progress</h3>
+                <h3 contenteditable="true" class="columnName">In progress</h3>
                 <li draggable="true" class="card">
-                    <span>Create Kanban</span>
+                    <span class="title">Create Kanban</span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
-                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                                class="icon-arrow-left"></i></a>
+                        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i
+                                class="icon-arrow-right"></i></a>
                     </div>
                 </li>
             </ul>
             <ul id="column2" data-columnnumber="2" class="column">
                 <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
-                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
+                <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i
+                        class="icon-remove"></i></a>
 
-                <h3 contenteditable="true">Done</h3>
+                <h3 contenteditable="true" class="columnName">Done</h3>
                 <li draggable="true" class="card">
-                    <span>Paper for ref test</span>
+                    <span class="title">Paper for ref test</span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                                class="icon-arrow-left"></i></a>
                     </div>
                 </li>
                 <li draggable="true" class="card">
-                    <span>Washing</span>
+                    <span class="title">Washing</span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+                        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                                class="icon-arrow-left"></i></a>
                     </div>
                 </li>
             </ul>
@@ -172,29 +187,34 @@
             <div id="column-template">
                 <ul class="column">
                     <a href="#addCard" class="addCard" title="Add new card to column"><i class="icon-plus"></i></a>
-                    <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i class="icon-remove"></i></a>
-                    <h3 contenteditable="true"></h3>
+                    <a href="#deleteColumn" class="deleteColumn pull-right" title="Remove column"><i
+                            class="icon-remove"></i></a>
+
+                    <h3 contenteditable="true" class="columnName"></h3>
                 </ul>
             </div>
             <div id="card-template">
                 <li draggable="true" class="card">
                     <span class="title"></span>
+
                     <div class="cardButtons">
                         <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
                     </div>
                 </li>
             </div>
             <div id="button-move-left">
-                <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
+                <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i
+                        class="icon-arrow-left"></i></a>
             </div>
             <div id="button-move-right">
-                <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
+                <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i
+                        class="icon-arrow-right"></i></a>
             </div>
         </div>
     </section>
     <section id="deserializedKanban">
         <div id="deserializedColumns">
-            
+
         </div>
     </section>
 </div>

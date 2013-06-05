@@ -24,23 +24,18 @@
 
                 module("Before number of columns is selected");
 
-                test("should create four lists when confirm button is clicked", function () {
+                test("should create three lists when confirm button is clicked", function () {
                     $("#numberOfColumns").val("3");
                     $("#confirmColumns").trigger("click");
 
                     var numberOfColumns = $("#columns ul").length;
-                    equals(numberOfColumns, 3, "Should contain 4 columns");
+                    equals(numberOfColumns, 3, "Should contain 3 columns");
                 });
 
                 module("After number of columns was selected");
 
                 test("should hide column selection thingy", function () {
                     equals($('#columnSelection :visible').length, 0, 'columns selection section should be invisible');
-                });
-
-                test("should remove click event after initial number of columns selected", function () {
-                    var numberOfColumns = $("#columns ul").length;
-                    equals(numberOfColumns, 3, "Should still contain 3 columns");
                 });
 
                 test("created columns should have column class", function () {

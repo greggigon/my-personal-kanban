@@ -35,7 +35,7 @@ mpk.Columns.prototype = {
 
         if (numberOfColumns < this.MINIMUM_NUMBER_OF_COLUMNS || numberOfColumns > this.MAXIMUM_NUMBER_OF_COLUMNS) {
             this.numberOfColumnsField.classList.add("error");
-            this.numberOfColumnsField.setAttribute("title", "Minimum number of columns is 2 and maximum is 9")
+            this.numberOfColumnsField.setAttribute("title", "Minimum number of columns is 2 and maximum is 12")
             return;
         }
         this.numberOfColumns = numberOfColumns;

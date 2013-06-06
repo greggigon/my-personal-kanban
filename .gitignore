@@ -1,3 +1,8 @@
 *.iml
 *.ipr
 *.iws
+build/
+.gradle/
+stories_*
+.DS_Store
+*/.*

@@ -29,3 +29,8 @@ dependencies {
 test {
     systemProperties "geb.build.reportsDir": "${reporting.baseDir}/geb"
 }
+
+task prepareDistributionZip(type: Zip) {
+    from "$projectDir/src"
+
+}

@@ -40,7 +40,11 @@ test {
     systemProperties "geb.build.reportsDir": "${reporting.baseDir}/geb"
 }
 
-task prepareDistributionZip(type: Zip) {
-    from "$projectDir/src"
+task prepareDistributionZip(type: Zip, description: 'Creates a ZIP file with SRC folder. Distribution ready to be used') {
+    from "src"
+    baseName='my-personal-kanban'
+}
 
+task version <<  {
+    logger.lifecycle "Version is set to [$version]"
 }

@@ -7,37 +7,37 @@ It is a single page JavaScript application with very basic functionality. No flu
 
 ## How to use it?
 
-Open index.html page in your browser and your done.
+Open __index.html__ page in your browser and your done.
 
 The application is a single file HTML page with Twitter Bootstrap used for styling and jQuery to help some basic document manipulation.
 
 ### Functionality
 
-The functionality is very basic.
+The functionality is simple and pure.
 
-You can change Kanban name by clicking top header and edit it inline.
+You can __change Kanban name__ by clicking top header and edit it inline.
 
-You can choose from a predefined list of column numbers for your Kanban.
+You can __choose from a predefined list of column numbers__ for your Kanban.
 
-You can Click on Column headers to rename them.
+You can __Click on Column headers__ to rename them.
 
-Plus sign in the top right corner can be used to add new Card to a column.
+__Plus sign in the top right corner__ can be used to add new Card to a column.
 
-Card could be Moved between columns with arrow buttons or removed with a Cross button.
+Card could be Moved between columns with __arrow buttons__ or removed with a __Cross button__.
 
 ### Menu
 
 There should be a Menu in the Top right corner.
 
-You can persist your Kanban to a storage of your browser. When the page is opened next time it will automatically load Kanban content from local storage.
+You can __persist your Kanban to a local storage__ of your browser. When the page is opened next time it will automatically load Kanban content from local storage.
 
-You can Delete the Kanban from local storage. The Kanban board will stay as it was however next time you open the browser you will meet empty page with prompt for number of columns.
+You can __Delete the Kanban from local storage__. The Kanban board will stay as it was however next time you open the browser you will meet empty page with prompt for number of columns.
 
-You can also Start new Kanban board, which will remove the old one from local storage and start from scratch.
+You can also __Start new Kanban board__, which will remove the old one from local storage and start from scratch.
 
 ### Multiple Kanban boards
 
-Well, I need to do this work.
+Well, I need to do this work. It is impossible to have more than one at the moment, unless you open the __index.html__ in a different browsers.
 
 ## More about technology
 
@@ -61,4 +61,7 @@ For testing and Browser automation I use Geb to lunch browser and run all the QU
 
 Build script is driven by Gradle.
 
+### Want to help?
+
+If you want to help me with styling or anything else, please do get in touch.
 

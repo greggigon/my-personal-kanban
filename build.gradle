@@ -42,7 +42,8 @@ test {
 
 task prepareDistributionZip(type: Zip, description: 'Creates a ZIP file with SRC folder. Distribution ready to be used') {
     from "src"
-    baseName='my-personal-kanban'
+    baseName = 'my-personal-kanban'
+    destinationDir = projectDir
 }
 
 task version <<  {

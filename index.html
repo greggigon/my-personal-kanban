@@ -1,119 +1,144 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print"/>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>My-personal-kanban by greggigon</title>
-  </head>
+</head>
 
-  <body>
-    <div id="container">
-      <div class="inner">
+<body>
+<div id="container">
+    <div class="inner">
 
         <header>
-          <h1>My-personal-kanban</h1>
-          <h2>This is a one page HTML/JavaScript application for people who would like to use simple and basic Kanban board for their personal stuff</h2>
+            <h1>My-personal-kanban</h1>
+
+            <h2>This is a one page HTML/JavaScript application for people who would like to use simple and basic Kanban
+                board for their personal stuff</h2>
         </header>
 
         <section id="downloads" class="clearfix">
-          <a href="https://github.com/greggigon/my-personal-kanban/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/greggigon/my-personal-kanban/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/greggigon/my-personal-kanban" id="view-on-github" class="button"><span>View on GitHub</span></a>
+            <a href="https://github.com/greggigon/my-personal-kanban/zipball/master" id="download-zip"
+               class="button"><span>Download .zip</span></a>
+            <a href="https://github.com/greggigon/my-personal-kanban/tarball/master" id="download-tar-gz"
+               class="button"><span>Download .tar.gz</span></a>
+            <a href="https://github.com/greggigon/my-personal-kanban" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
 
         <hr>
 
         <section id="main_content">
-          <h1>
-<a name="my-personal-kanban-mpk" class="anchor" href="#my-personal-kanban-mpk"><span class="octicon octicon-link"></span></a>My Personal Kanban (MPK)</h1>
+            <h1>
+                <a name="my-personal-kanban-mpk" class="anchor" href="#my-personal-kanban-mpk"><span
+                        class="octicon octicon-link"></span></a>My Personal Kanban (MPK)</h1>
 
-<p>This is a small and simple in browser application that aspire to be offline Personal Kanban board.</p>
+            <p>This is a small and simple in browser application that aspire to be offline Personal Kanban board.</p>
 
-<p>It is a single page JavaScript application with very basic functionality. No fluff, just basics.</p>
+            <p>It is a single page JavaScript application with very basic functionality. No fluff, just basics.</p>
 
-<h2>
-<a name="how-to-use-it" class="anchor" href="#how-to-use-it"><span class="octicon octicon-link"></span></a>How to use it?</h2>
+            <p>
+                <a href="images/my_personal_kanban.jpg" target="_blank"><img src="images/my_personal_kanban.jpg" width="640" height="400"/></a>
+            </p>
+            <hr/>
+            <h2>
+                <a name="how-to-use-it" class="anchor" href="#how-to-use-it"><span class="octicon octicon-link"></span></a>How
+                to use it?</h2>
 
-<p>Open <strong>index.html</strong> page in your browser and your done.</p>
+            <p>Open <strong>index.html</strong> page in your browser and your done.</p>
 
-<p>The application is a single file HTML page with Twitter Bootstrap used for styling and jQuery to help some basic document manipulation.</p>
+            <p>The application is a single file HTML page with Twitter Bootstrap used for styling and jQuery to help
+                some basic document manipulation.</p>
 
-<h3>
-<a name="functionality" class="anchor" href="#functionality"><span class="octicon octicon-link"></span></a>Functionality</h3>
+            <h3>
+                <a name="functionality" class="anchor" href="#functionality"><span class="octicon octicon-link"></span></a>Functionality
+            </h3>
 
-<p>The functionality is simple and pure.</p>
+            <p>The functionality is simple and pure.</p>
 
-<p>You can <strong>change Kanban name</strong> by clicking top header and edit it inline.</p>
+            <p>You can <strong>change Kanban name</strong> by clicking top header and edit it inline.</p>
 
-<p>You can <strong>choose from a predefined list of column numbers</strong> for your Kanban.</p>
+            <p>You can <strong>choose from a predefined list of column numbers</strong> for your Kanban.</p>
 
-<p>You can <strong>Click on Column headers</strong> to rename them.</p>
+            <p>You can <strong>Click on Column headers</strong> to rename them.</p>
 
-<p><strong>Plus sign in the top right corner</strong> can be used to add new Card to a column.</p>
+            <p><strong>Plus sign in the top right corner</strong> can be used to add new Card to a column.</p>
 
-<p>Card could be Moved between columns with <strong>arrow buttons</strong> or removed with a <strong>Cross button</strong>.</p>
+            <p>Card could be Moved between columns with <strong>arrow buttons</strong> or removed with a <strong>Cross
+                button</strong>.</p>
 
-<h3>
-<a name="menu" class="anchor" href="#menu"><span class="octicon octicon-link"></span></a>Menu</h3>
+            <h3>
+                <a name="menu" class="anchor" href="#menu"><span class="octicon octicon-link"></span></a>Menu</h3>
 
-<p>There should be a Menu in the Top right corner.</p>
+            <p>There should be a Menu in the Top right corner.</p>
 
-<p>You can <strong>persist your Kanban to a local storage</strong> of your browser. When the page is opened next time it will automatically load Kanban content from local storage.</p>
+            <p>You can <strong>persist your Kanban to a local storage</strong> of your browser. When the page is opened
+                next time it will automatically load Kanban content from local storage.</p>
 
-<p>You can <strong>Delete the Kanban from local storage</strong>. The Kanban board will stay as it was however next time you open the browser you will meet empty page with prompt for number of columns.</p>
+            <p>You can <strong>Delete the Kanban from local storage</strong>. The Kanban board will stay as it was
+                however next time you open the browser you will meet empty page with prompt for number of columns.</p>
 
-<p>You can also <strong>Start new Kanban board</strong>, which will remove the old one from local storage and start from scratch.</p>
+            <p>You can also <strong>Start new Kanban board</strong>, which will remove the old one from local storage
+                and start from scratch.</p>
 
-<h3>
-<a name="multiple-kanban-boards" class="anchor" href="#multiple-kanban-boards"><span class="octicon octicon-link"></span></a>Multiple Kanban boards</h3>
+            <h3>
+                <a name="multiple-kanban-boards" class="anchor" href="#multiple-kanban-boards"><span
+                        class="octicon octicon-link"></span></a>Multiple Kanban boards</h3>
 
-<p>Well, I need to do this work. It is impossible to have more than one at the moment, unless you open the <strong>index.html</strong> in a different browsers.</p>
+            <p>Well, I need to do this work. It is impossible to have more than one at the moment, unless you open the
+                <strong>index.html</strong> in a different browsers.</p>
 
-<h2>
-<a name="more-about-technology" class="anchor" href="#more-about-technology"><span class="octicon octicon-link"></span></a>More about technology</h2>
+            <h2>
+                <a name="more-about-technology" class="anchor" href="#more-about-technology"><span
+                        class="octicon octicon-link"></span></a>More about technology</h2>
 
-<h3>
-<a name="first-a-bit-of-a-history" class="anchor" href="#first-a-bit-of-a-history"><span class="octicon octicon-link"></span></a>First a bit of a history</h3>
+            <h3>
+                <a name="first-a-bit-of-a-history" class="anchor" href="#first-a-bit-of-a-history"><span
+                        class="octicon octicon-link"></span></a>First a bit of a history</h3>
 
-<p>I started this little project 2 years ago when I decided to familiarise myself with HTML5, Pure JavaScript and CSS.</p>
+            <p>I started this little project 2 years ago when I decided to familiarise myself with HTML5, Pure
+                JavaScript and CSS.</p>
 
-<p>I used jQuery with QUnit for JavaScript TDD testing.</p>
+            <p>I used jQuery with QUnit for JavaScript TDD testing.</p>
 
-<p>I managed to get it to a workable state and stop developing it.</p>
+            <p>I managed to get it to a workable state and stop developing it.</p>
 
-<h3>
-<a name="how-things-are-now" class="anchor" href="#how-things-are-now"><span class="octicon octicon-link"></span></a>How things are now?</h3>
+            <h3>
+                <a name="how-things-are-now" class="anchor" href="#how-things-are-now"><span
+                        class="octicon octicon-link"></span></a>How things are now?</h3>
 
-<p>At some point I decided that I want to use it for my personal stuff. I like Kanban and I use it as a kind of a more sophisticated TODO list.</p>
+            <p>At some point I decided that I want to use it for my personal stuff. I like Kanban and I use it as a kind
+                of a more sophisticated TODO list.</p>
 
-<p>It wasn't entirely working like I wanted it to so I decided to fix it and style it quickly.</p>
+            <p>It wasn't entirely working like I wanted it to so I decided to fix it and style it quickly.</p>
 
-<p>I slapped Twitter Bootstrap on it with jQuery leaking into non-test code.</p>
+            <p>I slapped Twitter Bootstrap on it with jQuery leaking into non-test code.</p>
 
-<p>For testing and Browser automation I use Geb to lunch browser and run all the QUnit test.</p>
+            <p>For testing and Browser automation I use Geb to lunch browser and run all the QUnit test.</p>
 
-<p>Build script is driven by Gradle.</p>
+            <p>Build script is driven by Gradle.</p>
 
-<h3>
-<a name="want-to-help" class="anchor" href="#want-to-help"><span class="octicon octicon-link"></span></a>Want to help?</h3>
+            <h3>
+                <a name="want-to-help" class="anchor" href="#want-to-help"><span
+                        class="octicon octicon-link"></span></a>Want to help?</h3>
 
-<p>If you want to help me with styling or anything else, please do get in touch.</p>
+            <p>If you want to help me with styling or anything else, please do get in touch.</p>
         </section>
 
         <footer>
-          My-personal-kanban is maintained by <a href="https://github.com/greggigon">greggigon</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+            My-personal-kanban is maintained by <a href="https://github.com/greggigon">greggigon</a><br>
+            This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a
+                href="http://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
-        
-      </div>
+
     </div>
-  </body>
+</div>
+</body>
 </html>

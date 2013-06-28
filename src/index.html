@@ -1,11 +1,12 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<html ng-app>
 <head>
     <title>My Personal Kanban</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="style.css" type="text/css"/>
-    <script src="mpk.js" type="text/javascript"></script>
+    <script src="angular.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
 
     <script src="jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -15,10 +16,11 @@
      <div class="navbar-inner">
         <div class="container">
             <div class="brand"><span id="kanbanName" contentEditable="true">Kanban name</span></div>
-            <ul class="nav pull-right" id="menu">
+            <ul class="nav pull-right" id="menu" ng-controller="MenuController">
                 <li class="dropdown">
                     <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="#newKanban" role="button" class="mpkNew" title="New Kanban board" data-toggle="modal"><i class="icon-briefcase" ng-click="newKanbanAction()"></i> New</a></li>
                         <li><a href="#save" class="mpkSave" title="Save Kanban to local storage"><i class="icon-hdd"></i> Save</a></li>
                         <li><a href="#startNew" class="mpkRestart" title="Clear Kanban and remove from local storage"><i class="icon-briefcase"></i> Start new</a></li>
                         <li><a href="#delete" class="mpkDelete" title="Delete Kanban from local storage"><i class="icon-remove-sign"></i> Delete</a></li>
@@ -30,7 +32,8 @@
 
 </header>
 <div class="container" style="margin-top: 45px">
-    <section id="columnSelection" class="row">
+
+<!--     <section id="columnSelection" class="row">
         <fieldset class="form-inline">
             <label for="numberOfColumns">How many columns in your Kanban to start with?</label>
             <select name="numberOfColumns" id="numberOfColumns" class="input-mini">
@@ -45,9 +48,40 @@
         <div id="columns" class="row">
 
         </div>
-    </section>
+    </section> -->
 </div>
 <footer>
+    <div id="newKanban" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="NewKanbanController">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+        <h3 id="myModalLabel">New Kanban board</h3>
+      </div>
+      <div class="modal-body">
+        <form action="#createNew">
+            <div class="control-group">
+                <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                <div class="controls">
+                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+                <div class="controls">
+                  <select id="numberOfColumnsField" ng-model="numberOfColumns">
+                    <option>2</option>
+                    <option selected="selected">3</option>
+                    <option>4</option>
+                    <option>6</option>
+                  </select>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" ng-click="createNew()">Create new</button>
+      </div>
+    </div>
 </footer>
 <div id="templates" class="noDisplay">
     <div id="column-template">
@@ -74,15 +108,6 @@
         <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
     </div>
 </div>
-<script>
-    var savedKanban = localStorage.getItem("mpk");
-    var columns = new mpk.Columns(document, "numberOfColumns", "confirmColumns", "columns", "columnSelection");
-    var menu = new mpk.Menu(columns, "#menu");
-    if (savedKanban) {
-        $('#columnSelection').hide();
-        var kanbanName = new mpk.Deserializer(columns).deserialize(savedKanban, document.getElementById("columns"));
-        $('#kanbanName').text(kanbanName);
-    }
-</script>
+
 </body>
 </html>

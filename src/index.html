@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="mpk">
 <head>
     <title>My Personal Kanban</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
@@ -31,7 +31,7 @@
      </div>
 
 </header>
-<div class="container" style="margin-top: 45px">
+<div class="container" style="margin-top: 45px" id="kanban" ng-controller="KanbanController">
 
 <!--     <section id="columnSelection" class="row">
         <fieldset class="form-inline">
@@ -79,7 +79,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ng-click="createNew()">Create new</button>
+        <button class="btn btn-primary" ng-click="createNew('#newKanban')">Create new</button>
       </div>
     </div>
 </footer>

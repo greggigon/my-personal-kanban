@@ -19,6 +19,7 @@ function KanbanCard(name){
 function KanbanRepository(){
 	return {
 		kanbansByName : {},
+		lastUsed : '',
 		
 		add: function(kanban){
 			this.kanbansByName[kanban.name] = kanban;
@@ -33,14 +34,29 @@ function KanbanRepository(){
 			if (this.kanbansByName[kanbanName]){
 				delete this.kanbansByName[kanbanName];
 			}
+			return this.kanbansByName;
 		},
 
 		save: function(){
-			
+			localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: ''}, false));
+			return this.kanbansByName;
 		},
 
 		load: function(){
-			
+			var saved = angular.fromJson(localStorage.getItem('myPersonalKanban'));
+			if (saved == null) return null;
+			this.kanbansByName = saved.kanbans;
+			this.lastUsed = saved.lastUsed;
+			return this.kanbansByName;
+		},
+
+		getLastUsed: function(){
+			return this.kanbansByName[this.lastUsed];
+		}, 
+
+		setLastUsed : function(kanbanName){
+			this.lastUsed = kanbanName;
+			return this.lastUsed;
 		}
 	}
 };
@@ -51,10 +67,13 @@ mpkService.factory('kanbanRepository', KanbanRepository);
 
 var mpk = angular.module('mpk', ['mpk.service']);
 
-function MenuController($scope){
+function MenuController($scope, kanbanRepository){
 	$scope.newKanbanAction = function(){
 		return false;
-	}
+	};
+	$scope.save = function(){
+		return kanbanRepository.save();
+	};
 }
 
 function NewKanbanController($scope, kanbanRepository){
@@ -75,12 +94,11 @@ function KanbanController($scope) {
 
 }
 
-function ApplicationController($scope){
-	var kanban = new Kanban('Test kanban', 3);
-
-	kanban.columns.push(new KanbanColumn('Column 1'));
-	kanban.columns.push(new KanbanColumn('Column 2'));
-	kanban.columns.push(new KanbanColumn('Column 3'));
-
-	$scope.kanban = kanban;
+function ApplicationController($scope, kanbanRepository){
+	var loadedRepo = kanbanRepository.load();
+	if (loadedRepo) {
+		$scope.kanban = kanbanRepository.getLastUsed(); 
+	} else {
+		$scope.kanban = new Kanban('Kanban name', 0);
+	}
 }

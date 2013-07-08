@@ -30,6 +30,10 @@ function KanbanRepository(){
 			return this.kanbansByName;
 		},
 
+		get: function(kanbanName){
+			return this.kanbansByName[kanbanName];
+		},
+
 		remove: function(kanbanName) {
 			if (this.kanbansByName[kanbanName]){
 				delete this.kanbansByName[kanbanName];
@@ -38,7 +42,7 @@ function KanbanRepository(){
 		},
 
 		save: function(){
-			localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: ''}, false));
+			localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed}, false));
 			return this.kanbansByName;
 		},
 
@@ -51,6 +55,9 @@ function KanbanRepository(){
 		},
 
 		getLastUsed: function(){
+			if (!this.lastUsed){
+				return this.kanbansByName[Object.keys(this.kanbansByName)[0]]
+			}
 			return this.kanbansByName[this.lastUsed];
 		}, 
 
@@ -84,21 +91,36 @@ function NewKanbanController($scope, kanbanRepository){
 		var newKanban = new Kanban($scope.kanbanName, $scope.numberOfColumns);
 		kanbanRepository.add(newKanban);
 		$(dialogId).modal('toggle');
+
 		$scope.kanbanName = '';
 		$scope.numberOfColumns = 3;
+		
+		kanbanRepository.setLastUsed(newKanban.name);
+		$scope.$emit('ChangeCurrentKanban');
+
 		return true;
 	}
 }
 
 function KanbanController($scope) {
-
+		$scope.$on('ChangeCurrentKanban', function(){
+			console.log('Called to change current Kanban [KanbanController]');
+		});
 }
 
 function ApplicationController($scope, kanbanRepository){
+
+	$scope.$on('ChangeCurrentKanban', function(){
+		$scope.kanban = kanbanRepository.getLastUsed();
+	});
+
+	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();
+
 	if (loadedRepo) {
-		$scope.kanban = kanbanRepository.getLastUsed(); 
-	} else {
-		$scope.kanban = new Kanban('Kanban name', 0);
-	}
+		currentKanban = kanbanRepository.getLastUsed(); 
+	} 
+
+	$scope.currentKanban = currentKanban.name;
+	$scope.kanban = currentKanban;
 }

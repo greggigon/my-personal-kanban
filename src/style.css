@@ -1,11 +1,26 @@
-#columns { display: box; box-orient: horizontal; }
-#columns ul { background-color: #CCFFFF; list-style-type: none; padding: 10px; margin: 0 0 0px 10px; box-shadow: 2px 2px 1px #888888;}
-#columns ul.dropdown-menu { background-color: #ffffff;}
-#columns ul.dropdown-menu li { padding: 2px; }
-#columns ul li { float: left; padding: 10px; margin: 2px; }
+/* Bootstrap overrides */
+.row { margin-left: 0px;}
 
 .noDisplay { display: none; }
 .error { border-color: red;}
 a { padding-left: 2px; padding-right: 2px;}
 
 .card { background-color: #FFFF9E; box-shadow: 2px 2px 1px #758808;}
+
+.column {
+	border:solid 1px #ffffff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	margin-left: 10px;
+	height: 200px;	
+	background-color: #f9f9f9;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+}
+
+.column h2 { 
+	margin: 0px;
+	padding: 0px 3px;
+	font-size: 0.9em;
+}

@@ -1,8 +1,13 @@
 function Kanban(name, numberOfColumns) {
-	this.name = name;
-	this.numberOfColumns = numberOfColumns;
-	this.columns = [];
-	return this;
+	return {
+		name: name,
+		numberOfColumns: numberOfColumns,
+		columns: [],
+
+		addColumn: function(columnName){
+			this.columns.push(new KanbanColumn(columnName));
+		}
+	};
 }
 
 function KanbanColumn(name){
@@ -89,6 +94,9 @@ function NewKanbanController($scope, kanbanRepository){
 
 	$scope.createNew = function(dialogId){
 		var newKanban = new Kanban($scope.kanbanName, $scope.numberOfColumns);
+		for (i=1;i < parseInt($scope.numberOfColumns) + 1 ; i++){
+			newKanban.addColumn('Column '+i);
+		}
 		kanbanRepository.add(newKanban);
 		$(dialogId).modal('toggle');
 
@@ -103,9 +111,7 @@ function NewKanbanController($scope, kanbanRepository){
 }
 
 function KanbanController($scope) {
-		$scope.$on('ChangeCurrentKanban', function(){
-			console.log('Called to change current Kanban [KanbanController]');
-		});
+
 }
 
 function ApplicationController($scope, kanbanRepository){
@@ -121,6 +127,5 @@ function ApplicationController($scope, kanbanRepository){
 		currentKanban = kanbanRepository.getLastUsed(); 
 	} 
 
-	$scope.currentKanban = currentKanban.name;
 	$scope.kanban = currentKanban;
 }

@@ -19,8 +19,10 @@ a { padding-left: 2px; padding-right: 2px;}
 	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 }
 
-.column h2 { 
-	margin: 0px;
+.columnHeader { 
+	margin: 10px 0px;
 	padding: 0px 3px;
-	font-size: 0.9em;
+	font-size: 15px;
+	color: #777;
+	font-weight: 100;
 }

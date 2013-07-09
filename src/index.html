@@ -35,7 +35,10 @@
     <section id="kanban" style="margin-top: 10px" ng-model="kanban">
         <div id="columns" class="row">
             <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns">
-                <h2>{{column.name}}</h2>
+                <div class="columnHeader">
+                    <a href="#changeColumnName" title="Change column name"><i class="icon-tasks"></i></a>
+                    <span>{{column.name}}</span>
+                </div>
             </div>
         </div>
     </section>

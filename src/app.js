@@ -2,29 +2,36 @@ function Kanban(name, numberOfColumns) {
 	return {
 		name: name,
 		numberOfColumns: numberOfColumns,
-		columns: [],
-
-		addColumn: function(columnName){
-			this.columns.push(new KanbanColumn(columnName));
-		}
+		columns: []
 	};
 }
 
 function KanbanColumn(name){
 	return {
 		name: name,
-		cards: [],
-
-		addCard : function(title){
-			cards.push(new KanbanCard(title));
-			return cards;
-		}
+		cards: []
 	}
 }
 
 function KanbanCard(name){
 	this.name = name;
 	return this;
+}
+
+function KanbanManipulator(){
+	return {
+		addColumn: function(kanban, columnName){
+			kanban.columns.push(new KanbanColumn(columnName));
+		},
+
+		addCardToColumn: function(kanban, column, cardTitle){
+			angular.forEach(kanban.columns, function(col){
+				if (col.name == column.name){
+					col.cards.push(new KanbanCard(cardTitle));
+				}
+			});
+		}
+	};
 }
 
 function KanbanRepository(){
@@ -82,6 +89,7 @@ function KanbanRepository(){
 
 var mpkService = angular.module('mpk.service', []);
 mpkService.factory('kanbanRepository', KanbanRepository);
+mpkService.factory('kanbanManipulator', KanbanManipulator);
 
 var mpk = angular.module('mpk', ['mpk.service']);
 
@@ -94,14 +102,14 @@ function MenuController($scope, kanbanRepository){
 	};
 }
 
-function NewKanbanController($scope, kanbanRepository){
+function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
 	$scope.numberOfColumns = 3;
 	$scope.kanbanName = '';
 
 	$scope.createNew = function(dialogId){
 		var newKanban = new Kanban($scope.kanbanName, $scope.numberOfColumns);
 		for (i=1;i < parseInt($scope.numberOfColumns) + 1 ; i++){
-			newKanban.addColumn('Column '+i);
+			kanbanManipulator.addColumn(newKanban, 'Column '+i);
 		}
 		kanbanRepository.add(newKanban);
 		$(dialogId).modal('toggle');
@@ -118,10 +126,18 @@ function NewKanbanController($scope, kanbanRepository){
 
 function NewKanbanCardController($scope){
 	$scope.kanbanColumnName = '';
-	
+	$scope.column = null;
+	$scope.title = '';
+
 	$scope.$on('AddNewCard', function(theEvent, args){
 		$scope.kanbanColumnName = args.column.name;
+		$scope.column = args.column;
 	});
+
+	$scope.addNewCard = function(){
+		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
+		$scope.title = '';
+	};
 }
 
 function KanbanController($scope) {
@@ -130,10 +146,14 @@ function KanbanController($scope) {
 	};
 }
 
-function ApplicationController($scope, kanbanRepository){
+function ApplicationController($scope, kanbanRepository, kanbanManipulator){
 
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
+	});
+
+	$scope.$on('NewCardRequest', function(event, arguments){
+		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title);
 	});
 
 	var currentKanban = new Kanban('Kanban name', 0);

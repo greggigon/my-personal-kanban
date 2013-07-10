@@ -48,6 +48,12 @@
                         </div>
                     </form>
                 </div>
+                <div class="cards" ng-repeat="card in column.cards" ng-model="card">
+                    <div class="card">
+                        <a href="" class="pull-right"><i class="icon-remove"></i></a>
+                        <p>{{card.name}}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -63,14 +69,14 @@
                 <div class="control-group">
                     <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
                     <div class="controls">
-                      <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required />
+                      <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
                     </div>
                   </div>
             </form>
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" >Create new</button>
+            <button class="btn btn-primary" ng-click="addNewCard()" data-dismiss="modal" data-target="#newCard">Add</button>
           </div>
         </div>
     </section>

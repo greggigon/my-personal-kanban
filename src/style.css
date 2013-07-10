@@ -5,10 +5,23 @@
 .error { border-color: red;}
 a { padding-left: 2px; padding-right: 2px;}
 
-.card { background-color: #FFFF9E; box-shadow: 2px 2px 1px #758808;}
+.card {
+	margin: 5px;
+	padding: 10px;
+	font-weight: 200;
+
+	border: solid 1px #ffffff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+}
+
+.card p { margin: 0px;}
 
 .column {
-	border:solid 1px #ffffff;
+	border: solid 1px #ffffff;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
@@ -24,5 +37,4 @@ a { padding-left: 2px; padding-right: 2px;}
 	padding: 0px 3px;
 	font-size: 15px;
 	color: #777;
-	font-weight: 100;
 }

@@ -11,9 +11,15 @@ function Kanban(name, numberOfColumns) {
 }
 
 function KanbanColumn(name){
-	this.name = name;
-	this.cards = [];
-	return this;
+	return {
+		name: name,
+		cards: [],
+
+		addCard : function(title){
+			cards.push(new KanbanCard(title));
+			return cards;
+		}
+	}
 }
 
 function KanbanCard(name){
@@ -110,8 +116,18 @@ function NewKanbanController($scope, kanbanRepository){
 	}
 }
 
-function KanbanController($scope) {
+function NewKanbanCardController($scope){
+	$scope.kanbanColumnName = '';
+	
+	$scope.$on('AddNewCard', function(theEvent, args){
+		$scope.kanbanColumnName = args.column.name;
+	});
+}
 
+function KanbanController($scope) {
+	$scope.addNewCard = function(column){
+		$scope.$broadcast('AddNewCard', {column: column});
+	};
 }
 
 function ApplicationController($scope, kanbanRepository){

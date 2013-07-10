@@ -20,7 +20,7 @@
                 <li class="dropdown">
                     <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#newKanban" role="button" class="mpkNew" title="New Kanban board" data-toggle="modal"><i class="icon-briefcase" ng-click="newKanbanAction()"></i> New</a></li>
+                        <li><a href="#newKanban" role="button" class="mpkNew" title="New Kanban board" data-toggle="modal" data-target="#newKanban"><i class="icon-briefcase" ng-click="newKanbanAction()"></i> New</a></li>
                         <li><a href="#save" class="mpkSave" title="Save Kanban to local storage" ng-click="save()"><i class="icon-hdd"></i> Save</a></li>
                         <li><a href="#startNew" class="mpkRestart" title="Clear Kanban and remove from local storage"><i class="icon-briefcase"></i> Start new</a></li>
                         <li><a href="#delete" class="mpkDelete" title="Delete Kanban from local storage"><i class="icon-remove-sign"></i> Delete</a></li>
@@ -35,11 +35,43 @@
     <section id="kanban" style="margin-top: 10px" ng-model="kanban">
         <div id="columns" class="row">
             <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns">
+                
                 <div class="columnHeader">
-                    <a href="#changeColumnName" title="Change column name"><i class="icon-tasks"></i></a>
-                    <span>{{column.name}}</span>
+                    <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)" data-toggle="modal" data-target="#newCard"><i class="icon-plus"></i></a>
+
+                    <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="icon-tasks"></i></a>
+                    <span ng-hide="editing">{{column.name}}</span>
+                    <form ng-show="editing" ng-submit="editing = false">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-tasks"></i></span>
+                            <input class="span2" type="text" ng-model="column.name" value="{{column.name}}" />
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </section>
+    <section id="kanbanOperations">
+        <!-- this one is for the new card -->
+        <div id="newCard" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="NewKanbanCardController" ng-model="kanban">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
+          </div>
+          <div class="modal-body">
+            <form action="#addNewCardAction">
+                <div class="control-group">
+                    <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
+                    <div class="controls">
+                      <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required />
+                    </div>
+                  </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" >Create new</button>
+          </div>
         </div>
     </section>
 </div>
@@ -54,7 +86,7 @@
             <div class="control-group">
                 <label class="control-label" for="kanbanNameFormField">Kanban name</label>
                 <div class="controls">
-                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName">
+                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" ng-required />
                 </div>
               </div>
               <div class="control-group">
@@ -75,33 +107,8 @@
         <button class="btn btn-primary" ng-click="createNew('#newKanban')">Create new</button>
       </div>
     </div>
+    
 </footer>
-
-<div id="templates" class="noDisplay">
-    <div id="column-template">
-        <ul class="column">
-            <a href="#addCard" class="addCard pull-right" title="Add new card to column"><i class="icon-plus"></i></a>
-            <h4 class="columnName" contenteditable="true"></h4>
-        </ul>
-    </div>
-    <div id="card-template">
-        <li class="card">
-            <div class="cardButtons">
-                <a href="#removeCard" class="remove pull-right"><i class="icon-remove"></i></a>
-            </div>
-            <span class="title"></span>
-        </li>
-    </div>
-    <div id="button-remove">
-        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
-    </div>
-    <div id="button-move-left">
-        <a href="#moveLeft" class="moveLeft" title="Move this card to the column on the left"><i class="icon-arrow-left"></i></a>
-    </div>
-    <div id="button-move-right">
-        <a href="#moveRight" class="moveRight" title="Move this card to the column on the right"><i class="icon-arrow-right"></i></a>
-    </div>
-</div>
 
 </body>
 </html>

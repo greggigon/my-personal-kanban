@@ -14,11 +14,11 @@ a { padding-left: 2px; padding-right: 2px;}
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
-	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	-webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 }
 
-.card p { margin: 0px;}
+.card p { margin: 0px; cursor: move;}
 
 .column {
 	border: solid 1px #ffffff;

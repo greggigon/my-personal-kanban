@@ -2,14 +2,16 @@
 <html ng-app="mpk">
 <head>
     <title>My Personal Kanban</title>
+    <script src="jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="angular.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="jquery-ui.min.css" type="text/css"/>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" type="text/css"/>
     <link rel="stylesheet" href="style.css" type="text/css"/>
-    <script src="angular.js" type="text/javascript"></script>
-    <script src="app.js" type="text/javascript"></script>
-
-    <script src="jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="jquery-ui.min.js" type="text/javascript"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src="app.js" type="text/javascript"></script>
 </head>
 <body ng-controller="ApplicationController">
 <header class="navbar navbar-fixed-top">
@@ -34,7 +36,7 @@
 <div class="container" style="margin-top: 45px" id="kanban" ng-controller="KanbanController">
     <section id="kanban" style="margin-top: 10px" ng-model="kanban">
         <div id="columns" class="row">
-            <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns">
+            <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" droppable data-columnindex="{{$index}}">
                 
                 <div class="columnHeader">
                     <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)" data-toggle="modal" data-target="#newCard"><i class="icon-plus"></i></a>
@@ -49,7 +51,7 @@
                     </form>
                 </div>
                 <div class="cards" ng-repeat="card in column.cards" ng-model="card">
-                    <div class="card">
+                    <div class="card" ng-model="card" draggable data-index="{{$index}}">
                         <a href="" class="pull-right"><i class="icon-remove"></i></a>
                         <p>{{card.name}}</p>
                     </div>

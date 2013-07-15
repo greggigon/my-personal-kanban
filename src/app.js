@@ -30,6 +30,14 @@ function KanbanManipulator(){
 					col.cards.push(new KanbanCard(cardTitle));
 				}
 			});
+		},
+		moveCardFromColumnToColumn: function(kanban, leftColumn, rightColumn, cardIndex){
+			if (leftColumn == rightColumn) return;
+			var left = kanban.columns[leftColumn];
+			var right = kanban.columns[rightColumn];
+			var card = left.cards.splice(cardIndex, 1)[0];
+			right.cards.push(card);
+			return card;
 		}
 	};
 }
@@ -92,6 +100,42 @@ mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
 
 var mpk = angular.module('mpk', ['mpk.service']);
+
+mpk.directive('draggable', function() {
+  return {
+    restrict:'A',
+    link: function(scope, element, attrs) {
+      element.draggable({
+        revert: true
+      });
+    }
+  };
+});
+
+mpk.directive('droppable', function($compile) {
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.droppable({
+      	out : function(event,ui){
+      		if (angular.element(ui.draggable).data('leftColumn') == undefined){
+	      		var columnIndex = angular.element(this).data('columnindex');
+	      		angular.element(ui.draggable).data('leftColumn', columnIndex);
+	      	}
+      	},
+        drop : function(event,ui) {
+        	var rightColumnIndex = angular.element(this).data('columnindex');
+        	var leftColumnIndex = angular.element(ui.draggable).data('leftColumn');
+        	var cardIndex = angular.element(ui.draggable).data('index');
+      		var manipulator = new KanbanManipulator();
+      		var c = manipulator.moveCardFromColumnToColumn(scope.kanban, leftColumnIndex, rightColumnIndex, cardIndex);
+      		console.log(c);
+        	scope.$apply();
+        }
+      });
+    }
+  };
+});    
 
 function MenuController($scope, kanbanRepository){
 	$scope.newKanbanAction = function(){

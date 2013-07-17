@@ -148,43 +148,7 @@ mpk.directive('sortable', function(){
 			});
 		}
 	};
-});
-
-mpk.directive('draggable', function() {
-  return {
-    restrict:'A',
-    link: function(scope, element, attrs) {
-	    element.draggable({
-	    	revert: "invalid",
-	    	connectToSortable: "#columns ul.cards"
-	    });
-    }
-  };
-});
-
-mpk.directive('droppable', function($compile) {
-  return {
-    restrict: 'A',
-    link: function(scope,element,attrs){
-      element.droppable({
-      	out : function(event,ui){
-      		if (angular.element(ui.draggable).data('leftColumn') == undefined){
-	      		var columnIndex = angular.element(this).data('columnindex');
-	      		angular.element(ui.draggable).data('leftColumn', columnIndex);
-	      	}
-      	},
-        drop : function(event,ui) {
-        // 	var rightColumnIndex = angular.element(this).data('columnindex');
-        // 	var leftColumnIndex = angular.element(ui.draggable).data('leftColumn');
-        // 	var cardIndex = angular.element(ui.draggable).data('index');
-      		// var manipulator = new KanbanManipulator();
-      		// var c = manipulator.moveCardFromColumnToColumn(scope.kanban, leftColumnIndex, rightColumnIndex, cardIndex);
-        // 	scope.$apply();
-        }
-      });
-    }
-  };
-});    
+});  
 
 function MenuController($scope, kanbanRepository){
 	$scope.newKanbanAction = function(){

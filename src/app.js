@@ -114,7 +114,7 @@ mpk.directive('sortable', function(){
 			};
 
 			element.sortable({
-				connectWith: '#kanban ul.cards',
+				connectWith: attrs.sortableSelector,
 				revert: true, 
 				remove: function(e, ui){
 					if (ngModel.$modelValue.length === 1) {

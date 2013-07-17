@@ -32,6 +32,7 @@ function KanbanManipulator(){
 			});
 		},
 		moveCardFromColumnToColumn: function(kanban, leftColumn, rightColumn, cardIndex){
+			if (leftColumn == undefined || rightColumn == undefined) return;
 			if (leftColumn == rightColumn) return;
 			var left = kanban.columns[leftColumn];
 			var right = kanban.columns[rightColumn];
@@ -101,13 +102,62 @@ mpkService.factory('kanbanManipulator', KanbanManipulator);
 
 var mpk = angular.module('mpk', ['mpk.service']);
 
+mpk.directive('sortable', function(){
+	return {
+		restrict: 'A',
+		require: "?ngModel",
+		link: function(scope, element, attrs, ngModel){
+			if (ngModel){
+				ngModel.$render = function(){
+					element.sortable( 'refresh' );	
+				}
+			};
+
+			element.sortable({
+				connectWith: '#kanban ul.cards',
+				revert: true, 
+				remove: function(e, ui){
+					if (ngModel.$modelValue.length === 1) {
+                  		ui.item.sortable.moved = ngModel.$modelValue.splice(0, 1)[0];
+                	} else {
+                  		ui.item.sortable.moved =  ngModel.$modelValue.splice(ui.item.sortable.index, 1)[0];
+                	}
+				},
+				receive: function(e, ui){
+					ui.item.sortable.relocate = true;
+					ngModel.$modelValue.splice(ui.item.index(), 0, ui.item.sortable.moved);
+				},
+				update: function(e, ui){
+					ui.item.sortable.resort = ngModel;
+				},
+				start: function(e, ui){
+					ui.item.sortable = { index: ui.item.index(), resort: ngModel };
+				},
+				stop: function(e, ui){
+					if (ui.item.sortable.resort && !ui.item.sortable.relocate){
+						var end, start;
+	                	start = ui.item.sortable.index;
+	                	end = ui.item.index();
+
+	                	ui.item.sortable.resort.$modelValue.splice(end, 0, ui.item.sortable.resort.$modelValue.splice(start, 1)[0]);
+	                }
+	                if (ui.item.sortable.resort || ui.item.sortable.relocate) {
+	                	scope.$apply();
+	                }
+				}
+			});
+		}
+	};
+});
+
 mpk.directive('draggable', function() {
   return {
     restrict:'A',
     link: function(scope, element, attrs) {
-      element.draggable({
-        revert: true
-      });
+	    element.draggable({
+	    	revert: "invalid",
+	    	connectToSortable: "#columns ul.cards"
+	    });
     }
   };
 });
@@ -124,13 +174,12 @@ mpk.directive('droppable', function($compile) {
 	      	}
       	},
         drop : function(event,ui) {
-        	var rightColumnIndex = angular.element(this).data('columnindex');
-        	var leftColumnIndex = angular.element(ui.draggable).data('leftColumn');
-        	var cardIndex = angular.element(ui.draggable).data('index');
-      		var manipulator = new KanbanManipulator();
-      		var c = manipulator.moveCardFromColumnToColumn(scope.kanban, leftColumnIndex, rightColumnIndex, cardIndex);
-      		console.log(c);
-        	scope.$apply();
+        // 	var rightColumnIndex = angular.element(this).data('columnindex');
+        // 	var leftColumnIndex = angular.element(ui.draggable).data('leftColumn');
+        // 	var cardIndex = angular.element(ui.draggable).data('index');
+      		// var manipulator = new KanbanManipulator();
+      		// var c = manipulator.moveCardFromColumnToColumn(scope.kanban, leftColumnIndex, rightColumnIndex, cardIndex);
+        // 	scope.$apply();
         }
       });
     }

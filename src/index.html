@@ -36,7 +36,7 @@
 <div class="container" style="margin-top: 45px" id="kanban" ng-controller="KanbanController">
     <section id="kanban" style="margin-top: 10px" ng-model="kanban">
         <div id="columns" class="row">
-            <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" droppable data-columnindex="{{$index}}">
+            <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}">
                 
                 <div class="columnHeader">
                     <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)" data-toggle="modal" data-target="#newCard"><i class="icon-plus"></i></a>
@@ -50,12 +50,12 @@
                         </div>
                     </form>
                 </div>
-                <div class="cards" ng-repeat="card in column.cards" ng-model="card">
-                    <div class="card" ng-model="card" draggable data-index="{{$index}}">
-                        <a href="" class="pull-right"><i class="icon-remove"></i></a>
+                <ul class="cards" sortable ng-model="column.cards">
+                    <li class="card" ng-repeat="card in column.cards" ng-model="card">
+                        <a href="#" class="pull-right"><i class="icon-remove"></i></a>
                         <p>{{card.name}}</p>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>

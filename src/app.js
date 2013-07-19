@@ -148,7 +148,8 @@ mpk.directive('sortable', function(){
 			});
 		}
 	};
-});  
+});
+
 
 function MenuController($scope, kanbanRepository){
 	$scope.newKanbanAction = function(){
@@ -203,7 +204,7 @@ function KanbanController($scope) {
 	};
 }
 
-function ApplicationController($scope, kanbanRepository, kanbanManipulator){
+function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
 
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
@@ -221,4 +222,12 @@ function ApplicationController($scope, kanbanRepository, kanbanManipulator){
 	} 
 
 	$scope.kanban = currentKanban;
+
+	// Do stuff when the entire document gets loaded
+	angular.element(document).ready(function(){
+		var windowHeight = angular.element($window).height();
+		angular.forEach(angular.element('ul.cards'), function(e){
+			angular.element(e).attr('style', 'min-height:'+(windowHeight-180)+'px;');
+		});
+	});
 }

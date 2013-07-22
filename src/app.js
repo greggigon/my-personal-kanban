@@ -154,7 +154,7 @@ mpk.directive('sortable', function(){
 function MenuController($scope, kanbanRepository){
 	$scope.save = function(){
 		return kanbanRepository.save();
-	};
+	}
 }
 
 function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
@@ -203,8 +203,9 @@ function KanbanController($scope) {
 
 function OpenKanbanController($scope){
 	$scope.selectedToOpen = '';
+	
 	$scope.open = function(){
-		console.log($scope.selectedToOpen);
+		$scope.$emit('Open', {kanbanName: $scope.selectedToOpen})
 	};
 
 };
@@ -219,6 +220,12 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title);
 	});
 
+	$scope.$on('Open', function(event, arguments){
+		kanbanRepository.save();
+		$scope.kanban = kanbanRepository.get(arguments.kanbanName);
+		kanbanRepository.setLastUsed(arguments.kanbanName);
+	});
+
 	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();
 
@@ -227,7 +234,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 	} 
 
 	$scope.kanban = currentKanban;
-	$scope.allKanbans = kanbanRepository.all();
+	$scope.allKanbans = Object.keys(kanbanRepository.all());
 
 	// Do stuff when the entire document gets loaded
 	angular.element(document).ready(function(){

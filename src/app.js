@@ -202,12 +202,9 @@ function KanbanController($scope) {
 }
 
 function OpenKanbanController($scope){
-	$scope.selectedToOpen = '';
-	
 	$scope.open = function(){
 		$scope.$emit('Open', {kanbanName: $scope.selectedToOpen})
 	};
-
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
@@ -235,6 +232,8 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 
 	$scope.kanban = currentKanban;
 	$scope.allKanbans = Object.keys(kanbanRepository.all());
+	$scope.selectedToOpen = currentKanban.name;
+
 
 	// Do stuff when the entire document gets loaded
 	angular.element(document).ready(function(){

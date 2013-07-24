@@ -101,13 +101,7 @@ mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
 
 var mpk = angular.module('mpk', ['mpk.service']);
-mpk.directive('stuff', function(){
-	return {
-		link: function(scope, element, attrs){
-			console.log('should be called');
-		}
-	}
-});
+
 mpk.directive('sortable', function(){
 	return {
 		restrict: 'A',
@@ -163,7 +157,16 @@ function MenuController($scope, kanbanRepository){
 	};
 
 	$scope.delete = function(){
-		KanbanRepository.remove($scope.kanban.name);
+		if (confirm('You sure you want to delete the entire Kanban?')){
+			kanbanRepository.remove($scope.kanban.name);
+			var all = kanbanRepository.all();
+			if (all.length > 0){
+				kanbanRepository.setLastUsed(all[0].name);
+			} else {
+				kanbanRepository.setLastUsed(undefined);
+			}
+			$scope.$emit('KanbanDeleted');
+		}
 	};
 }
 
@@ -228,6 +231,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
+		$scope.allKanbans = Object.keys(kanbanRepository.all());
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){
@@ -236,10 +240,16 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 
 	$scope.$on('Open', function(event, arguments){
 		$scope.kanban = kanbanRepository.get(arguments.kanbanName);
+
 		kanbanRepository.setLastUsed(arguments.kanbanName);
 		kanbanRepository.save();
 
 		resizeTheColumns('ul.cards');
+	});
+
+	$scope.$on('KanbanDeleted', function(){
+		$scope.kanban = undefined;
+		$scope.allKanbans = Object.keys(kanbanRepository.all());
 	});
 
 	var currentKanban = new Kanban('Kanban name', 0);
@@ -253,7 +263,9 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 	$scope.allKanbans = Object.keys(kanbanRepository.all());
 	$scope.selectedToOpen = currentKanban.name;
 
-
+	$scope.$watch('kanban', function(newValue, oldValue){
+		kanbanRepository.save();
+	}, true);
 
 	// Do stuff when the entire document gets loaded
 	angular.element(document).ready(function(){

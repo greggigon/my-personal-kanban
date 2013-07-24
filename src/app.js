@@ -101,7 +101,13 @@ mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
 
 var mpk = angular.module('mpk', ['mpk.service']);
-
+mpk.directive('stuff', function(){
+	return {
+		link: function(scope, element, attrs){
+			console.log('should be called');
+		}
+	}
+});
 mpk.directive('sortable', function(){
 	return {
 		restrict: 'A',
@@ -154,7 +160,11 @@ mpk.directive('sortable', function(){
 function MenuController($scope, kanbanRepository){
 	$scope.save = function(){
 		return kanbanRepository.save();
-	}
+	};
+
+	$scope.delete = function(){
+		KanbanRepository.remove($scope.kanban.name);
+	};
 }
 
 function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
@@ -228,7 +238,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 		$scope.kanban = kanbanRepository.get(arguments.kanbanName);
 		kanbanRepository.setLastUsed(arguments.kanbanName);
 		kanbanRepository.save();
-		
+
 		resizeTheColumns('ul.cards');
 	});
 

@@ -152,10 +152,6 @@ mpk.directive('sortable', function(){
 
 
 function MenuController($scope, kanbanRepository){
-	$scope.save = function(){
-		return kanbanRepository.save();
-	};
-
 	$scope.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);

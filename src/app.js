@@ -220,6 +220,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
+		$scope.selectedToOpen = $scope.kanban.name;
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){

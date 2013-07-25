@@ -31,14 +31,12 @@ function KanbanManipulator(){
 				}
 			});
 		},
-		moveCardFromColumnToColumn: function(kanban, leftColumn, rightColumn, cardIndex){
-			if (leftColumn == undefined || rightColumn == undefined) return;
-			if (leftColumn == rightColumn) return;
-			var left = kanban.columns[leftColumn];
-			var right = kanban.columns[rightColumn];
-			var card = left.cards.splice(cardIndex, 1)[0];
-			right.cards.push(card);
-			return card;
+		removeCardFromColumn: function(kanban, column, card){
+			angular.forEach(kanban.columns, function(col){
+				if (col.name == column.name){
+					col.cards.splice(col.cards.indexOf(card), 1);
+				}
+			});	
 		}
 	};
 }
@@ -188,7 +186,7 @@ function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
 	}
 }
 
-function NewKanbanCardController($scope){
+function NewKanbanCardController($scope, kanbanManipulator){
 	$scope.kanbanColumnName = '';
 	$scope.column = null;
 	$scope.title = '';
@@ -208,6 +206,12 @@ function KanbanController($scope) {
 	$scope.addNewCard = function(column){
 		$scope.$broadcast('AddNewCard', {column: column});
 	};
+
+	$scope.delete = function(card, column){
+		if (confirm('You sure?')){
+			$scope.$emit('DeleteCardRequest', {column: column, card: card});
+		}	
+	};
 }
 
 function OpenKanbanController($scope){
@@ -225,6 +229,10 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 
 	$scope.$on('NewCardRequest', function(event, arguments){
 		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title);
+	});
+
+	$scope.$on('DeleteCardRequest', function(event, arguments){
+		kanbanManipulator.removeCardFromColumn($scope.kanban, arguments.column, arguments.card);
 	});
 
 	$scope.$on('Open', function(event, arguments){

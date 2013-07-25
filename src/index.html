@@ -55,7 +55,7 @@
                 </div>
                 <ul class="cards" sortable-selector="#kanban ul.cards" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
                     <li class="card" ng-repeat="card in column.cards" ng-model="card">
-                        <a href="#" class="pull-right"><i class="icon-remove"></i></a>
+                        <a href="#deleteCard" class="pull-right" ng-click="delete(card, column)"><i class="icon-remove"></i></a>
                         <p>{{card.name}}</p>
                     </li>
                 </ul>

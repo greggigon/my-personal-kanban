@@ -217,14 +217,6 @@ function OpenKanbanController($scope){
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
-
-	var resizeTheColumns = function(elementName){
-		var windowHeight = angular.element($window).height();
-		angular.forEach(angular.element(elementName), function(e){
-			angular.element(e).attr('style', 'min-height:'+(windowHeight-180)+'px;');
-		});
-	};
-
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
@@ -239,8 +231,6 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 
 		kanbanRepository.setLastUsed(arguments.kanbanName);
 		kanbanRepository.save();
-
-		resizeTheColumns('ul.cards');
 	});
 
 	$scope.$on('KanbanDeleted', function(){
@@ -263,8 +253,6 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 		kanbanRepository.save();
 	}, true);
 
-	// Do stuff when the entire document gets loaded
-	angular.element(document).ready(function(){
-		resizeTheColumns('ul.cards');
-	});
+	var windowHeight = angular.element($window).height() - 180;
+	$scope.minHeightOfColumn =  'min-height:'+windowHeight+'px;';
 }

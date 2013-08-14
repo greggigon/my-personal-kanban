@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
 
     <script src="jquery-ui.min.js" type="text/javascript"></script>
-    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- // <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
+    <script src="ui-bootstrap-0.5.0.min.js" type="text/javascript"></script>
+    <script src="ui-bootstrap-tpls-0.5.0.min.js" type="text/javascript"></script>
 
     <script src="app.js" type="text/javascript"></script>
 </head>
@@ -42,8 +44,7 @@
             <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}">
                 
                 <div class="columnHeader">
-                    <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)" data-toggle="modal" data-target="#newCard"><i class="icon-plus"></i></a>
-
+                    <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="icon-plus"></i></a>
                     <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="icon-tasks"></i></a>
                     <span ng-hide="editing">{{column.name}}</span>
                     <form ng-show="editing" ng-submit="editing = false">
@@ -64,25 +65,27 @@
     </section>
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
-        <div id="newCard" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="NewKanbanCardController" ng-model="kanban">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-            <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
-          </div>
-          <div class="modal-body">
-            <form action="#addNewCardAction">
-                <div class="control-group">
-                    <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
-                    <div class="controls">
-                      <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
-                    </div>
-                  </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" ng-click="addNewCard()" data-dismiss="modal" data-target="#newCard">Add</button>
-          </div>
+        <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
+            <div class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" modal="newCardShouldBeOpen">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
+              </div>
+              <div class="modal-body">
+                <form action="#addNewCardAction">
+                    <div class="control-group">
+                        <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
+                        <div class="controls">
+                          <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
+                        </div>
+                      </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" ng-click="addNewCard()" data-dismiss="modal" data-target="#newCard">Add</button>
+              </div>
+            </div>
         </div>
     </section>
 </div>

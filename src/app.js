@@ -98,7 +98,7 @@ var mpkService = angular.module('mpk.service', []);
 mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
 
-var mpk = angular.module('mpk', ['mpk.service']);
+var mpk = angular.module('mpk', ['mpk.service', 'ui.bootstrap']);
 
 mpk.directive('sortable', function(){
 	return {
@@ -190,8 +190,11 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	$scope.kanbanColumnName = '';
 	$scope.column = null;
 	$scope.title = '';
+	$scope.newCardShouldBeOpen = false;
+
 
 	$scope.$on('AddNewCard', function(theEvent, args){
+		$scope.newCardShouldBeOpen = true;
 		$scope.kanbanColumnName = args.column.name;
 		$scope.column = args.column;
 	});

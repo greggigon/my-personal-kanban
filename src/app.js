@@ -203,6 +203,11 @@ function NewKanbanCardController($scope, kanbanManipulator){
 		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
 		$scope.title = '';
 	};
+
+	$scope.close = function(){
+		$scope.title = '';
+		$scope.newCardShouldBeOpen = false;
+	};
 }
 
 function KanbanController($scope) {

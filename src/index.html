@@ -68,7 +68,7 @@
         <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
             <div class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" modal="newCardShouldBeOpen">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"><i class="icon-remove"></i></button>
                 <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
               </div>
               <div class="modal-body">

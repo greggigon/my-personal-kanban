@@ -66,25 +66,26 @@
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
         <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
+
             <div class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" modal="newCardShouldBeOpen">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"><i class="icon-remove"></i></button>
-                <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
-              </div>
-              <div class="modal-body">
-                <form action="#addNewCardAction">
-                    <div class="control-group">
-                        <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
-                        <div class="controls">
-                          <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
-                        </div>
-                      </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <button class="btn btn-primary" ng-click="addNewCard()" data-dismiss="modal" data-target="#newCard">Add</button>
-              </div>
+              <form ng-submit="addNewCard()" class="noMargin">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"><i class="icon-remove"></i></button>
+                    <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
+                  </div>
+                  <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
+                            <div class="controls">
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
+                            </div>
+                          </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()">Close</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-target="#newCard">Add</button>
+                  </div>
+              </form>
             </div>
         </div>
     </section>

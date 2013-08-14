@@ -39,3 +39,5 @@ a { padding-left: 2px; padding-right: 2px;}
 	font-size: 15px;
 	color: #777;
 }
+
+.noMargin { margin-bottom: 0px;}

@@ -202,6 +202,7 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	$scope.addNewCard = function(){
 		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
 		$scope.title = '';
+		$scope.newCardShouldBeOpen = false;
 	};
 
 	$scope.close = function(){

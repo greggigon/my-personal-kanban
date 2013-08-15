@@ -150,6 +150,10 @@ mpk.directive('sortable', function(){
 
 
 function MenuController($scope, kanbanRepository){
+	$scope.newKanban = function(){
+		$scope.$emit('NewKanban');
+	};
+
 	$scope.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);
@@ -183,7 +187,12 @@ function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
 		$scope.$emit('ChangeCurrentKanban');
 
 		return true;
-	}
+	};
+
+	$scope.closeNewKanban = function(){
+		$scope.$emit('CloseNewKanban');
+	};
+
 }
 
 function NewKanbanCardController($scope, kanbanManipulator){
@@ -200,6 +209,7 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	});
 
 	$scope.addNewCard = function(){
+		// check if form is valid first, 
 		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
 		$scope.title = '';
 		$scope.newCardShouldBeOpen = false;
@@ -230,10 +240,20 @@ function OpenKanbanController($scope){
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
+	$scope.newKanbanShouldBeOpen = false;
+
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
+	});
+
+	$scope.$on('NewKanban', function(){
+		$scope.newKanbanShouldBeOpen = true;
+	});
+
+	$scope.$on('CloseNewKanban', function(){
+		$scope.newKanbanShouldBeOpen = false;
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){

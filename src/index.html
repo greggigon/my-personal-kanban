@@ -26,7 +26,7 @@
                 <li class="dropdown">
                     <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#newKanban" role="button" class="mpkNew" title="New Kanban board" data-toggle="modal" data-target="#newKanban"><i class="icon-briefcase"></i> New</a></li>
+                        <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="icon-briefcase"></i> New</a></li>
                         <li><a href="#open" role="button" title="Open saved Kanban board" data-toggle="modal" data-target="#openKanban"><i class="icon-folder-open"></i> Open</a></li>
                         <li><a href="#delete" title="Delete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
                         <li class="divider"></li>
@@ -67,7 +67,7 @@
         <!-- this one is for the new card -->
         <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
 
-            <div class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" modal="newCardShouldBeOpen">
+            <div class="modal hide fade" modal="newCardShouldBeOpen">
               <form ng-submit="addNewCard()" class="noMargin">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"><i class="icon-remove"></i></button>
@@ -82,8 +82,8 @@
                           </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()">Close</button>
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-target="#newCard">Add</button>
+                    <button type="button" class="btn" ng-click="close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
                   </div>
               </form>
             </div>
@@ -91,38 +91,39 @@
     </section>
 </div>
 <footer>
-    <div id="newKanban" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="NewKanbanController" ng-model="kanban">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-        <h3 id="myModalLabel">New Kanban board</h3>
-      </div>
-      <div class="modal-body">
-        <form action="#createNew">
-            <div class="control-group">
-                <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                <div class="controls">
-                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" ng-required />
-                </div>
+    <div id="newKanban" ng-controller="NewKanbanController">
+        <div class="modal hide fade" ng-model="kanban" modal="newKanbanShouldBeOpen">
+            <form class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="closeNewKanban()"><i class="icon-remove"></i></button>
+                <h3 id="myModalLabel">New Kanban board</h3>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-                <div class="controls">
-                  <select id="numberOfColumnsField" ng-model="numberOfColumns">
-                    <option>2</option>
-                    <option selected="selected">3</option>
-                    <option>4</option>
-                    <option>6</option>
-                  </select>
-                </div>
+              <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                    <div class="controls">
+                      <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" ng-required />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+                    <div class="controls">
+                      <select id="numberOfColumnsField" ng-model="numberOfColumns">
+                        <option>2</option>
+                        <option selected="selected">3</option>
+                        <option>4</option>
+                        <option>6</option>
+                      </select>
+                    </div>
+                  </div>
               </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ng-click="createNew('#newKanban')">Create new</button>
-      </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" ng-click="createNew('#newKanban')">Create new</button>
+              </div>
+          </form>
+        </div>
     </div>
-    
 
     <div id="openKanban" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="openKanbanLabel" aria-hidden="true" ng-controller="OpenKanbanController">
         <form action="#openKanbanAction">

@@ -62,7 +62,32 @@
                             </div>
 
                         </li>
-                        <li><a href="#open" role="button" title="Open saved Kanban board" data-toggle="modal" data-target="#openKanban"><i class="icon-folder-open"></i> Open</a></li>
+                        <li><a href="#open" role="button" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
+                            <div id="openKanban" ng-controller="OpenKanbanController">
+                                <div class="modal hide fade" tabindex="-1" modal="openKanbanShouldBeOpen">
+                                    <form ng-submit="open()" name="openKanbanForm">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                                        <h3 id="openKanbanLabel">Open another Kanban</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                            <div class="control-group">
+                                                <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                                                <div class="controls">
+                                                    <select name="selectedToOpen" ng-model="selectedToOpen" required ng-options="name for name in allKanbans">
+                                                    </select>
+                                               </div>
+                                            </div>
+                                        </form>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button class="btn" type="button" ng-click="close()">Close</button>
+                                        <button class="btn btn-primary" type="submit">Open</button>
+                                      </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
                         <li><a href="#delete" title="Delete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
                         <li class="divider"></li>
                         <li><a href="#sync" class="btn btn-link disabled"><i class="icon-refresh"></i> Synchronize</a></li>
@@ -101,7 +126,6 @@
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
         <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
-
             <div class="modal hide fade" modal="newCardShouldBeOpen">
               <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
                   <div class="modal-header">
@@ -128,29 +152,6 @@
 <footer>
     
 
-    <div id="openKanban" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="openKanbanLabel" aria-hidden="true" ng-controller="OpenKanbanController">
-        <form action="#openKanbanAction">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-            <h3 id="openKanbanLabel">Open another Kanban</h3>
-          </div>
-          <div class="modal-body">
-                <div class="control-group">
-                    <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                    <div class="controls">
-                        <select name="selectedToOpen" ng-model="selectedToOpen" required ng-options="name for name in allKanbans">
-                        </select>
-                   </div>
-                </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true" data-target="#openKanban">Close</button>
-            <button class="btn btn-primary" data-dismiss="modal" data-target="#openKanban" ng-click="open()" type="submit">Open</button>
-          </div>
-        </form>
-    </div>
 </footer>
 
 </body>

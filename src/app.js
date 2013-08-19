@@ -154,6 +154,10 @@ function MenuController($scope, kanbanRepository){
 		$scope.$broadcast('NewKanban');
 	};
 
+	$scope.openKanban = function(){
+		$scope.$broadcast('OpenKanban');
+	};
+
 	$scope.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);
@@ -249,9 +253,19 @@ function KanbanController($scope) {
 }
 
 function OpenKanbanController($scope){
+	$scope.openKanbanShouldBeOpen = false;
+
+	$scope.close = function(){
+		$scope.openKanbanShouldBeOpen = false;	
+	};
+
 	$scope.open = function(){
 		$scope.$emit('Open', {kanbanName: $scope.selectedToOpen})
 	};
+
+	$scope.$on('OpenKanban', function(){
+		$scope.openKanbanShouldBeOpen = true;
+	});
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){

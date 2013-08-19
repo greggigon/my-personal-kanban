@@ -175,7 +175,9 @@ function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
 	$scope.kanbanName = '';
 
 	$scope.createNew = function(dialogId){
-		// Check if the form is valid
+		if (!$scope.newKanbanForm.$valid){
+			return false;
+		}
 		var newKanban = new Kanban($scope.kanbanName, $scope.numberOfColumns);
 		for (i=1;i < parseInt($scope.numberOfColumns) + 1 ; i++){
 			kanbanManipulator.addColumn(newKanban, 'Column '+i);
@@ -219,7 +221,10 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	});
 
 	$scope.addNewCard = function(){
-		// check if form is valid first, 
+		if (!$scope.newCardForm.$valid){
+			return false;
+		}
+
 		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
 		$scope.title = '';
 		$scope.newCardShouldBeOpen = false;

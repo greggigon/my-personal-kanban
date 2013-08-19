@@ -29,7 +29,7 @@
                         <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="icon-briefcase"></i> New</a>
                             <div id="newKanban" ng-controller="NewKanbanController" ng-model="kanban">
                                 <div class="modal hide fade" modal="newKanbanShouldBeOpen">
-                                    <form class="noMargin" ng-submit="createNew('#newKanban')">
+                                    <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
                                       <div class="modal-header">
                                         <button type="button" class="close" ng-click="closeNewKanban()"><i class="icon-remove"></i></button>
                                         <h3 id="myModalLabel">New Kanban board</h3>
@@ -38,7 +38,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="kanbanNameFormField">Kanban name</label>
                                             <div class="controls">
-                                              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" ng-required />
+                                              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" required />
                                             </div>
                                           </div>
                                           <div class="control-group">
@@ -55,7 +55,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn" ng-click="closeNewKanban()">Close</button>
-                                        <button type="submit" class="btn btn-primary">Create new</button>
+                                        <button type="submit" class="btn btn-primary" >Create new</button>
                                       </div>
                                   </form>
                                 </div>
@@ -103,7 +103,7 @@
         <div id="newCard" ng-controller="NewKanbanCardController" ng-model="kanban">
 
             <div class="modal hide fade" modal="newCardShouldBeOpen">
-              <form ng-submit="addNewCard()" class="noMargin">
+              <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"><i class="icon-remove"></i></button>
                     <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
@@ -112,7 +112,7 @@
                         <div class="control-group">
                             <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
                             <div class="controls">
-                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" ng-required class="input-xlarge" />
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" />
                             </div>
                           </div>
                   </div>

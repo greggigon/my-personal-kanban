@@ -62,7 +62,7 @@
                             </div>
 
                         </li>
-                        <li><a href="#open" role="button" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
+                        <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
                             <div id="openKanban" ng-controller="OpenKanbanController">
                                 <div class="modal hide fade" tabindex="-1" modal="openKanbanShouldBeOpen">
                                     <form ng-submit="open()" name="openKanbanForm">
@@ -78,7 +78,6 @@
                                                     </select>
                                                </div>
                                             </div>
-                                        </form>
                                       </div>
                                       <div class="modal-footer">
                                         <button class="btn" type="button" ng-click="close()">Close</button>

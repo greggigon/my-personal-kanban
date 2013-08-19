@@ -260,7 +260,12 @@ function OpenKanbanController($scope){
 	};
 
 	$scope.open = function(){
-		$scope.$emit('Open', {kanbanName: $scope.selectedToOpen})
+		if (!$scope.openKanbanForm.$valid){
+			return false;
+		}
+		$scope.$emit('Open', {kanbanName: $scope.selectedToOpen});
+		$scope.openKanbanShouldBeOpen = false;
+		return true;
 	};
 
 	$scope.$on('OpenKanban', function(){

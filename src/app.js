@@ -151,7 +151,7 @@ mpk.directive('sortable', function(){
 
 function MenuController($scope, kanbanRepository){
 	$scope.newKanban = function(){
-		$scope.$emit('NewKanban');
+		$scope.$broadcast('NewKanban');
 	};
 
 	$scope.delete = function(){
@@ -169,28 +169,38 @@ function MenuController($scope, kanbanRepository){
 }
 
 function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
+	$scope.newKanbanShouldBeOpen = false;
+
 	$scope.numberOfColumns = 3;
 	$scope.kanbanName = '';
 
 	$scope.createNew = function(dialogId){
+		// Check if the form is valid
 		var newKanban = new Kanban($scope.kanbanName, $scope.numberOfColumns);
 		for (i=1;i < parseInt($scope.numberOfColumns) + 1 ; i++){
 			kanbanManipulator.addColumn(newKanban, 'Column '+i);
 		}
 		kanbanRepository.add(newKanban);
-		$(dialogId).modal('toggle');
 
 		$scope.kanbanName = '';
 		$scope.numberOfColumns = 3;
 		
 		kanbanRepository.setLastUsed(newKanban.name);
 		$scope.$emit('ChangeCurrentKanban');
+		$scope.newKanbanShouldBeOpen = false;
 
 		return true;
 	};
 
+	$scope.$on('NewKanban', function(){
+		$scope.newKanbanShouldBeOpen = true;
+	});
+
+
 	$scope.closeNewKanban = function(){
-		$scope.$emit('CloseNewKanban');
+		$scope.newKanbanShouldBeOpen = false;
+		$scope.numberOfColumns = 3;
+		$scope.kanbanName = '';
 	};
 
 }
@@ -240,20 +250,10 @@ function OpenKanbanController($scope){
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
-	$scope.newKanbanShouldBeOpen = false;
-
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
-	});
-
-	$scope.$on('NewKanban', function(){
-		$scope.newKanbanShouldBeOpen = true;
-	});
-
-	$scope.$on('CloseNewKanban', function(){
-		$scope.newKanbanShouldBeOpen = false;
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){

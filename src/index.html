@@ -137,7 +137,14 @@
                             <div class="controls">
                               <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" focus-me="newCardShouldBeOpen"/>
                             </div>
-                          </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="detailsField">More details <small>(optional)</small></label>
+                            <div class="controls">
+                                <textarea id="detailsField" ng-model="details" class="input-xlarge" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn" ng-click="close()">Close</button>

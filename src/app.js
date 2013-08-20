@@ -13,8 +13,9 @@ function KanbanColumn(name){
 	}
 }
 
-function KanbanCard(name){
+function KanbanCard(name, details){
 	this.name = name;
+	this.details = details;
 	return this;
 }
 
@@ -24,10 +25,10 @@ function KanbanManipulator(){
 			kanban.columns.push(new KanbanColumn(columnName));
 		},
 
-		addCardToColumn: function(kanban, column, cardTitle){
+		addCardToColumn: function(kanban, column, cardTitle, details){
 			angular.forEach(kanban.columns, function(col){
 				if (col.name == column.name){
-					col.cards.push(new KanbanCard(cardTitle));
+					col.cards.push(new KanbanCard(cardTitle, details));
 				}
 			});
 		},
@@ -234,6 +235,7 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	$scope.column = null;
 	$scope.title = '';
 	$scope.newCardShouldBeOpen = false;
+	$scope.details = '';
 
 
 	$scope.$on('AddNewCard', function(theEvent, args){
@@ -247,13 +249,16 @@ function NewKanbanCardController($scope, kanbanManipulator){
 			return false;
 		}
 
-		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column});
+		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column, details: $scope.details});
 		$scope.title = '';
+		$scope.details = '';
+
 		$scope.newCardShouldBeOpen = false;
 	};
 
 	$scope.close = function(){
 		$scope.title = '';
+		$scope.details = '';
 		$scope.newCardShouldBeOpen = false;
 	};
 }
@@ -299,7 +304,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){
-		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title);
+		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title, arguments.details);
 	});
 
 	$scope.$on('DeleteCardRequest', function(event, arguments){

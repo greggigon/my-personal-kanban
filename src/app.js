@@ -98,7 +98,9 @@ var mpkService = angular.module('mpk.service', []);
 mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
 
-var mpk = angular.module('mpk', ['mpk.service', 'ui.bootstrap']);
+var mpk = angular.module('mpk', ['mpk.service', 'ui.bootstrap'], function($dialogProvider){
+	$dialogProvider.options({dialogFade: true, backdropFade: true});
+});
 
 mpk.directive('sortable', function(){
 	return {
@@ -182,7 +184,9 @@ function MenuController($scope, kanbanRepository){
 				kanbanRepository.setLastUsed(undefined);
 			}
 			$scope.$emit('KanbanDeleted');
+			$scope.openKanban();
 		}
+		return false;
 	};
 }
 

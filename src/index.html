@@ -38,7 +38,7 @@
                                         <div class="control-group">
                                             <label class="control-label" for="kanbanNameFormField">Kanban name</label>
                                             <div class="controls">
-                                              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" required />
+                                              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" required focus-me="newKanbanShouldBeOpen"/>
                                             </div>
                                           </div>
                                           <div class="control-group">
@@ -65,7 +65,7 @@
                         <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
                             <div id="openKanban" ng-controller="OpenKanbanController">
                                 <div class="modal hide fade" tabindex="-1" modal="openKanbanShouldBeOpen">
-                                    <form ng-submit="open()" name="openKanbanForm">
+                                    <form ng-submit="open()" name="openKanbanForm" class="noMargin">
                                       <div class="modal-header">
                                         <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
                                         <h3 id="openKanbanLabel">Open another Kanban</h3>
@@ -135,7 +135,7 @@
                         <div class="control-group">
                             <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
                             <div class="controls">
-                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" />
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" focus-me="newCardShouldBeOpen"/>
                             </div>
                           </div>
                   </div>

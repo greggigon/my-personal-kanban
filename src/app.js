@@ -264,19 +264,37 @@ function NewKanbanCardController($scope, kanbanManipulator){
 }
 
 function CardController($scope){
-	$scope.cardDetailShouldBeOpen = false;
-	$scope.card = undefined;
+	function initScope(scope){
+		scope.cardDetailShouldBeOpen = false;
+		scope.name = '';
+		scope.details = '';
+		scope.card = undefined;
+	}
+	
 
 	$scope.$on('OpenCardDetails', function(event, arguments){
 		$scope.cardDetailShouldBeOpen = true;
+		$scope.name = arguments.card.name;
+		$scope.details = arguments.card.details;
 		$scope.card = arguments.card;
 	});
 
 	$scope.close = function(){
-		$scope.cardDetailShouldBeOpen = false;
-		$scope.card = undefined;
+		initScope($scope);
 	};
 
+	$scope.update = function(){
+		if (!$scope.cardDetails.$valid){
+			return false;
+		}
+		$scope.card.name = $scope.name;
+		$scope.card.details = $scope.details;
+
+		initScope($scope);
+
+	};
+
+	initScope($scope);
 }
 
 function KanbanController($scope) {

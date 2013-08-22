@@ -20,6 +20,7 @@ a { padding-left: 2px; padding-right: 2px;}
 .cards { margin: 0px;}
 .card { list-style: none;}
 .card p { margin: 0px; cursor: move;}
+.card a:hover { text-decoration: none; cursor: pointer;}
 
 .column {
 	border: solid 1px #ffffff;

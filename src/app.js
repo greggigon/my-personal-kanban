@@ -263,6 +263,22 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	};
 }
 
+function CardController($scope){
+	$scope.cardDetailShouldBeOpen = false;
+	$scope.card = undefined;
+
+	$scope.$on('OpenCardDetails', function(event, arguments){
+		$scope.cardDetailShouldBeOpen = true;
+		$scope.card = arguments.card;
+	});
+
+	$scope.close = function(){
+		$scope.cardDetailShouldBeOpen = false;
+		$scope.card = undefined;
+	};
+
+}
+
 function KanbanController($scope) {
 	$scope.addNewCard = function(column){
 		$scope.$broadcast('AddNewCard', {column: column});
@@ -272,6 +288,10 @@ function KanbanController($scope) {
 		if (confirm('You sure?')){
 			$scope.$emit('DeleteCardRequest', {column: column, card: card});
 		}	
+	};
+
+	$scope.openCardDetails = function(card){
+		$scope.$broadcast('OpenCardDetails', {card: card});
 	};
 }
 

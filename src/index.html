@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
 
     <script src="jquery-ui.min.js" type="text/javascript"></script>
-    <!-- // <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
     <script src="ui-bootstrap-0.5.0.min.js" type="text/javascript"></script>
     <script src="ui-bootstrap-tpls-0.5.0.min.js" type="text/javascript"></script>
 
@@ -116,7 +115,7 @@
                 <ul class="cards" sortable-selector="#kanban ul.cards" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
                     <li class="card" ng-repeat="card in column.cards" ng-model="card">
                         <a href="#deleteCard" class="pull-right" ng-click="delete(card, column)"><i class="icon-remove"></i></a>
-                        <a>{{card.name}}</a>
+                        <a ng-click="openCardDetails(card)">{{card.name}}</a>
                     </li>
                 </ul>
             </div>
@@ -129,19 +128,19 @@
               <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
                   <div class="modal-header">
                     <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
-                    <h3 id="myModalLabel" ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
+                    <h3 ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
                   </div>
                   <div class="modal-body">
                         <div class="control-group">
-                            <label class="control-label" for="kanbanNameFormField">Kanban card title</label>
+                            <label class="control-label" for="newCardTitle">Kanban card title</label>
                             <div class="controls">
                               <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" focus-me="newCardShouldBeOpen"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="detailsField">More details <small>(optional)</small></label>
+                            <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
                             <div class="controls">
-                                <textarea id="detailsField" ng-model="details" class="input-xlarge" rows="10">
+                                <textarea id="newCardDetails" ng-model="details" class="input-xlarge" rows="10">
                                 </textarea>
                             </div>
                         </div>
@@ -149,6 +148,35 @@
                   <div class="modal-footer">
                     <button type="button" class="btn" ng-click="close()">Close</button>
                     <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+              </form>
+            </div>
+        </div>
+        <div id="cardDetails" ng-controller="CardController">
+            <div class="modal hide fade" modal="cardDetailShouldBeOpen">
+              <form ng-submit="update()" class="noMargin" name="cardDetails">
+                  <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                    <h3>Card details</h3>
+                  </div>
+                  <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label" for="cardTitle">Kanban card title</label>
+                            <div class="controls">
+                              <input type="text" id="cardTitle" placeholder="Title on a card" ng-model="card.name" required class="input-xlarge" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="details">More details <small>(optional)</small></label>
+                            <div class="controls">
+                                <textarea id="details" ng-model="card.details" class="input-xlarge" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                   </div>
               </form>
             </div>

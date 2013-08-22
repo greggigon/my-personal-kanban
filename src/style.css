@@ -6,7 +6,6 @@
 a { padding-left: 2px; padding-right: 2px;}
 
 .card {
-	margin: 5px;
 	padding: 10px;
 	font-weight: 200;
 
@@ -16,9 +15,9 @@ a { padding-left: 2px; padding-right: 2px;}
 	border-radius: 10px;
 	-webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 	box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	list-style: none;
 }
 .cards { margin: 0px;}
-.card { list-style: none;}
 .card p { margin: 0px; cursor: move;}
 .card a:hover { text-decoration: none; cursor: pointer;}
 

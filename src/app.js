@@ -165,6 +165,28 @@ mpk.directive('focusMe', function($timeout){
   };
 });
 
+mpk.directive('colorSelector', function(){
+	return {
+		restrict: 'E',
+		scope: { options: '=', showRadios: '=', model: '=ngModel', prefix: '@'},
+		require: 'ngModel',
+		template: '<div class="pull-left" ng-repeat="option in options" ng-model="option">\n'+
+				'	<label class="colorBox" for="{{prefix}}{{option}}" ng-class="{selected: option == model}" style="background-color: #{{option}};" ng-click="selectColor(option)"></label>\n'+
+                '	<br ng-show="showRadios"/>\n'+
+                '	<input type="radio" id="{{prefix}}{{option}}" name="{{prefix}}" value="{{option}}" ng-show="showRadios" ng-model="model"/>\n'+
+                '</div>\n',
+        link: function(scope) {
+        	if (scope.model == undefined || scope.model == ''){
+        		scope.model = scope.options[0];
+        	};
+        	
+    		scope.selectColor = function(color){
+    			scope.model = color;
+    		};
+        }
+	};
+});
+
 
 function MenuController($scope, kanbanRepository){
 	$scope.newKanban = function(){
@@ -236,6 +258,8 @@ function NewKanbanCardController($scope, kanbanManipulator){
 	$scope.title = '';
 	$scope.newCardShouldBeOpen = false;
 	$scope.details = '';
+	$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
+	$scope.cardColor = undefined;
 
 
 	$scope.$on('AddNewCard', function(theEvent, args){

@@ -13,8 +13,6 @@ a { padding-left: 2px; padding-right: 2px;}
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	-webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
-	box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 	list-style: none;
 }
 .cards { margin: 0px;}
@@ -41,3 +39,26 @@ a { padding-left: 2px; padding-right: 2px;}
 }
 
 .noMargin { margin-bottom: 0px;}
+.colorBox {  
+	width: 15px;
+    height: 15px;
+    display: inline-block;
+    border: 1px solid black;
+    margin: 2px;
+/*    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+ */}
+
+ .colorSelector .selected {
+ 	border: 2px solid red;
+ }
+/* TAGS */
+
+.default { 
+	-webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+	box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+}
+.default-color { background-color: #ffffff; }
+
+

@@ -95,7 +95,6 @@ function KanbanRepository(){
 	}
 };
 
-
 var mpkService = angular.module('mpk.service', []);
 mpkService.factory('kanbanRepository', KanbanRepository);
 mpkService.factory('kanbanManipulator', KanbanManipulator);
@@ -261,7 +260,6 @@ function NewKanbanCardController($scope, kanbanManipulator){
 		$scope.title = '';
 		$scope.newCardShouldBeOpen = false;
 		$scope.details = '';
-		$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
 		$scope.cardColor = $scope.colorOptions[0];	
 	}
 
@@ -293,18 +291,19 @@ function CardController($scope){
 		scope.name = '';
 		scope.details = '';
 		scope.card = undefined;
+		scope.cardColor = scope.colorOptions[0];
 	}
-
-	function hexToInt(hex){
-		return parseInt(hex, 16);
-	}
-	
 
 	$scope.$on('OpenCardDetails', function(event, arguments){
 		$scope.cardDetailShouldBeOpen = true;
 		$scope.name = arguments.card.name;
 		$scope.details = arguments.card.details;
 		$scope.card = arguments.card;
+		if (arguments.card.cardColor == undefined || arguments.card.cardColor == ''){
+			$scope.cardColor = $scope.colorOptions[0];
+		} else {
+			$scope.cardColor = arguments.card.cardColor;
+		}
 	});
 
 	$scope.close = function(){
@@ -317,20 +316,9 @@ function CardController($scope){
 		}
 		$scope.card.name = $scope.name;
 		$scope.card.details = $scope.details;
+		$scope.card.color = $scope.cardColor;
 
 		initScope($scope);
-	};
-
-	$scope.red = function(hexColor){
-		return parseInt(hexColor.substr(0,2));
-	};
-
-	$scope.green = function(hexColor){
-		return parseInt(hexColor.substr(2,2));
-	};
-
-	$scope.blue = function(hexColor){
-		return parseInt(hexColor.substr(4,2));
 	};
 
 	initScope($scope);
@@ -374,6 +362,8 @@ function OpenKanbanController($scope){
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
+	$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
+
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());

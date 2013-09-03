@@ -13,9 +13,10 @@ function KanbanColumn(name){
 	}
 }
 
-function KanbanCard(name, details){
+function KanbanCard(name, details, color){
 	this.name = name;
 	this.details = details;
+	this.color = color;
 	return this;
 }
 
@@ -25,10 +26,10 @@ function KanbanManipulator(){
 			kanban.columns.push(new KanbanColumn(columnName));
 		},
 
-		addCardToColumn: function(kanban, column, cardTitle, details){
+		addCardToColumn: function(kanban, column, cardTitle, details, color){
 			angular.forEach(kanban.columns, function(col){
 				if (col.name == column.name){
-					col.cards.push(new KanbanCard(cardTitle, details));
+					col.cards.push(new KanbanCard(cardTitle, details, color));
 				}
 			});
 		},
@@ -253,14 +254,16 @@ function NewKanbanController($scope, kanbanRepository, kanbanManipulator){
 }
 
 function NewKanbanCardController($scope, kanbanManipulator){
-	$scope.kanbanColumnName = '';
-	$scope.column = null;
-	$scope.title = '';
-	$scope.newCardShouldBeOpen = false;
-	$scope.details = '';
-	$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
-	$scope.cardColor = undefined;
-
+	
+	function initScope($scope){
+		$scope.kanbanColumnName = '';
+		$scope.column = null;
+		$scope.title = '';
+		$scope.newCardShouldBeOpen = false;
+		$scope.details = '';
+		$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
+		$scope.cardColor = $scope.colorOptions[0];	
+	}
 
 	$scope.$on('AddNewCard', function(theEvent, args){
 		$scope.newCardShouldBeOpen = true;
@@ -273,18 +276,15 @@ function NewKanbanCardController($scope, kanbanManipulator){
 			return false;
 		}
 
-		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column, details: $scope.details});
-		$scope.title = '';
-		$scope.details = '';
-
-		$scope.newCardShouldBeOpen = false;
+		$scope.$emit('NewCardRequest', {title: $scope.title, column: $scope.column, details: $scope.details, color: $scope.cardColor});
+		initScope($scope);
 	};
 
 	$scope.close = function(){
-		$scope.title = '';
-		$scope.details = '';
-		$scope.newCardShouldBeOpen = false;
+		initScope($scope);
 	};
+
+	initScope($scope);
 }
 
 function CardController($scope){
@@ -293,6 +293,10 @@ function CardController($scope){
 		scope.name = '';
 		scope.details = '';
 		scope.card = undefined;
+	}
+
+	function hexToInt(hex){
+		return parseInt(hex, 16);
 	}
 	
 
@@ -315,7 +319,18 @@ function CardController($scope){
 		$scope.card.details = $scope.details;
 
 		initScope($scope);
+	};
 
+	$scope.red = function(hexColor){
+		return parseInt(hexColor.substr(0,2));
+	};
+
+	$scope.green = function(hexColor){
+		return parseInt(hexColor.substr(2,2));
+	};
+
+	$scope.blue = function(hexColor){
+		return parseInt(hexColor.substr(4,2));
 	};
 
 	initScope($scope);
@@ -366,7 +381,7 @@ function ApplicationController($scope, $window, kanbanRepository, kanbanManipula
 	});
 
 	$scope.$on('NewCardRequest', function(event, arguments){
-		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title, arguments.details);
+		kanbanManipulator.addCardToColumn($scope.kanban, arguments.column, arguments.title, arguments.details, arguments.color);
 	});
 
 	$scope.$on('DeleteCardRequest', function(event, arguments){

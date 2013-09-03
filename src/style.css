@@ -14,6 +14,9 @@ a { padding-left: 2px; padding-right: 2px;}
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	list-style: none;
+
+	-webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px; 
+	box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 }
 .cards { margin: 0px;}
 .card p { margin: 0px; cursor: move;}
@@ -45,10 +48,7 @@ a { padding-left: 2px; padding-right: 2px;}
     display: inline-block;
     border: 1px solid black;
     margin: 2px;
-/*    background-color: #ccc;
-    position: absolute;
-    left: 5px;
- */}
+}
 
  .colorSelector .selected {
  	border: 2px solid red;

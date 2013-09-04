@@ -341,6 +341,13 @@ function KanbanController($scope) {
 		$scope.$broadcast('OpenCardDetails', {card: card});
 	};
 
+	$scope.details = function(card){
+		if (card.details != undefined && card.details != '') {
+			return card.details;
+		}
+		return card.name;
+	};
+
 	$scope.colorFor = function(card){
 		return (card.color != undefined && card.color != '') ? card.color : $scope.colorOptions[0];
 	};

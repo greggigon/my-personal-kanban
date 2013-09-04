@@ -168,9 +168,9 @@ mpk.directive('focusMe', function($timeout){
 mpk.directive('colorSelector', function(){
 	return {
 		restrict: 'E',
-		scope: { options: '=', showRadios: '=', model: '=ngModel', prefix: '@'},
+		scope: { options: '=', model: '=ngModel', prefix: '@', showRadios: '=', showHexCode: "="},
 		require: 'ngModel',
-		template: '<div class="pull-left" ng-repeat="option in options" ng-model="option">\n'+
+		template: '<span ng-show="showHexCode">&nbsp;#{{model}}</span><div class="pull-left" ng-repeat="option in options" ng-model="option">\n'+
 				'	<label class="colorBox" for="{{prefix}}{{option}}" ng-class="{selected: option == model}" style="background-color: #{{option}};" ng-click="selectColor(option)"></label>\n'+
                 '	<br ng-show="showRadios"/>\n'+
                 '	<input type="radio" id="{{prefix}}{{option}}" name="{{prefix}}" value="{{option}}" ng-show="showRadios" ng-model="model"/>\n'+
@@ -179,7 +179,7 @@ mpk.directive('colorSelector', function(){
         	if (scope.model == undefined || scope.model == ''){
         		scope.model = scope.options[0];
         	};
-        	
+
     		scope.selectColor = function(color){
     			scope.model = color;
     		};
@@ -295,15 +295,17 @@ function CardController($scope){
 	}
 
 	$scope.$on('OpenCardDetails', function(event, arguments){
-		$scope.cardDetailShouldBeOpen = true;
 		$scope.name = arguments.card.name;
 		$scope.details = arguments.card.details;
 		$scope.card = arguments.card;
-		if (arguments.card.cardColor == undefined || arguments.card.cardColor == ''){
+		console.log(arguments.card.color);
+		if (arguments.card.color == undefined || arguments.card.color == ''){
 			$scope.cardColor = $scope.colorOptions[0];
 		} else {
-			$scope.cardColor = arguments.card.cardColor;
+			$scope.cardColor = arguments.card.color;
 		}
+		$scope.cardDetailShouldBeOpen = true;
+
 	});
 
 	$scope.close = function(){
@@ -366,7 +368,7 @@ function OpenKanbanController($scope){
 };
 
 function ApplicationController($scope, $window, kanbanRepository, kanbanManipulator){
-	$scope.colorOptions = ['FFFFFF', 'FF8282', '94D6FF', 'F6FCB1', 'A5FC9D', 'F5CE90'];
+	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();

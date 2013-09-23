@@ -1,0 +1,16 @@
+{
+  "name": "mpk",
+  "version": "0.0.2",
+  "dependencies": {
+    "angular": "~1.0.7",
+    "jquery": "~1.9.1",
+    "angular-ui-bootstrap-bower": "~0.6.0",
+    "jquery-ui": "~1.10.3",
+    "angular-ui-utils": "~0.0.4",
+    "ichuan-bower-angular-ui-utils": "~0.0.4"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.0.7",
+    "angular-scenario": "~1.0.7"
+  }
+}

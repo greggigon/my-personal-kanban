@@ -1,0 +1,229 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="Personal Kanban Board">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/bootstrap.css">
+        <link rel="stylesheet" href="styles/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+</head>
+  <body ng-app="mpk" ng-controller="ApplicationController">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+<header class="navbar navbar-fixed-top">
+     <div class="navbar-inner">
+        <div class="container">
+            <div class="brand"><span id="kanbanName" ng-model="kanban">{{kanban.name}}</span></div>
+            <ul class="nav pull-right" id="menu" ng-controller="MenuController">
+                <li class="dropdown">
+                    <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="icon-briefcase"></i> New</a>
+                        </li>
+                        <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
+                        </li>
+                        <li><a href="#delete" title="Delete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#sync" class="btn btn-link disabled"><i class="icon-refresh"></i> Synchronize</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+     </div>
+</header>
+
+<div class="container" style="margin-top: 45px" id="kanban" ng-controller="KanbanController">
+    <section id="kanban" style="margin-top: 10px" ng-model="kanban">
+        <div id="columns" class="row">
+            <div class="column span{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}">
+                
+                <div class="columnHeader">
+                    <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="icon-plus"></i></a>
+                    <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="icon-tasks"></i></a>
+                    <span ng-hide="editing">{{column.name}}</span>
+                    <form ng-show="editing" ng-submit="editing = false">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-tasks"></i></span>
+                            <input class="span2" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
+                        </div>
+                    </form>
+                </div>
+                <ul class="cards" sortable-selector="#kanban ul.cards" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
+                    <li class="card" ng-repeat="card in column.cards" ng-model="card" style="background-color: #{{colorFor(card)}};">
+                        <a href="#deleteCard" class="pull-right" ng-click="delete(card, column)"><i class="icon-remove"></i></a>
+                        <a ng-click="openCardDetails(card)"><span tooltip-popup-delay='2000' tooltip='{{details(card)}}'>{{card.name}}</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="kanbanOperations">
+        <!-- this one is for the new card -->
+        <script type="text/ng-template" id="NewKanbanModal.html">
+            <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
+                <div class="modal-header">
+                  <button type="button" class="close" ng-click="closeNewKanban()"><i class="icon-remove"></i></button>
+                  <h3 id="myModalLabel">New Kanban board</h3>
+                </div>
+                <div class="modal-body">
+                  <div class="control-group">
+                      <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                      <div class="controls">
+                        <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" required />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+                      <div class="controls">
+                        <select id="numberOfColumnsField" ng-model="numberOfColumns">
+                          <option>2</option>
+                          <option selected="selected">3</option>
+                          <option>4</option>
+                          <option>6</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn" ng-click="closeNewKanban()">Close</button>
+                  <button type="submit" class="btn btn-primary" >Create new</button>
+                </div>
+            </form>
+          </script> 
+           
+          <script type="text/ng-template" id="OpenKanban.html">
+            <form ng-submit="open()" name="openKanbanForm" class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <h3 id="openKanbanLabel">Open another Kanban</h3>
+              </div>
+              <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                        <div class="controls">
+                            <select name="selectedToOpen" ng-model="selectedToOpen" required ng-options="name for name in allKanbans">
+                            </select>
+                       </div>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-primary" type="submit">Open</button>
+              </div>
+            </form>
+          </script>
+            <script type="text/ng-template" id="NewKanbanCard.html">
+              <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
+                  <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                    <h3 ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
+                  </div>
+                  <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label" for="newCardTitle">Kanban card title</label>
+                            <div class="controls">
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" focus-me/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
+                            <div class="controls">
+                                <textarea id="newCardDetails" ng-model="details" class="input-xlarge" rows="5">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Card color</label>
+                        </div>
+                        <div class="control-group">
+                            <color-selector options="colorOptions" ng-model="cardColor" prefix="newCardColor" class="colorSelector" show-hex-code="true"/>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+              </form>
+        </script>
+        <script type="text/ng-template" id="OpenCard.html">
+              <form ng-submit="update()" class="noMargin" name="cardDetails">
+                  <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                    <h3>Card details</h3>
+                  </div>
+                  <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label" for="cardTitle">Kanban card title</label>
+                            <div class="controls">
+                              <input type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="input-xlarge" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="details">More details <small>(optional)</small></label>
+                            <div class="controls">
+                                <textarea id="details" ng-model="details" class="input-xlarge" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Card color</label>
+                        </div>
+                        <div class="control-group">
+                            <color-selector options="colorOptions" ng-model="cardColor" prefix="editCardColor" class="colorSelector" show-hex-code="true" />
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+              </form>
+        </script>
+    </section>
+</div>
+<footer>
+
+</footer>
+
+        <script src="bower_components/jquery/jquery.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
+        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+        <script src="bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js"></script>
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/model.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/kanbanRepository.js"></script>
+        <script src="scripts/services/kanbanManipulator.js"></script>
+        <script src="scripts/controllers/ApplicationController.js"></script>
+        <script src="scripts/controllers/MenuController.js"></script>
+        <script src="scripts/controllers/NewKanbanController.js"></script>
+        <script src="scripts/controllers/OpenKanbanController.js"></script>
+        <script src="scripts/controllers/CardController.js"></script>
+        <script src="scripts/controllers/NewKanbanCardController.js"></script>
+        <script src="scripts/controllers/KanbanController.js"></script>
+        <script src="scripts/directives/colorSelector.js"></script>
+        <script src="scripts/directives/focusMe.js"></script>
+        <script src="scripts/directives/sortable.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

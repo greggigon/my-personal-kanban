@@ -1,6 +1,6 @@
 {
   "name": "mpk",
-  "version": "0.0.2",
+  "version": "0.2.0",
   "dependencies": {
     "angular": "~1.0.7",
     "jquery": "~1.9.1",

@@ -2,7 +2,7 @@
 
 var OpenKanbanController = function ($scope, $modalInstance, allKanbans, currentKanban) {
 	$scope.allKanbans = allKanbans;
-	$scope.selectedToOpen = currentKanban.name;
+	$scope.selectedToOpen = (currentKanban) ? currentKanban.name :  undefined;
 
 	$scope.close = function(){
 		$modalInstance.close();

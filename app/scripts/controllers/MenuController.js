@@ -35,8 +35,9 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);
 			var all = kanbanRepository.all();
-			if (all.length > 0){
-				kanbanRepository.setLastUsed(all[0].name);
+			var names = Object.keys(all);
+			if (names.length > 0){
+				kanbanRepository.setLastUsed(names[0]);
 			} else {
 				kanbanRepository.setLastUsed(undefined);
 			}

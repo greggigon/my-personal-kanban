@@ -5,6 +5,10 @@ This is a small and simple in-browser application that aspire to be offline Pers
 
 It is a single page JavaScript application with very basic functionality. 
 
+## Download
+
+You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.2.0.zip?raw=true).
+
 ## How to use it?
 
 Download the applicaton distribution zip file, unzip it at your prefered location, open __index.html__ page in your browser and your done.
@@ -13,7 +17,7 @@ There is no need to be connected to Internet to use it. You can run it in any mo
 
 ### Functionality
 
-The functionality is very simple and basic. For a short screencast demo you can navigate to this link [link§].
+The functionality is very simple and basic. For a short screencast demo you can navigate to this link [link to follow].
 
 You should be able to create multiple Kanban boards with 2,3,4 and 6 columns, name columns and delete kanban.
 

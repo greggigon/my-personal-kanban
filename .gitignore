@@ -1,0 +1,8 @@
+app/
+test/
+.tmp/
+dist/
+node_modules/
+.DS_Store
+images/.DS_Store
+stories_summary.txt

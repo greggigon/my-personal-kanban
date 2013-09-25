@@ -17,9 +17,9 @@ There is no need to be connected to Internet to use it. You can run it in any mo
 
 ### Functionality
 
-The functionality is very simple and basic. For a short screencast demo you can navigate to this link [link to follow].
+TThe functionality is very simple and basic. For a short screencast demo you can navigate to [Github pages](http://greggigon.github.io/my-personal-kanban/) .
 
-You should be able to create multiple Kanban boards with 2,3,4 and 6 columns, name columns and delete kanban.
+Kanban boards with 2,3,4 and 6 columns, name columns and delete kanban.
 
 You can add cards to columns and drag them between columns as well as remove them.
 

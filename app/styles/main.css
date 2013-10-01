@@ -19,7 +19,7 @@ a { padding-left: 2px; padding-right: 2px;}
     box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
 }
 .cards { margin: 0px;}
-.card p { margin: 0px; cursor: move;}
+.card { margin: 0px; cursor: move;}
 .card a { color: #444; }
 .card a:hover { text-decoration: none; cursor: pointer; color: #777;}
 

@@ -14,6 +14,7 @@ angular.module('mpk').directive('sortable', function(){
 			element.sortable({
 				connectWith: attrs.sortableSelector,
 				revert: true,
+				cancel: 'a',
 				remove: function(e, ui){
 					if (ngModel.$modelValue.length === 1) {
 						ui.item.sortable.moved = ngModel.$modelValue.splice(0, 1)[0];

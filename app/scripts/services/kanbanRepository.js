@@ -4,6 +4,7 @@ angular.module('mpk').factory('kanbanRepository', function () {
   return {
     kanbansByName : {},
     lastUsed : '',
+    theme: 'default-bright',
     
     add: function(kanban){
       this.kanbansByName[kanban.name] = kanban;
@@ -27,7 +28,7 @@ angular.module('mpk').factory('kanbanRepository', function () {
     },
 
     save: function(){
-      localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed}, false));
+      localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed, theme: this.theme}, false));
       return this.kanbansByName;
     },
 
@@ -38,6 +39,7 @@ angular.module('mpk').factory('kanbanRepository', function () {
       }
       this.kanbansByName = saved.kanbans;
       this.lastUsed = saved.lastUsed;
+      this.theme = saved.theme;
       return this.kanbansByName;
     },
 
@@ -47,9 +49,20 @@ angular.module('mpk').factory('kanbanRepository', function () {
       }
       return this.kanbansByName[this.lastUsed];
     },
+
     setLastUsed : function(kanbanName){
       this.lastUsed = kanbanName;
       return this.lastUsed;
+    },
+
+    getTheme: function(){
+      return this.theme;
+    },
+
+    setTheme: function(theme){
+      this.theme = theme;
+      this.save();
+      return this.theme;
     }
   };
 });

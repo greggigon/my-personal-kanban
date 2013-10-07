@@ -1,17 +1,22 @@
 'use strict';
 
-var SwitchThemeController = function ($scope, $modalInstance) {
+var SwitchThemeController = function ($scope, $modalInstance, themesProvider, kanbanRepository) {
 	$scope.model = {};
-	$scope.model.themes = ['default-bright', 'default-dark'];
-
+	$scope.model.themes = themesProvider.getThemes();
+	var theme = kanbanRepository.getTheme();
+	if (theme == undefined || theme == ''){
+		theme = themesProvider.defaultTheme;
+	}
+	$scope.model.selectedTheme = theme;
+	
+	$scope.$watch('model.selectedTheme', function(newvalue){ console.log(newvalue);});
 	$scope.close = function(){
 		$modalInstance.close();
 	};
 
-	$scope.switchTeme = function(){
-		var themeStylesheet = document.getElementById('themeStylesheet');
-		var pathPart = themeStylesheet.href.substr(0, themeStylesheet.href.lastIndexOf('/'));
-		themeStylesheet.href = pathPart + "/" + $scope.model.selectedTheme + '.css';
+	$scope.switchTheme = function(){
+		themesProvider.setCurrentTheme($scope.model.selectedTheme);
+		kanbanRepository.setTheme($scope.model.selectedTheme);
 		$modalInstance.close();
 	};
 

@@ -208,14 +208,14 @@
                     <div class="control-group">
                         <label class="control-label" for="kanbanTheme">Themes to choose from</label>
                         <div class="controls">
-                          <select name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="theme for theme in model.themes">
+                          <select name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes">
                           </select>
                        </div>
                     </div>
               </div>
               <div class="modal-footer">
                 <button class="btn" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-click="switchTeme()">Switch</button>
+                <button class="btn btn-primary" type="submit" ng-click="switchTheme()">Switch</button>
               </div>
             </form>
           </script>
@@ -231,12 +231,15 @@
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
         <script src="bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js"></script>
+        <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/model.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/services/kanbanRepository.js"></script>
         <script src="scripts/services/kanbanManipulator.js"></script>
+        <script src="scripts/services/themesProvider.js"></script>
+        
         <script src="scripts/controllers/ApplicationController.js"></script>
         <script src="scripts/controllers/MenuController.js"></script>
         <script src="scripts/controllers/NewKanbanController.js"></script>

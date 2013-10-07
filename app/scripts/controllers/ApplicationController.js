@@ -1,5 +1,5 @@
 'use strict';
-var ApplicationController = function ($scope, $window, kanbanRepository) {
+var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider) {
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
 	$scope.$on('ChangeCurrentKanban', function(){
@@ -40,5 +40,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository) {
 
 	$scope.triggerOpen = function(){
 		$scope.$broadcast('TriggerOpenKanban');
+	};
+
+	if (kanbanRepository.getTheme() != undefined && kanbanRepository.getTheme() != ''){
+		themesProvider.setCurrentTheme(kanbanRepository.getTheme());
 	}
+
 };

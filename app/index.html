@@ -14,7 +14,7 @@
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
         <!-- endbuild -->
 </head>
   <body ng-app="mpk" ng-controller="ApplicationController">
@@ -41,6 +41,7 @@
                         <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
                         </li>
                         <li><a href="#delete" title="Delete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
+                        <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="icon-wrench"></i> Themes</a></li>
                         <li class="divider"></li>
                         <li><a href="#sync" class="btn btn-link disabled"><i class="icon-refresh"></i> Synchronize</a></li>
                     </ul>
@@ -196,6 +197,28 @@
                   </div>
               </form>
         </script>
+
+        <script type="text/ng-template" id="SelectTheme.html">
+            <form ng-submit="switchTheme()" name="selectTheme" class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <h3 id="openKanbanLabel">Choose Kanban Theme</h3>
+              </div>
+              <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label" for="kanbanTheme">Themes to choose from</label>
+                        <div class="controls">
+                          <select name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="theme for theme in model.themes">
+                          </select>
+                       </div>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-primary" type="submit" ng-click="switchTeme()">Switch</button>
+              </div>
+            </form>
+          </script>
     </section>
 </div>
 <footer>
@@ -224,6 +247,7 @@
         <script src="scripts/directives/colorSelector.js"></script>
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
+        <script src="scripts/controllers/SwitchThemeController.js"></script>
         <!-- endbuild -->
 </body>
 </html>

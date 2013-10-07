@@ -47,6 +47,13 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 		return false;
 	};
 
+	$scope.selectTheme = function(){
+		$modal.open({
+			templateUrl: 'SelectTheme.html',
+			controller: 'SwitchThemeController'
+		});
+	};
+
 	$scope.$on('TriggerOpen', function(){
 		$scope.openKanban();
 	});

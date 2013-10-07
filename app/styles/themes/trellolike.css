@@ -1,0 +1,89 @@
+.row
+{
+    margin-left: 0;
+}
+.noDisplay
+{
+    display: none;
+}
+.error
+{
+    border-color: red;
+}
+a
+{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.card
+{
+    padding: 10px;
+    border: solid 1px #b9b9b9;
+    border-radius: 3px;
+    font-weight: 200;
+    list-style: none;
+}
+.cards
+{
+    margin: 0px;
+}
+.card
+{
+    cursor: pointer;
+    margin: 0px;
+    margin-top: 10px;
+}
+.card:hover {
+    border: solid 1px #205c7e;
+}
+.card a
+{
+    color: #393939;
+}
+.card a:hover
+{
+    cursor: pointer;
+    text-decoration: none;
+}
+.column
+{
+    background-color: #e3e3e3;
+    border-radius: 3px;
+    border-top: solid 2px #ffffff;
+    border-right: solid 2px #ffffff;
+    box-shadow: rgba(0,0,0,.0980392) 0 1px 10px 0;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+.columnHeader
+{
+    color: #333333;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 0;
+    padding: 0 3px;
+}
+.noMargin
+{
+    margin-bottom: 0;
+}
+.colorBox
+{
+    border: 1px solid #000;
+    display: inline-block;
+    height: 15px;
+    margin: 2px;
+    width: 15px;
+}
+.colorSelector .selected
+{
+    border: 2px solid red;
+}
+.default
+{
+    box-shadow: inset rgba(0,0,0,.0980392) 0 1px 10px 0;
+}
+.default-color
+{
+    background-color: #fff;
+}

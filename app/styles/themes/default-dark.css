@@ -4,42 +4,50 @@
 .noDisplay { display: none; }
 .error { border-color: red;}
 a { padding-left: 2px; padding-right: 2px;}
+.navbar { background-image: linear-gradient(to bottom, #222222, #111111); }
+.navbar .brand { text-shadow: none; color: #ddd;}
+.navbar .nav > li > a { text-shadow: none; color: #ddd;}
+.navbar .nav > li > a:hover, .navbar .nav > li > a:focus { color: #fff;}
+
+.navbar-inner { background-image: linear-gradient(to bottom, #222222, #111111);}
+body { background-color: #bbb; }
 
 .card {
     padding: 10px;
     font-weight: 200;
 
-    border: solid 1px #ffffff;
+    border: solid 1px #555;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     list-style: none;
 
-    -webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px; 
-    box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+    -webkit-box-shadow: inset rgba(0, 0, 0, 0.35) 0px 2px 10px 0px; 
+    box-shadow: inset rgba(0, 0, 0, 0.35) 0px 2px 10px 0px;
+    margin: 2px;
+    cursor: move;
 }
 .cards { margin: 0px;}
-.card { margin: 0px; cursor: move;}
 .card a { color: #444; }
 .card a:hover { text-decoration: none; cursor: pointer; color: #777;}
 
 .column {
-    border: solid 1px #ffffff;
+    border: solid 1px #444;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     margin-left: 10px;
     
-    background-color: #f9f9f9;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
-    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+    background-color: #666;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.7) 0px 1px 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 1px 10px 0px;
 }
 
 .columnHeader { 
     margin: 10px 0px;
     padding: 0px 3px;
     font-size: 15px;
-    color: #777;
+    color: #fff;
 }
 
 .noMargin { margin-bottom: 0px;}
@@ -54,12 +62,5 @@ a { padding-left: 2px; padding-right: 2px;}
  .colorSelector .selected {
     border: 2px solid red;
  }
-/* TAGS */
-
-.default { 
-    -webkit-box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
-    box-shadow: inset rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
-}
-.default-color { background-color: #ffffff; }
 
 

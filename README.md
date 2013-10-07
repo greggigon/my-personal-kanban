@@ -17,12 +17,15 @@ There is no need to be connected to Internet to use it. You can run it in any mo
 
 ### Functionality
 
-TThe functionality is very simple and basic. For a short screencast demo you can navigate to [Github pages](http://greggigon.github.io/my-personal-kanban/) .
+The functionality is very simple and basic. For a short screencast demo you can navigate to [Github pages](http://greggigon.github.io/my-personal-kanban/) .
 
 Kanban boards with 2,3,4 and 6 columns, name columns and delete kanban.
 
 You can add cards to columns and drag them between columns as well as remove them.
 
+## Adding Themes
+
+Themes are just a simple CSS files. They should be put in the __styles/themes__ folder. New Theme should be added to __scripts/themes.js__ file. Also, a Theme image (jpg) can be placed in __img/themes__ folder. Name of the image should be the same as the __css__ attribute in the themes.js file.
 
 ## A bit of history
 

@@ -9,7 +9,6 @@ var SwitchThemeController = function ($scope, $modalInstance, themesProvider, ka
 	}
 	$scope.model.selectedTheme = theme;
 	
-	$scope.$watch('model.selectedTheme', function(newvalue){ console.log(newvalue);});
 	$scope.close = function(){
 		$modalInstance.close();
 	};

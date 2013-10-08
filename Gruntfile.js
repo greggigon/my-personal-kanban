@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         tasks: ['coffee:test']
       },
       styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        files: ['<%= yeoman.app %>/styles/*.css'],
         tasks: ['copy:styles', 'autoprefixer']
       },
       livereload: {
@@ -163,7 +163,7 @@ module.exports = function (grunt) {
         files: {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/styles/{,*/}*.css',
+            '<%= yeoman.dist %>/styles/*.css',
             '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
@@ -178,7 +178,7 @@ module.exports = function (grunt) {
     },
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      css: ['<%= yeoman.dist %>/styles/*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
       }
@@ -247,8 +247,10 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
-            'img/{,*/}*.{gif,png,webp}',
+            'img/{,*/}*.{gif,png,webp,jpg}',
             'styles/fonts/*',
+            'styles/themes/*.css',
+            'scripts/themes.js',
             'bower_components/angular/**/*.min.js',
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
             'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',

@@ -9,7 +9,10 @@ a { padding-left: 2px; padding-right: 2px;}
 .navbar .nav > li > a { text-shadow: none; color: #ddd;}
 .navbar .nav > li > a:hover, .navbar .nav > li > a:focus { color: #fff;}
 
-.navbar-inner { background-image: linear-gradient(to bottom, #222222, #111111);}
+.navbar-inner { 
+    background-image: linear-gradient(to bottom, #222222, #111111); 
+    background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#111111));
+}
 body { background-color: #bbb; }
 
 .card {

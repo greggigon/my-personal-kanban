@@ -14,6 +14,7 @@
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         
         <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
@@ -142,13 +143,13 @@
                         <div class="control-group">
                             <label class="control-label" for="newCardTitle">Kanban card title</label>
                             <div class="controls">
-                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required class="input-xlarge" focus-me/>
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
                             <div class="controls">
-                                <textarea id="newCardDetails" ng-model="details" class="input-xlarge" rows="5">
+                                <textarea id="newCardDetails" ng-model="details" class="cardInputs" rows="7">
                                 </textarea>
                             </div>
                         </div>
@@ -175,14 +176,25 @@
                         <div class="control-group">
                             <label class="control-label" for="cardTitle">Kanban card title</label>
                             <div class="controls">
-                              <input type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="input-xlarge" />
+                              <ng-form ng-submit="editingTitle = false">
+                              <div>
+                                <input name="cardTitle" type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="cardInputs" ng-disabled="!editingTitle" focus-me />
+                                <a href="#editTitle" title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="icon-pencil"></i></a>                              
+                                <a href="#editTitle" title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="icon-ok"></i></a>
+                              </ng-form>
+                              </div>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="details">More details <small>(optional)</small></label>
-                            <div class="controls">
-                                <textarea id="details" ng-model="details" class="input-xlarge" rows="10">
+                            <label class="control-label" for="cardTitle">Details</label>
+
+                            <div class="controls clearfix">
+                                <textarea id="details" ng-model="details" class="cardInputs" rows="7" ng-show="editDetails">
                                 </textarea>
+                                <div class="cardDetails cardInputs pull-left" ng-show="!editDetails" ng-bind-html="details|linky|cardDetails"></div>
+
+                                <a href="#editDetails" title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="icon-pencil"></i></a>                              
+                                <a href="#editDetails" title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="icon-ok"></i></a>
                             </div>
                         </div>
                         <div class="control-group">
@@ -229,6 +241,7 @@
 
         <script src="bower_components/jquery/jquery.min.js"></script>
         <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
@@ -253,6 +266,7 @@
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
         <script src="scripts/controllers/SwitchThemeController.js"></script>
+        <script src="scripts/filters/cardDetails.js"></script>
         <!-- endbuild -->
 </body>
 </html>

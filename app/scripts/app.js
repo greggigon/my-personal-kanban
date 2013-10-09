@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mpk', ['ui.bootstrap']);
+angular.module('mpk', ['ui.bootstrap', 'ngSanitize']);

@@ -1,0 +1,11 @@
+
+.cardInputs { width: 450px; color: #555555; }
+
+.cardDetails { 
+  border: 1px solid #CCCCCC;
+  padding: 4px 6px;
+  height: 150px;
+  margin-bottom: 0px;
+  overflow: auto;
+  background-color: #eeeeee;
+}

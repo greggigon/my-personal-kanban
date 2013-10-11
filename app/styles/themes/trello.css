@@ -3018,6 +3018,11 @@ button.btn.btn-mini,input[type=submit].btn.btn-mini
 	background-repeat: repeat-x;
 	border-radius: 4px;
 	box-shadow: 0 1px 4px rgba(0,0,0,.065);
+	background-image: -moz-linear-gradient(top, #f0f0f0, #f0f0f0);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f0f0f0), to(#f0f0f0));
+	background-image: -webkit-linear-gradient(top, #f0f0f0, #f0f0f0);
+	background-image: -o-linear-gradient(top, #f0f0f0, #f0f0f0);
+	background-image: linear-gradient(to bottom, #f0f0f0, #f0f0f0);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
 	min-height: 40px;
 	padding-left: 20px;

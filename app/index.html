@@ -53,7 +53,7 @@
               <li class="dropdown"> 
                 <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#"><i class="icon-wrench"></i> Setup</a></li>
+                  <li><a href="#" ng-click="openCloudSetup()"><i class="icon-wrench"></i> Setup</a></li>
                   <li><a href="#"><i class="icon-upload"></i> Upload</a></li>
                   <li><a href="#"><i class="icon-download"></i> Download</a></li>
                 </ul>
@@ -243,6 +243,27 @@
               </div>
             </form>
           </script>
+
+          <script type="text/ng-template" id="SetupCloudModal.html">
+            <form ng-submit="saveSettings()" name="cloudSettings" class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <h3>Cloud Setup</h3>
+              </div>
+              <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label" for="kanbanTheme"></label>
+                        <div class="controls">
+                      
+                       </div>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-primary" type="submit" ng-click="switchTheme()">Save settings</button>
+              </div>
+            </form>
+          </script>
     </section>
 </div>
 <footer>
@@ -274,7 +295,8 @@
         <script src="scripts/controllers/NewKanbanCardController.js"></script>
         <script src="scripts/controllers/KanbanController.js"></script>
         <script src="scripts/controllers/CloudMenuController.js"></script>
-        <script src="scripts/controllers/SwitchThemeController.js"></script>        
+        <script src="scripts/controllers/SwitchThemeController.js"></script>  
+        <script src="scripts/controllers/SetupCloudController.js"></script>
 
         <script src="scripts/directives/colorSelector.js"></script>
         <script src="scripts/directives/focusMe.js"></script>

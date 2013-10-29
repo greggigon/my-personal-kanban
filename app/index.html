@@ -36,7 +36,7 @@
             <div class="brand"><span id="kanbanName" ng-model="kanban">{{kanban.name}}</span></div>
             <ul class="nav pull-right" id="menu" ng-controller="MenuController">
                 <li class="dropdown">
-                    <a href="#" id="saveKanban" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
+                    <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="icon-briefcase"></i> New</a>
                         </li>
@@ -48,6 +48,16 @@
                         <li><a href="#sync" class="btn btn-link disabled"><i class="icon-refresh"></i> Synchronize</a></li>
                     </ul>
                 </li>
+            </ul>
+            <ul class="nav pull-right" id="cloudMenu" >
+              <li class="dropdown"> 
+                <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-wrench"></i> Setup</a></li>
+                  <li><a href="#"><i class="icon-upload"></i> Upload</a></li>
+                  <li><a href="#"><i class="icon-download"></i> Download</a></li>
+                </ul>
+              </li>
             </ul>
         </div>
      </div>

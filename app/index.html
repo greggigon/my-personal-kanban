@@ -251,11 +251,21 @@
                 <h3>Cloud Setup</h3>
               </div>
               <div class="modal-body">
+                    <div class="alert alert-info">
+                      <small>It is possible to setup Cloud service for Your Personal Kanban. It enables Upload/Download and synchronization of your kanban between many computers and devices.</small>
+                      <p>You need to generate Kanban Key, unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="" target="blank">http://localhost:8080/</a></p>
+                    </div>
                     <div class="control-group">
-                        <label class="control-label" for="kanbanTheme"></label>
+                        <label class="control-label" for="kanbanKey">Kanban key:</label>
                         <div class="controls">
-                      
+                          <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey"/>
                        </div>
+                    </div>
+              </div>              
+              <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label" for="">Always sync</label>
+                        
                     </div>
               </div>
               <div class="modal-footer">

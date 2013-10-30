@@ -9,14 +9,14 @@ angular.module('mpk').factory('cloudService', function($http) {
 				this.settings.notSetup = true;
 				return this.settings;
 			}
-			this.settings = settings;
+			this.settings = angular.fromJson(settings);
 			this.settings.notSetup = false;
 			return this.settings;
 		},
 
 		saveSettings: function(settings){
 			this.settings = settings;
-			localStorage.setItem('myPersonalKanban.cloudSettings', this.settings);
+			localStorage.setItem('myPersonalKanban.cloudSettings', angular.toJson(this.settings));
 			return this.settings;
 		},
 

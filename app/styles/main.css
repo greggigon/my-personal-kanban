@@ -9,3 +9,11 @@
   overflow: auto;
   background-color: #eeeeee;
 }
+
+input.kanbanKey {
+	width: 98%; 
+	color: #555555;
+	font-weight: bold;
+	padding-right: 0px;
+	font-size: 1.5em;
+}

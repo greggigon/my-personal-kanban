@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function () {
+angular.module('mpk').factory('kanbanRepository', function (cloudService) {
   return {
     kanbansByName : {},
     lastUsed : '',
     theme: 'default-bright',
+    lastUpdated: 0,
     
     add: function(kanban){
       this.kanbansByName[kanban.name] = kanban;
@@ -27,8 +28,12 @@ angular.module('mpk').factory('kanbanRepository', function () {
       return this.kanbansByName;
     },
 
+    prepareSerializedKanbans: function(){
+      return angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed, theme: this.theme, lastUpdated: this.lastUpdated}, false);
+    },
+
     save: function(){
-      localStorage.setItem('myPersonalKanban', angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed, theme: this.theme}, false));
+      localStorage.setItem('myPersonalKanban', this.prepareSerializedKanbans());
       return this.kanbansByName;
     },
 
@@ -40,6 +45,7 @@ angular.module('mpk').factory('kanbanRepository', function () {
       this.kanbansByName = saved.kanbans;
       this.lastUsed = saved.lastUsed;
       this.theme = saved.theme;
+      this.lastUpdated = saved.lastUpdated;
       return this.kanbansByName;
     },
 
@@ -63,6 +69,16 @@ angular.module('mpk').factory('kanbanRepository', function () {
       this.theme = theme;
       this.save();
       return this.theme;
+    },
+
+    upload: function(){
+      var lastUpdated = cloudService.uploadKanban(this.prepareSerializedKanbans());
+      console.log(lastUpdated);
+      //this.lastUpdated = lastUpdated;
+      this.save();
+    },
+    download: function(){
+
     }
   };
 });

@@ -44,8 +44,6 @@
                         </li>
                         <li><a href="#delete" title="Delete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
                         <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="icon-wrench"></i> Themes</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#sync" class="btn btn-link disabled"><i class="icon-refresh"></i> Synchronize</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,9 +51,9 @@
               <li class="dropdown"> 
                 <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#" ng-click="openCloudSetup()"><i class="icon-wrench"></i> Setup</a></li>
-                  <li><a href="#"><i class="icon-upload"></i> Upload</a></li>
-                  <li><a href="#"><i class="icon-download"></i> Download</a></li>
+                  <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="icon-wrench"></i> Setup</a></li>
+                  <li><a href="#upload" ng-click="upload()"><i class="icon-upload"></i> Upload</a></li>
+                  <li><a href="#download"><i class="icon-download"></i> Download</a></li>
                 </ul>
               </li>
             </ul>
@@ -290,12 +288,13 @@
         <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/md5.js"></script>
         <script src="scripts/model.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/cloudService.js"></script>        
         <script src="scripts/services/kanbanRepository.js"></script>
         <script src="scripts/services/kanbanManipulator.js"></script>
         <script src="scripts/services/themesProvider.js"></script>
-        <script src="scripts/services/cloudService.js"></script>        
         
         <script src="scripts/controllers/ApplicationController.js"></script>
         <script src="scripts/controllers/MenuController.js"></script>
@@ -312,6 +311,7 @@
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
         <script src="scripts/filters/cardDetails.js"></script>
+        <script src="scripts/services/cryptoService.js"></script>
         <!-- endbuild -->
 </body>
 </html>

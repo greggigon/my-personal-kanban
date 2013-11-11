@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout) {
+angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout, cryptoService) {
 	return {
 		settings: {notLoaded: true},
 		loadSettings: function() {
@@ -41,13 +41,18 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			};
 
 			function sendChunk(chunk, chunkNumber){
-				var compressed = compressString(chunk);
 				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', chunk: chunk, chunkNumber:chunkNumber};
 
 				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
-			}
+			};
 
-			
+			function checkKanbanValidity(kanban){
+				var hash = cryptoService.md5Hash(kanban);
+				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', hash: hash};
+
+				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params}); 
+			};
+
 
 			var kanbanInChunks = splitSlice(kanban, 1500);
 			var promise = sendStart(kanbanInChunks.length);
@@ -62,6 +67,11 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				$q.all(promises).then(function(allPromiseResults){
 					// there was no error, probably need to fetch the last-updated and save it to local storage
 					console.log('Upload succesfull. Checking MD5 now');
+					checkKanbanValidity(kanban).then(function(data){
+						console.log('Yupi ' + data);
+					}, function(error){
+						console.error('There be dragons'+error);
+					});
 				}, function(errors){ 
 					// there should be no errors, if there are errors we need to set some shit
 					console.error('One of the uplaods failed. ' + errors);

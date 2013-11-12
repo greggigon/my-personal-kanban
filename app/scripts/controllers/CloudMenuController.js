@@ -11,5 +11,10 @@ var CloudMenuController = function($scope, $modal, kanbanRepository){
 	$scope.upload = function(){
 		kanbanRepository.upload();
 		return false;
-	}
+	};
+
+	$scope.download = function(){
+		kanbanRepository.download();
+		return false;
+	};
 };

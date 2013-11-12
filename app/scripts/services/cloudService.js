@@ -41,6 +41,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			};
 
 			function sendChunk(chunk, chunkNumber){
+				console.log(chunk, chunkNumber);
 				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', chunk: chunk, chunkNumber:chunkNumber};
 
 				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
@@ -55,41 +56,16 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 
 
 			var kanbanInChunks = splitSlice(kanban, 1500);
+
 			var promise = sendStart(kanbanInChunks.length);
-			
-			promise.then(function(){
-				var promises = [];
-
-				for (var i=0;i<kanbanInChunks.length;i++){
-					promises.push(sendChunk(kanbanInChunks[i], i + 1));
-				}
-
-				$q.all(promises).then(function(allPromiseResults){
-					// there was no error, probably need to fetch the last-updated and save it to local storage
-					console.log('Upload succesfull. Checking MD5 now');
-					checkKanbanValidity(kanban).then(function(data){
-						console.log('Yupi ' + data);
-					}, function(error){
-						console.error('There be dragons'+error);
-					});
-				}, function(errors){ 
-					// there should be no errors, if there are errors we need to set some shit
-					console.error('One of the uplaods failed. ' + errors);
-				});
-			}, function(error){
-				// Initial handshake has errored
-				console.error('Initial handshake errored when trying to upload Kanban');
+			angular.forEach(kanbanInChunks, function(value, index){
+				promise = promise.then(function(){ return sendChunk(value, index + 1)});
 			});
 
 
-
-			// Split the Kanban string into multiple request
-			// upload start with /action:put, fragments: 41, kanban: ''
-			// upload fragments /action:put, fragment: 1, kanban: 'sdasdad'
-			// upload finish with /action:put, fragment : 41, kanban: 'last one' 
-
-			// HASH every single kanban slice, perhaps compress with something.
-
+			return promise.then(function(){
+				return checkKanbanValidity(kanban);
+			});
 		},
 	};
 });

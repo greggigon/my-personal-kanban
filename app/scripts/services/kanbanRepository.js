@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function (cloudService) {
+angular.module('mpk').factory('kanbanRepository', function (cloudService, $q ) {
   return {
     kanbansByName : {},
     lastUsed : '',
@@ -72,12 +72,17 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
     },
 
     upload: function(){
-      var lastUpdated = cloudService.uploadKanban(this.prepareSerializedKanbans());
-      console.log(lastUpdated);
-      //this.lastUpdated = lastUpdated;
+      var promise = cloudService.uploadKanban(this.prepareSerializedKanbans());
+      $q.all(promise).then(function(data){
+        console.log('Git');
+        console.log(data[data.length-1]);
+      }, function(errors){
+        console.log('Shit');
+        console.log(error);
+      });
       this.save();
     },
-    download: function(){
+    download: function(kanban){
 
     }
   };

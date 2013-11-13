@@ -1,6 +1,6 @@
 'use strict';
 
-var CloudMenuController = function($scope, $modal, kanbanRepository){
+var CloudMenuController = function($scope, $modal, kanbanRepository, $q){
 	$scope.openCloudSetup = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'SetupCloudModal.html',
@@ -9,7 +9,16 @@ var CloudMenuController = function($scope, $modal, kanbanRepository){
 	};
 
 	$scope.upload = function(){
-		kanbanRepository.upload();
+		var promise = kanbanRepository.upload();
+		promise.success(function(result){
+			var lastUpdated = result.data.lastUpdated;
+			kanbanRepository.setLastUpdated(lastUpdated).save();
+
+		}).error(function(failures){
+
+			console.log('Failure');
+			console.log(failures);
+		});
 		return false;
 	};
 

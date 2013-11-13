@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function (cloudService, $q ) {
+angular.module('mpk').factory('kanbanRepository', function (cloudService) {
   return {
     kanbansByName : {},
     lastUsed : '',
@@ -71,17 +71,18 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService, $q ) {
       return this.theme;
     },
 
+    /**
+    * returns the Promise from the chained calls (just in case I freaking forget)
+    */
     upload: function(){
-      var promise = cloudService.uploadKanban(this.prepareSerializedKanbans());
-      $q.all(promise).then(function(data){
-        console.log('Git');
-        console.log(data[data.length-1]);
-      }, function(errors){
-        console.log('Shit');
-        console.log(error);
-      });
-      this.save();
+      return cloudService.uploadKanban(this.prepareSerializedKanbans());
     },
+
+    setLastUpdated: function(updated){
+      this.lastUpdated = updated;
+      return this;
+    },
+
     download: function(kanban){
 
     }

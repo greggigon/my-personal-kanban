@@ -17,3 +17,8 @@ input.kanbanKey {
 	padding-right: 0px;
 	font-size: 1.5em;
 }
+
+#info {
+  padding: 10px 15px;
+  color: #fff;
+}

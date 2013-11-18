@@ -57,6 +57,11 @@
                 </ul>
               </li>
             </ul>
+            <div id="info" class="nav pull-right" ng-show="showInfo">
+              <span id="message" class="">{{infoMessage}}</span>
+              <span id="spinner"></span>
+            </div>
+
         </div>
      </div>
 </header>
@@ -279,12 +284,13 @@
 </footer>
 
         <script src="bower_components/jquery/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
         <script src="bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js"></script>
+        <script src="bower_components/spinjs/dist/spin.min.js"></script>
         <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->

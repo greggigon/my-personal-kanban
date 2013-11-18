@@ -20,7 +20,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			return this.settings;
 		},
 
-		uploadKanban: function(kanban, status){
+		uploadKanban: function(kanban){
 			if (this.settings.notLoaded) {
 				this.loadSettings();
 			}
@@ -53,12 +53,13 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params}); 
 			};
 
-
 			var kanbanInChunks = splitSlice(kanban, 1500);
 
 			var promise = sendStart(kanbanInChunks.length);
 			angular.forEach(kanbanInChunks, function(value, index){
-				promise = promise.then(function(){ return sendChunk(value, index + 1)});
+				promise = promise.then(function(){ 
+					return sendChunk(value, index + 1);
+				});
 			});
 
 

@@ -2,6 +2,7 @@
 var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider) {
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
+	// <-------- Handling different events in this block ---------------> //
 	$scope.$on('ChangeCurrentKanban', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
@@ -19,6 +20,17 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.kanban = undefined;
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 	});
+
+	$scope.$on('UploadStarted', function(){
+		$scope.infoMessage = 'Uploading Kanban ...';
+		$scope.showInfo = true;
+	});
+
+	$scope.$on('UploadFinished', function(){
+		$scope.infoMessage = '';
+		$scope.showInfo = false;
+	});
+	// <-------- Handling different events in this block ---------------> //
 
 	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();

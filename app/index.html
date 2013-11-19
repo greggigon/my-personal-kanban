@@ -59,7 +59,7 @@
             </ul>
             <div id="info" class="nav pull-right" ng-show="showInfo">
               <span id="message" class="">{{infoMessage}}</span>
-              <span id="spinner"></span>
+              <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
             </div>
 
         </div>
@@ -318,6 +318,7 @@
         <script src="scripts/directives/sortable.js"></script>
         <script src="scripts/filters/cardDetails.js"></script>
         <script src="scripts/services/cryptoService.js"></script>
+        <script src="scripts/directives/spin.js"></script>
         <!-- endbuild -->
 </body>
 </html>

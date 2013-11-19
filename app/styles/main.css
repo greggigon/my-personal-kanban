@@ -20,5 +20,8 @@ input.kanbanKey {
 
 #info {
   padding: 10px 15px;
-  color: #fff;
+  color: #8a8a8a;
+  margin-right: 30px;
 }
+
+#info .spinner { padding: 10px 15px; left: 0px;}

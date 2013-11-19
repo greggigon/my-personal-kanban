@@ -24,14 +24,16 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.$on('UploadStarted', function(){
 		$scope.infoMessage = 'Uploading Kanban ...';
 		$scope.showInfo = true;
+		$scope.showSpinner = true;
 	});
 
 	$scope.$on('UploadFinished', function(){
 		$scope.infoMessage = '';
 		$scope.showInfo = false;
+		$scope.showSpinner = false;
 	});
 	// <-------- Handling different events in this block ---------------> //
-
+	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
 	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();
 

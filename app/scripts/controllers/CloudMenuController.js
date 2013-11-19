@@ -1,6 +1,6 @@
 'use strict';
 
-var CloudMenuController = function($scope, $modal, kanbanRepository){
+var CloudMenuController = function($scope, $modal, kanbanRepository, $log){
 	$scope.openCloudSetup = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'SetupCloudModal.html',
@@ -13,16 +13,26 @@ var CloudMenuController = function($scope, $modal, kanbanRepository){
 		$scope.$emit('UploadStarted');
 		promise.then(function(result){
 			kanbanRepository.setLastUpdated(result.data.lastUpdated).save();
-			// stop spinner, flash uploaded, save last updated
 			$scope.$emit('UploadFinished');
 		}, function(errors){ 
-			// stop spinner show error message
+			$scope.$emit('UploadError');
 		});
 		return false;
 	};
 
 	$scope.download = function(){
-		kanbanRepository.download();
+		$scope.$emit('DownloadStarted');
+		var promise = kanbanRepository.download();
+		promise.success(function(data){
+			if (data.success){
+				kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated);
+				$scope.$emit('DownloadFinished');
+			} else {
+				$scope.$emit('DownloadFinishedWithError', data.error);
+			}
+		}).error(function(data, status, headers, config){
+			$scope.$emit('DownloadError', data);
+		});
 		return false;
 	};
 };

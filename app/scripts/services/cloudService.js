@@ -20,6 +20,14 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			return this.settings;
 		},
 
+		downloadKanban: function(){
+			if (this.settings.notLoaded) {
+				this.loadSettings();
+			}
+			var params = {kanbanKey: this.settings.kanbanKey, action: 'get'};
+			return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
+		},
+
 		uploadKanban: function(kanban){
 			if (this.settings.notLoaded) {
 				this.loadSettings();

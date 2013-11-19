@@ -22,6 +22,8 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	});
 
 	$scope.$on('UploadStarted', function(){
+		$scope.errorMessage = '';
+		$scope.showError = false;
 		$scope.infoMessage = 'Uploading Kanban ...';
 		$scope.showInfo = true;
 		$scope.showSpinner = true;
@@ -32,8 +34,44 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.showInfo = false;
 		$scope.showSpinner = false;
 	});
+
+	$scope.$on('UploadError', function(){
+		$scope.infoMessage = '';
+		$scope.showInfo = true;
+		$scope.showSpinner = false;
+		$scope.showError = true;
+		$scope.errorMessage = 'There was a problem uploading your Kanban.';
+	});
+
+	$scope.$on('DownloadStarted', function(){
+		$scope.infoMessage = 'Downloading your Kanban ...';
+		$scope.showSpinner = true;
+		$scope.showError = false;
+		$scope.errorMessage = '';
+	});
+
+	$scope.$on('DownloadFinished', function(){
+		$window.location.reload();
+	});
+
+	$scope.$on('DownloadFinishedWithError', function(event, error){
+		$scope.infoMessage = '';
+		$scope.showInfo = true;
+		$scope.showError = true;
+		$scope.showSpinner = false;
+		$scope.errorMessage = error;
+	});
+
+	$scope.$on('DownloadError', function(){
+		$scope.infoMessage = '';
+		$scope.showInfo = true;
+		$scope.showError = true;
+		$scope.showSpinner = false;
+		$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
+	});
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
+
 	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();
 

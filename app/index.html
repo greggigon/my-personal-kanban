@@ -53,11 +53,12 @@
                 <ul class="dropdown-menu">
                   <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="icon-wrench"></i> Setup</a></li>
                   <li><a href="#upload" ng-click="upload()"><i class="icon-upload"></i> Upload</a></li>
-                  <li><a href="#download"><i class="icon-download"></i> Download</a></li>
+                  <li><a href="#download" ng-click="download()"><i class="icon-download"></i> Download</a></li>
                 </ul>
               </li>
             </ul>
             <div id="info" class="nav pull-right" ng-show="showInfo">
+              <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
               <span id="message" class="">{{infoMessage}}</span>
               <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
             </div>
@@ -265,12 +266,6 @@
                        </div>
                     </div>
               </div>              
-              <div class="modal-body">
-                    <div class="control-group">
-                        <label class="control-label" for="">Always sync</label>
-                        
-                    </div>
-              </div>
               <div class="modal-footer">
                 <button class="btn" type="button" ng-click="close()">Close</button>
                 <button class="btn btn-primary" type="submit" ng-click="switchTheme()">Save settings</button>

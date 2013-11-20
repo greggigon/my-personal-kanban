@@ -255,16 +255,18 @@
                 <h3>Cloud Setup</h3>
               </div>
               <div class="modal-body">
-                    <div class="alert alert-info">
-                      <small>It is possible to setup Cloud service for Your Personal Kanban. It enables Upload/Download and synchronization of your kanban between many computers and devices.</small>
-                      <p>You need to generate Kanban Key, unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="" target="blank">http://localhost:8080/</a></p>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="kanbanKey">Kanban key:</label>
-                        <div class="controls">
-                          <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey"/>
-                       </div>
-                    </div>
+                <div class="alert alert-error" ng-show="model.showConfigurationError">
+                  <p>In order to user Cloud Upload and Download functionality, you need to generate Kanban Key, a unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="kanbanKey">Kanban key:</label>
+                    <div class="controls">
+                      <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey"/>
+                   </div>
+                </div>
+                <div class="alert alert-info">
+                  <small>It is possible to setup Cloud service for Your Personal Kanban. It enables Upload/Download and synchronization of your kanban between many computers and devices.</small>
+                </div>
               </div>              
               <div class="modal-footer">
                 <button class="btn" type="button" ng-click="close()">Close</button>
@@ -279,7 +281,7 @@
 </footer>
 
         <script src="bower_components/jquery/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>

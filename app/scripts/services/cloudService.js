@@ -75,5 +75,12 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				return checkKanbanValidity(kanban);
 			});
 		},
+
+		isConfigurationValid: function(){
+			if (this.settings.notLoaded) {
+				this.loadSettings();
+			}
+			return this.settings.kanbanKey != undefined && this.settings.kanbanKey != '';
+		}
 	};
 });

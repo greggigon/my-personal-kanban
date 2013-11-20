@@ -69,6 +69,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.showSpinner = false;
 		$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
 	});
+	
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
 

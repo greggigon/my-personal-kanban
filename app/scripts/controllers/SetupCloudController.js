@@ -1,7 +1,8 @@
 'use strict';
 
-var SetupCloudController = function($scope, $modalInstance, cloudService){
+var SetupCloudController = function($scope, $modalInstance, cloudService, showConfigurationError){
 	$scope.model = {};
+	$scope.model.showConfigurationError = showConfigurationError;
 
 	$scope.close = function(){
 		$modalInstance.close();

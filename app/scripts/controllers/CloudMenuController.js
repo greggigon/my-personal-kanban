@@ -1,14 +1,19 @@
 'use strict';
 
-var CloudMenuController = function($scope, $modal, kanbanRepository, $log){
-	$scope.openCloudSetup = function(){
+var CloudMenuController = function($scope, $modal, kanbanRepository, cloudService){
+	$scope.openCloudSetup = function(showConfigurationError){
 		var modalInstance = $modal.open({
 			templateUrl: 'SetupCloudModal.html',
-			controller: 'SetupCloudController'
+			controller: 'SetupCloudController',
+			resolve: { showConfigurationError: function(){ return showConfigurationError; }}
 		});
+		return false;
 	};
 
 	$scope.upload = function(){
+		if (!cloudService.isConfigurationValid()){
+			return $scope.openCloudSetup(true);
+		}
 		var promise = kanbanRepository.upload();
 		$scope.$emit('UploadStarted');
 		promise.then(function(result){
@@ -21,6 +26,9 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, $log){
 	};
 
 	$scope.download = function(){
+		if (!cloudService.isConfigurationValid()){
+			return $scope.openCloudSetup(true);
+		}
 		$scope.$emit('DownloadStarted');
 		var promise = kanbanRepository.download();
 		promise.success(function(data){

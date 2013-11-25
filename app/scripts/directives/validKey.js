@@ -4,9 +4,7 @@ angular.module('mpk').directive('validKey', function ($http) {
     return {
       require: 'ngModel',
       link: function (scope, element, attrs, ctrl) {
-		//element.bind('blur', validate);
 		
-
         function validate() {
         	var key = element.val();
 			var params = {kanbanKey: key, action: 'get'};
@@ -16,8 +14,7 @@ angular.module('mpk').directive('validKey', function ($http) {
 			}).error(function(){
 				ctrl.$setValidity('validKeyUnableToVerify', false);
 			});
-			
-        }
+        };
 
 		scope.$watch(attrs.ngModel, validate);
 

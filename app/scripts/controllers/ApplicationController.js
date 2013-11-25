@@ -35,6 +35,16 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.showSpinner = false;
 	});
 
+	function handleErrorUploadDownload(event, errorMessage){
+		$scope.infoMessage = '';
+		$scope.showInfo = true;
+		$scope.showError = true;
+		$scope.showSpinner = false;
+		$scope.errorMessage = errorMessage;
+	}
+
+	$scope.$on('UploadFinishedWithErrors', handleErrorUploadDownload);
+
 	$scope.$on('UploadError', function(){
 		$scope.infoMessage = '';
 		$scope.showInfo = true;
@@ -54,13 +64,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$window.location.reload();
 	});
 
-	$scope.$on('DownloadFinishedWithError', function(event, error){
-		$scope.infoMessage = '';
-		$scope.showInfo = true;
-		$scope.showError = true;
-		$scope.showSpinner = false;
-		$scope.errorMessage = error;
-	});
+	$scope.$on('DownloadFinishedWithError', handleErrorUploadDownload);
 
 	$scope.$on('DownloadError', function(){
 		$scope.infoMessage = '';

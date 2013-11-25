@@ -17,8 +17,13 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 		var promise = kanbanRepository.upload();
 		$scope.$emit('UploadStarted');
 		promise.then(function(result){
-			kanbanRepository.setLastUpdated(result.data.lastUpdated).save();
-			$scope.$emit('UploadFinished');
+			if (result.data.success){
+				kanbanRepository.setLastUpdated(result.data.lastUpdated).save();
+				$scope.$emit('UploadFinished');
+			} else {
+				$scope.$emit('UploadFinishedWithErrors', result.data.error);
+				console.error(result);
+			}
 		}, function(errors){ 
 			$scope.$emit('UploadError');
 		});

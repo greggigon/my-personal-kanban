@@ -83,6 +83,10 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
       return this;
     },
 
+    getLastUpdated: function(){
+      return this.lastUpdated;
+    },
+
     download: function(){
       return cloudService.downloadKanban();
     },
@@ -94,7 +98,7 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
       this.theme = fromCloud.theme;
       this.lastUpdated = lastUpdated;
       this.save();
-      
+
       return this; 
     }
 

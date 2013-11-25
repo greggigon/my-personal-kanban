@@ -256,21 +256,24 @@
               </div>
               <div class="modal-body">
                 <div class="alert alert-error" ng-show="model.showConfigurationError">
-                  <p>In order to user Cloud Upload and Download functionality, you need to generate Kanban Key, a unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
+                  <p>In order to use Cloud Upload and Download functionality, you need to generate Kanban Key, a unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="kanbanKey">Kanban key:</label>
                     <div class="controls">
-                      <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey"/>
+                      <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey" placeholder="Cloud Kanban key" valid-key />
+                      <span class="text-error" ng-show="cloudSettings.kanbanKey.$error.validKey">Provided key is invalid</span>
+                      <span class="text-error" ng-show="cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Unable to validate key. You might not be connected to the Internet or unable to access <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></span>
+
                    </div>
                 </div>
-                <div class="alert alert-info">
-                  <small>It is possible to setup Cloud service for Your Personal Kanban. It enables Upload/Download and synchronization of your kanban between many computers and devices.</small>
+                <div class="alert alert-info" ng-hide="model.showConfigurationError">
+                  <p>If you need to retrieve your kanban key or generate a new one go to <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
               </div>              
               <div class="modal-footer">
                 <button class="btn" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-click="switchTheme()">Save settings</button>
+                <button class="btn btn-primary" type="submit" ng-disabled="cloudSettings.kanbanKey.$error.validKey || cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Save settings</button>
               </div>
             </form>
           </script>
@@ -316,6 +319,7 @@
         <script src="scripts/filters/cardDetails.js"></script>
         <script src="scripts/services/cryptoService.js"></script>
         <script src="scripts/directives/spin.js"></script>
+        <script src="scripts/directives/validKey.js"></script>
         <!-- endbuild -->
 </body>
 </html>

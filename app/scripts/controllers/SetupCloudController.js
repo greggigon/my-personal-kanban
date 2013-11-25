@@ -17,6 +17,10 @@ var SetupCloudController = function($scope, $modalInstance, cloudService, showCo
 		}
 	};
 
+	$scope.validateKanbanKey = function(){
+		// send request, get promise and see if it's any good. If it's good, it's good :)
+	};
+
 	var settings = cloudService.loadSettings();
 	
 	if (!settings.notSetup){

@@ -81,6 +81,10 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				this.loadSettings();
 			}
 			return this.settings.kanbanKey != undefined && this.settings.kanbanKey != '';
+		},
+
+		validateKanbanKey: function(kanbanKey){
+			return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params:{action:'key', kanbanKey: kanbanKey}});
 		}
 	};
 });

@@ -16,6 +16,7 @@ var mountFolder = function (connect, dir) {
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+  require('grunt-text-replace')(grunt);
 
   // configurable paths
   var yeomanConfig = {
@@ -323,7 +324,19 @@ module.exports = function (grunt) {
         },
         files: [{expand: true, cwd:'dist', src: ['**'], dest: 'my-personal-kanban'}]
       }
+    },
+
+    replace: {
+      'localhost_to_remote': {
+        src: ['<%= yeoman.dist %>/scripts/*.js'],             // source files array (supports minimatch)
+        dest: '<%= yeoman.dist %>/scripts/',             // destination directory or file
+        replacements: [{ 
+          from: 'http://localhost:8080',                   // string replacement
+          to: 'http://my-personal-kanban.appspot.com' 
+        }]
+      }
     }
+  
   });
 
   grunt.registerTask('server', function (target) {
@@ -360,6 +373,7 @@ module.exports = function (grunt) {
     'cssmin',
     'rev',
     'usemin',
+    'replace:localhost_to_remote',
     'compress'
   ]);
 

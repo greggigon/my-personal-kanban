@@ -327,14 +327,22 @@ module.exports = function (grunt) {
     },
 
     replace: {
-      'localhost_to_remote': {
+      'localhost_to_remote_in_js': {
         src: ['<%= yeoman.dist %>/scripts/*.js'],             // source files array (supports minimatch)
         dest: '<%= yeoman.dist %>/scripts/',             // destination directory or file
         replacements: [{ 
           from: 'http://localhost:8080',                   // string replacement
           to: 'http://my-personal-kanban.appspot.com' 
         }]
-      }
+      },      
+      'localhost_to_remote_in_html': {
+        src: ['<%= yeoman.dist %>/*.html'],             // source files array (supports minimatch)
+        dest: '<%= yeoman.dist %>/',             // destination directory or file
+        replacements: [{ 
+          from: 'http://localhost:8080',                   // string replacement
+          to: 'http://my-personal-kanban.appspot.com' 
+        }]
+      },
     }
   
   });
@@ -373,7 +381,8 @@ module.exports = function (grunt) {
     'cssmin',
     'rev',
     'usemin',
-    'replace:localhost_to_remote',
+    'replace:localhost_to_remote_in_js',
+    'replace:localhost_to_remote_in_html',
     'compress'
   ]);
 

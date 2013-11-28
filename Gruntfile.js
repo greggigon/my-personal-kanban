@@ -332,7 +332,7 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.dist %>/scripts/',             // destination directory or file
         replacements: [{ 
           from: 'http://localhost:8080',                   // string replacement
-          to: 'http://my-personal-kanban.appspot.com' 
+          to: 'https://my-personal-kanban.appspot.com' 
         }]
       },      
       'localhost_to_remote_in_html': {
@@ -340,7 +340,7 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.dist %>/',             // destination directory or file
         replacements: [{ 
           from: 'http://localhost:8080',                   // string replacement
-          to: 'http://my-personal-kanban.appspot.com' 
+          to: 'https://my-personal-kanban.appspot.com' 
         }]
       },
     }

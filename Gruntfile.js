@@ -1,6 +1,6 @@
 // Generated on 2013-09-12 using generator-angular 0.4.0
 'use strict';
-var APP_VERSION = '0.2.2';
+var APP_VERSION = '0.3.0';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
 var mountFolder = function (connect, dir) {
@@ -257,7 +257,8 @@ module.exports = function (grunt) {
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
             'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
-            'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js'
+            'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',
+            'bower_components/spinjs/dist/spin.min.js'
           ]
         }, {
           expand: true,

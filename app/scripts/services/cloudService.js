@@ -61,7 +61,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params}); 
 			};
 
-			var kanbanInChunks = splitSlice(kanban, 1500);
+			var kanbanInChunks = splitSlice(kanban, 1000);
 
 			var promise = sendStart(kanbanInChunks.length);
 			angular.forEach(kanbanInChunks, function(value, index){

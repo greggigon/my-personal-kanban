@@ -27,3 +27,5 @@ input.kanbanKey {
 #info .spinner { padding: 10px 15px; left: 0px;}
 #info .error { color: #FF9E9E;}
 #info #error a { color: #FF9E9E;}
+
+#message { float: left; }

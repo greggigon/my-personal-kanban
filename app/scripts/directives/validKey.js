@@ -7,10 +7,11 @@ angular.module('mpk').directive('validKey', function ($http) {
 		
         function validate() {
         	var key = element.val();
-			var params = {kanbanKey: key, action: 'get'};
+			var params = {kanbanKey: key, action: 'key'};
 
 			$http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params}).success(function(data){
-				ctrl.$setValidity('validKey', data.success)
+				console.log(data);
+				ctrl.$setValidity('validKey', data.success);
 			}).error(function(){
 				ctrl.$setValidity('validKeyUnableToVerify', false);
 			});

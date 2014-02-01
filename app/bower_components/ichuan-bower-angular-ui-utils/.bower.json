@@ -10,7 +10,6 @@
     "commit": "490a5c7889af99c2255e28908b8ed238a4816751"
   },
   "_source": "git://github.com/ichuan/bower-angular-ui-utils.git",
-  "_target": "~0.0.4",
-  "_originalSource": "ichuan-bower-angular-ui-utils",
-  "_direct": true
+  "_target": "0.0.4",
+  "_originalSource": "ichuan-bower-angular-ui-utils"
 }

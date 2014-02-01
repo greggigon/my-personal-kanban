@@ -18,6 +18,8 @@ input.kanbanKey {
 	font-size: 1.5em;
 }
 
+.cards { padding: 0px;}
+
 #info {
   padding: 10px 15px;
   color: #8a8a8a;

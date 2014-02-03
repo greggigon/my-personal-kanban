@@ -97,20 +97,20 @@
         <script type="text/ng-template" id="NewKanbanModal.html">
             <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
                 <div class="modal-header">
-                  <button type="button" class="close" ng-click="closeNewKanban()"><i class="icon-remove"></i></button>
+                  <button type="button" class="close" ng-click="closeNewKanban()"><i class="glyphicon glyphicon-remove"></i></button>
                   <h3 id="myModalLabel">New Kanban board</h3>
                 </div>
                 <div class="modal-body">
-                  <div class="control-group">
+                  <div class="form-group">
                       <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                      <div class="controls">
-                        <input type="text" id="kanbanNameFormField" placeholder="Kanban name" ng-model="kanbanName" required focus-me/>
+                      <div>
+                        <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
                       </div>
                     </div>
-                    <div class="control-group">
+                    <div class="form-group">
                       <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-                      <div class="controls">
-                        <select id="numberOfColumnsField" ng-model="numberOfColumns">
+                      <div>
+                        <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
                           <option>2</option>
                           <option selected="selected">3</option>
                           <option>4</option>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn" ng-click="closeNewKanban()">Close</button>
+                  <button type="button" class="btn btn-default" ng-click="closeNewKanban()">Close</button>
                   <button type="submit" class="btn btn-primary" >Create new</button>
                 </div>
             </form>
@@ -129,20 +129,20 @@
           <script type="text/ng-template" id="OpenKanban.html">
             <form ng-submit="open()" name="openKanbanForm" class="noMargin">
               <div class="modal-header">
-                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
                 <h3 id="openKanbanLabel">Open another Kanban</h3>
               </div>
               <div class="modal-body">
-                    <div class="control-group">
+                    <div class="form-group">
                         <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                        <div class="controls">
-                            <select name="selectedToOpen" ng-model="selectedToOpen" required ng-options="name for name in allKanbans">
+                        <div>
+                            <select name="selectedToOpen" ng-model="selectedToOpen" class="form-control" required ng-options="name for name in allKanbans">
                             </select>
                        </div>
                     </div>
               </div>
               <div class="modal-footer">
-                <button class="btn" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
                 <button class="btn btn-primary" type="submit">Open</button>
               </div>
             </form>
@@ -150,32 +150,32 @@
             <script type="text/ng-template" id="NewKanbanCard.html">
               <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
                   <div class="modal-header">
-                    <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                    <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
                     <h3 ng-model="kanbanColumnName">New card for column '{{kanbanColumnName}}'</h3>
                   </div>
                   <div class="modal-body">
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label" for="newCardTitle">Kanban card title</label>
-                            <div class="controls">
-                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs"/>
+                            <div>
+                              <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs form-control"/>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
-                            <div class="controls">
-                                <textarea id="newCardDetails" ng-model="details" class="cardInputs" rows="7">
+                            <div>
+                                <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7">
                                 </textarea>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Card color</label>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <color-selector options="colorOptions" ng-model="cardColor" prefix="newCardColor" class="colorSelector" show-hex-code="true"/>
                         </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn" ng-click="close()">Close</button>
+                    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
                     <button type="submit" class="btn btn-primary">Add</button>
                   </div>
               </form>
@@ -183,23 +183,23 @@
         <script type="text/ng-template" id="OpenCard.html">
               <form ng-submit="update()" class="noMargin" name="cardDetails">
                   <div class="modal-header">
-                    <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                    <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
                     <h3>Card details</h3>
                   </div>
                   <div class="modal-body">
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label" for="cardTitle">Kanban card title</label>
                             <div class="controls">
                               <ng-form ng-submit="editingTitle = false">
                               <div>
                                 <input name="cardTitle" type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="cardInputs" ng-disabled="!editingTitle" focus-me />
-                                <a href="#editTitle" title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="icon-pencil"></i></a>                              
-                                <a href="#editTitle" title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="icon-ok"></i></a>
+                                <a href="#editTitle" title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
+                                <a href="#editTitle" title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
                               </ng-form>
                               </div>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label" for="cardTitle">Details</label>
 
                             <div class="controls clearfix">
@@ -207,14 +207,14 @@
                                 </textarea>
                                 <div class="cardDetails cardInputs pull-left" ng-show="!editDetails" ng-bind-html="details|linky|cardDetails"></div>
 
-                                <a href="#editDetails" title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="icon-pencil"></i></a>                              
-                                <a href="#editDetails" title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="icon-ok"></i></a>
+                                <a href="#editDetails" title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
+                                <a href="#editDetails" title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Card color</label>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <color-selector options="colorOptions" ng-model="cardColor" prefix="editCardColor" class="colorSelector" show-hex-code="true" />
                         </div>
                   </div>
@@ -228,11 +228,11 @@
         <script type="text/ng-template" id="SelectTheme.html">
             <form ng-submit="switchTheme()" name="selectTheme" class="noMargin">
               <div class="modal-header">
-                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
                 <h3 id="openKanbanLabel">Choose Kanban Theme</h3>
               </div>
               <div class="modal-body">
-                    <div class="control-group">
+                    <div class="form-group">
                         <label class="control-label" for="kanbanTheme">Themes to choose from</label>
                         <div class="controls">
                           <select name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes">
@@ -251,14 +251,14 @@
           <script type="text/ng-template" id="SetupCloudModal.html">
             <form ng-submit="saveSettings()" name="cloudSettings" class="noMargin">
               <div class="modal-header">
-                <button type="button" class="close" ng-click="close()"><i class="icon-remove"></i></button>
+                <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
                 <h3>Cloud Setup</h3>
               </div>
               <div class="modal-body">
                 <div class="alert alert-error" ng-show="model.showConfigurationError">
                   <p>In order to use Cloud Upload and Download functionality, you need to generate Kanban Key, a unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="kanbanKey">Kanban key:</label>
                     <div class="controls">
                       <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey" placeholder="Cloud Kanban key" valid-key />

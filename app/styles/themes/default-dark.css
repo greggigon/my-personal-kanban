@@ -1,13 +1,13 @@
 /* Bootstrap overrides */
-/*.row { margin-left: 0px;}*/
 
 .noDisplay { display: none; }
 .error { border-color: red;}
 a { padding-left: 2px; padding-right: 2px;}
 .navbar { background-image: linear-gradient(to bottom, #222222, #111111); }
-.navbar .brand { text-shadow: none; color: #ddd;}
-.navbar .nav > li > a { text-shadow: none; color: #ddd;}
-.navbar .nav > li > a:hover, .navbar .nav > li > a:focus { color: #fff;}
+.navbar .navbar-brand { text-shadow: none; color: #ddd;}
+.navbar-nav > li > a { text-shadow: none; color: #ddd; }
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus { color: #fff; background-color: #000;}
+.nav > li > a:focus { color: #fff; background-color: #000;}
 
 .navbar-inner { 
     background-image: linear-gradient(to bottom, #222222, #111111); 
@@ -48,7 +48,7 @@ body { background-color: #bbb; }
     -webkit-box-shadow: rgba(0, 0, 0, 0.7) 0px 1px 10px 0px;
     box-shadow: rgba(0, 0, 0, 0.7) 0px 1px 10px 0px;
 }
-
+.column a { color: #444; }
 .columnHeader { 
     margin: 10px 0px;
     padding: 0px 3px;

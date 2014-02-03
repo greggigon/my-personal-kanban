@@ -30,36 +30,38 @@
 
     <!-- Add your site or application content here -->
 <header class="navbar navbar-fixed-top" role="navigation" id="headerMenu">
-  <div class="container">
-    <div class="navbar-header"><span id="kanbanName" class="navbar-brand" ng-model="kanban">{{kanban.name}}</span></div>
-    <ul class="nav pull-right" id="menu" ng-controller="MenuController">
-        <li class="dropdown">
-            <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="icon-briefcase"></i> New</a>
-                </li>
-                <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="icon-folder-open"></i> Open</a>
-                </li>
-                <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="icon-remove-sign"></i> Delete</a></li>
-                <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="icon-picture"></i> Themes</a></li>
-            </ul>
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="navbar-header"><span id="kanbanName" class="navbar-brand" ng-model="kanban">{{kanban.name}}</span></div>
+      <ul class="nav navbar-nav pull-right" id="menu" ng-controller="MenuController">
+          <li class="dropdown">
+              <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                  </li>
+                  <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open</a>
+                  </li>
+                  <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
+                  <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+              </ul>
+          </li>
+      </ul>
+      <ul class="nav navbar-nav pull-right" id="cloudMenu" ng-controller="CloudMenuController">
+        <li class="dropdown"> 
+          <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
+            <li><a href="#upload" ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
+            <li><a href="#download" ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
+            <li><a href="http://localhost:8080/" target="blank"><i class="glyphicon glyphicon-hand-right"></i> Go to Cloud</a></li>
+          </ul>
         </li>
-    </ul>
-    <ul class="nav pull-right" id="cloudMenu" ng-controller="CloudMenuController">
-      <li class="dropdown"> 
-        <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="icon-wrench"></i> Setup</a></li>
-          <li><a href="#upload" ng-click="upload()"><i class="icon-upload"></i> Upload</a></li>
-          <li><a href="#download" ng-click="download()"><i class="icon-download"></i> Download</a></li>
-          <li><a href="http://localhost:8080/" target="blank"><i class="icon-hand-right"></i> Go to Cloud</a></li>
-        </ul>
-      </li>
-    </ul>
-    <div id="info" class="nav pull-right" ng-show="showInfo">
-      <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
-      <span id="message" class="">{{infoMessage}}</span>
-      <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
+      </ul>
+      <div id="info" class="nav pull-right" ng-show="showInfo">
+        <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
+        <span id="message" class="">{{infoMessage}}</span>
+        <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
+      </div>
     </div>
   </div>
 </header>
@@ -74,9 +76,9 @@
                       <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-tasks"></i></a>
                       <span ng-hide="editing">{{column.name}}</span>
                       <form ng-show="editing" ng-submit="editing = false">
-                          <div class="input-prepend">
-                              <span class="add-on"><i class="icon-tasks"></i></span>
-                              <input class="span2" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
+                          <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-tasks"></i></span>
+                              <input class="form-control" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
                           </div>
                       </form>
                   </div>

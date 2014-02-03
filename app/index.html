@@ -232,14 +232,18 @@
                 <h3 id="openKanbanLabel">Choose Kanban Theme</h3>
               </div>
               <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label" for="kanbanTheme">Themes to choose from</label>
-                        <div class="controls">
-                          <select name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes">
-                          </select>
-                          <img src="img/themes/{{model.selectedTheme}}.jpg" width="250" class="pull-right" style="border: 1px solid black"/>
-                       </div>
+                <div class="form-group">
+                    <label class="control-label" for="kanbanTheme">Themes to choose from</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                      <select class="form-control" name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes" id="kanbanTheme">
+                      </select>
                     </div>
+                    <div class="col-md-5">
+                      <img src="img/themes/{{model.selectedTheme}}.jpg" width="250" class="thumbnail" style="border: 1px solid black"/>
+                   </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button class="btn" type="button" ng-click="close()">Close</button>
@@ -255,15 +259,15 @@
                 <h3>Cloud Setup</h3>
               </div>
               <div class="modal-body">
-                <div class="alert alert-error" ng-show="model.showConfigurationError">
+                <div class="alert alert-danger" ng-show="model.showConfigurationError">
                   <p>In order to use Cloud Upload and Download functionality, you need to generate Kanban Key, a unique identifier that will be used to upload and download your Kanban. You can to that at My Personal Kanban web service <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="kanbanKey">Kanban key:</label>
-                    <div class="controls">
-                      <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey" placeholder="Cloud Kanban key" valid-key />
-                      <span class="text-error" ng-show="cloudSettings.kanbanKey.$error.validKey">Provided key is invalid</span>
-                      <span class="text-error" ng-show="cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Unable to validate key. You might not be connected to the Internet or unable to access <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></span>
+                    <div>
+                      <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey form-control" placeholder="Cloud Kanban key" valid-key />
+                      <span class="text-danger" ng-show="cloudSettings.kanbanKey.$error.validKey">Provided key is invalid</span>
+                      <span class="text-danger" ng-show="cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Unable to validate key. You might not be connected to the Internet or unable to access <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></span>
 
                    </div>
                 </div>

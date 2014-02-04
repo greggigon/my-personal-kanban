@@ -3,7 +3,7 @@
 .noDisplay { display: none; }
 .error { border-color: red;}
 a { padding-left: 2px; padding-right: 2px;}
-.navbar { background-image: linear-gradient(to bottom, #222222, #111111); }
+.navbar { background-image: linear-gradient(to bottom, #333, #111); }
 .navbar .navbar-brand { text-shadow: none; color: #ddd;}
 .navbar-nav > li > a { text-shadow: none; color: #ddd; }
 .navbar-nav > li > a:hover, .navbar-nav > li > a:focus { color: #fff; background-color: #000;}

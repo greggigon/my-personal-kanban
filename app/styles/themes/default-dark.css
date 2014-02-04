@@ -9,10 +9,6 @@ a { padding-left: 2px; padding-right: 2px;}
 .navbar-nav > li > a:hover, .navbar-nav > li > a:focus { color: #fff; background-color: #000;}
 .nav > li > a:focus { color: #fff; background-color: #000;}
 
-.navbar-inner { 
-    background-image: linear-gradient(to bottom, #222222, #111111); 
-    background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#111111));
-}
 body { background-color: #bbb; }
 
 #kanban { margin: 0px; padding: 0px 10px 0 10px;}

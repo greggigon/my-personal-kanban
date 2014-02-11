@@ -1,7 +1,7 @@
 {
   "name": "jquery",
   "repo": "components/jquery",
-  "version": "1.10.2",
+  "version": "2.1.0",
   "description": "jQuery component",
   "keywords": [
     "jquery",

@@ -81,7 +81,7 @@
                   <div class="columnHeader">
                       <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="glyphicon glyphicon-plus"></i></a>
                       <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-tasks"></i></a>
-                      <span ng-hide="editing">{{column.name}}</span>
+                      <span ng-hide="editing">{{column.name}} ({{column.cards.length}})</span>
                       <form ng-show="editing" ng-submit="editing = false">
                           <div class="input-group">
                               <span class="input-group-addon"><i class="glyphicon glyphicon-tasks"></i></span>
@@ -89,8 +89,8 @@
                           </div>
                       </form>
                   </div>
-                  <ul class="cards" sortable-selector="#kanban ul.cards" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
-                      <li class="card" ng-repeat="card in column.cards" ng-model="card" style="background-color: #{{colorFor(card)}};">
+                  <ul class="cards" ui-sortable="{connectWith: '#kanban ul.cards'}" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
+                      <li class="card" ng-repeat="card in column.cards" style="background-color: #{{colorFor(card)}};">
                           <a href="#deleteCard" class="pull-right" ng-click="delete(card, column)"><i class="glyphicon glyphicon-remove"></i></a>
                           <a ng-click="openCardDetails(card)"><span tooltip-popup-delay='2000' tooltip='{{details(card)}}'>{{card.name}}</span></a>
                       </li>
@@ -295,13 +295,13 @@
 </footer>
 
         <script src="bower_components/jquery/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
         <script src="bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js"></script>
-        <script src="bower_components/spinjs/dist/spin.min.js"></script>
+        <script src="bower_components/spinjs/spin.js"></script>
         <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->

@@ -1,4 +1,6 @@
 /* Bootstrap overrides */
+#kanbanName a { color: #333 ;}
+div.navbar-header a { color: #333;}
 .row { margin-left: 0px;}
 
 .navbar { background-image: linear-gradient(to bottom, #fff, #ddd); }

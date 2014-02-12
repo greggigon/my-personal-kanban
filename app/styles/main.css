@@ -1,4 +1,5 @@
 #kanbanName a { color: #ddd; }
+div.navbar-header form div.input-group { margin-top: 7px;}
 .cardInputs { width: 450px; color: #555555; }
 
 .cardDetails { 

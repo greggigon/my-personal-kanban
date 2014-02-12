@@ -32,47 +32,49 @@
 <header class="navbar navbar-fixed-top" role="navigation" id="headerMenu">
   <div class="navbar-inner">
     <div class="container">
-      <div class="navbar-header">
+      <div class="navbar-header col-md-3">
         <span id="kanbanName" class="navbar-brand" ng-model="kanban" ng-hide="editingName"><a href="#renameKanban" class="renameKanban" ng-click="editingKanbanName()">{{kanban.name}}</a></span>
         <div ng-show="editingName" class="pull-left">
           <form ng-submit="rename()" >
             <div class="input-group">
               <span class="input-group-addon">
-                <i class="glyphicon glyphicon-tasks"></i>
+                <a href="#cancel" ng-click="editingName=false"><i class="glyphicon glyphicon-tasks"></i></a>
               </span>
               <input type="text" name="kanbanName" ng-model="newName" class="form-control"/>
             </div>
           </form>
         </div>
       </div>
-      <ul class="nav navbar-nav pull-right" id="menu" ng-controller="MenuController">
-          <li class="dropdown">
-              <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                  <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
-                  </li>
-                  <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open</a>
-                  </li>
-                  <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
-                  <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
-              </ul>
+      <div class="col-md-9">
+        <ul class="nav navbar-nav pull-right" id="menu" ng-controller="MenuController">
+            <li class="dropdown">
+                <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                    </li>
+                    <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open</a>
+                    </li>
+                    <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
+                    <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" id="cloudMenu" ng-controller="CloudMenuController">
+          <li class="dropdown"> 
+            <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
+              <li><a href="#upload" ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
+              <li><a href="#download" ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
+              <li><a href="http://localhost:8080/" target="blank"><i class="glyphicon glyphicon-hand-right"></i> Go to Cloud</a></li>
+            </ul>
           </li>
-      </ul>
-      <ul class="nav navbar-nav pull-right" id="cloudMenu" ng-controller="CloudMenuController">
-        <li class="dropdown"> 
-          <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
-            <li><a href="#upload" ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
-            <li><a href="#download" ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
-            <li><a href="http://localhost:8080/" target="blank"><i class="glyphicon glyphicon-hand-right"></i> Go to Cloud</a></li>
-          </ul>
-        </li>
-      </ul>
-      <div id="info" class="nav pull-right" ng-show="showInfo">
-        <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
-        <span id="message" class="">{{infoMessage}}</span>
-        <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
+        </ul>
+        <div id="info" class="nav pull-right" ng-show="showInfo">
+          <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
+          <span id="message" class="">{{infoMessage}}</span>
+          <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -89,7 +91,7 @@
                       <span ng-hide="editing">{{column.name}} ({{column.cards.length}})</span>
                       <form ng-show="editing" ng-submit="editing = false">
                           <div class="input-group">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-tasks"></i></span>
+                              <span class="input-group-addon"><a href="#cancel" ng-click="editing = false"><i class="glyphicon glyphicon-tasks"></i></a></span>
                               <input class="form-control" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
                           </div>
                       </form>

@@ -13,6 +13,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.kanban = kanbanRepository.get(args.kanbanName);
 
 		kanbanRepository.setLastUsed(args.kanbanName);
+		$scope.newName = args.kanbanName;
 		kanbanRepository.save();
 	});
 
@@ -80,6 +81,13 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	$scope.editingName = false;
 	
+	$scope.rename = function(){
+		kanbanRepository.renameLastUsedTo($scope.newName);
+		kanbanRepository.save();
+		$scope.allKanbans = Object.keys(kanbanRepository.all());
+		$scope.editingName = false;
+	};
+	
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
 
@@ -92,7 +100,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	$scope.kanban = currentKanban;
 	$scope.allKanbans = Object.keys(kanbanRepository.all());
-	$scope.selectedToOpen = currentKanban.name;
+	$scope.selectedToOpen = $scope.newName = currentKanban.name;
 
 	$scope.$watch('kanban', function(){
 		kanbanRepository.save();

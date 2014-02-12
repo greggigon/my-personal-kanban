@@ -34,9 +34,14 @@
     <div class="container">
       <div class="navbar-header">
         <span id="kanbanName" class="navbar-brand" ng-model="kanban" ng-hide="editingName"><a href="#renameKanban" class="renameKanban" ng-click="editingKanbanName()">{{kanban.name}}</a></span>
-        <div ng-show="editingName">
-          <form ng-submit="changeName()">
-            <input type="text" name="kanbanName" value="{{kanban.name}}" class="form-control" />
+        <div ng-show="editingName" class="pull-left">
+          <form ng-submit="rename()" >
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="glyphicon glyphicon-tasks"></i>
+              </span>
+              <input type="text" name="kanbanName" ng-model="newName" class="form-control"/>
+            </div>
           </form>
         </div>
       </div>

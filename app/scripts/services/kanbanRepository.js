@@ -29,11 +29,13 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
     },
 
     prepareSerializedKanbans: function(){
-      return angular.toJson({kanbans: this.kanbansByName, lastUsed: this.lastUsed, theme: this.theme, lastUpdated: this.lastUpdated}, false);
+      var toBeSerialized = {kanbans: this.kanbansByName, lastUsed: this.lastUsed, theme: this.theme, lastUpdated: this.lastUpdated};
+      return angular.toJson(toBeSerialized, false);
     },
 
     save: function(){
-      localStorage.setItem('myPersonalKanban', this.prepareSerializedKanbans());
+      var prepared = this.prepareSerializedKanbans();
+      localStorage.setItem('myPersonalKanban', prepared);
       return this.kanbansByName;
     },
 
@@ -100,6 +102,16 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
       this.save();
 
       return this; 
+    },
+
+    renameLastUsedTo: function(newName){
+      var lastUsed = this.getLastUsed();
+      delete this.kanbansByName[lastUsed.name];
+      lastUsed.name = newName;
+
+      this.kanbansByName[newName] = lastUsed;
+      this.lastUsed = newName;
+      return true;
     }
 
   };

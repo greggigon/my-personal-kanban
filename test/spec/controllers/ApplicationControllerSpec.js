@@ -1,14 +1,18 @@
-'use strict';
-
+		
 describe('Application controller', function(){
 	var scope, applicationController, kanbanRepositoryMock, themesProviderMock, window;
+	var renamer, saver;
 
 	beforeEach(inject(function($rootScope, $controller, $window){
+		renamer = jasmine.createSpy('Kanban Rename Function');
+		saver = jasmine.createSpy('Kanban Saver');
 		kanbanRepositoryMock = {
 			load: function(){ return validSampleKanban.kanbans;},
-			getLastUsed: function(){ return "Stuff to do at home";},
+			getLastUsed: function(){ return validSampleKanban.kanbans['Stuff to do at home']},
 			all: function() { return validSampleKanban.kanbans;},
-			getTheme: function() { return 'default-dark'; }
+			getTheme: function() { return 'default-dark'; },
+			renameLastUsedTo: renamer,
+			save: saver,
 		};
 		window = $window;
 		themesProviderMock = {setCurrentTheme: function(){}};
@@ -16,6 +20,21 @@ describe('Application controller', function(){
 		scope = $rootScope.$new();
 		applicationController = $controller('ApplicationController', {$scope: scope, kanbanRepository: kanbanRepositoryMock, themesProvider: themesProviderMock, $window: window});
 	}));
+
+	it("should change name of the Kanban to new name", function(){
+		scope.newName = 'foobarboo';
+		scope.allKanbans = [];
+
+		scope.rename();
+
+		expect(renamer).toHaveBeenCalledWith(scope.newName);
+		expect(saver).toHaveBeenCalled();
+		expect(scope.allKanbans).not.toEqual([]);
+	});
+
+	it("should set the Text field variable of the name", function(){
+		expect(scope.newName).toBe('Stuff to do at home');
+	});
 
 	it("should switch to editing when clicking Kanban Name editing", function(){
 		expect(scope.editingName).toBeFalsy();

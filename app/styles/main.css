@@ -32,3 +32,5 @@ input.kanbanKey {
 #info #error a { color: #FF9E9E;}
 
 #message { float: left; }
+
+.colorBox { cursor: pointer; }

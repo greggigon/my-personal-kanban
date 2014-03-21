@@ -34,3 +34,5 @@ input.kanbanKey {
 #message { float: left; }
 
 .colorBox { cursor: pointer; }
+
+.shortcut { color: #aaa; padding-top: 2px;}

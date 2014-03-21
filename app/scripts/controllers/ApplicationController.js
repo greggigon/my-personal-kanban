@@ -87,6 +87,11 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.editingName = false;
 	};
+
+	$scope.openKanbanShortcut = function($event){
+		console.log($event);
+		$scope.$broadcast('TriggerOpen');
+	};
 	
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};

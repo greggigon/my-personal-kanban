@@ -18,7 +18,8 @@
         
         <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
 </head>
-<body ng-app="mpk" ng-controller="ApplicationController">
+<body ng-app="mpk" ng-controller="ApplicationController" 
+          ui-keyup="{'ctrl-shift-79':'openKanbanShortcut($event)'}">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -40,7 +41,7 @@
               <span class="input-group-addon">
                 <a href="#cancel" ng-click="editingName=false"><i class="glyphicon glyphicon-tasks"></i></a>
               </span>
-              <input type="text" name="kanbanName" ng-model="newName" class="form-control"/>
+              <input type="text" name="kanbanName" ng-model="newName" class="form-control" />
             </div>
           </form>
         </div>
@@ -52,10 +53,12 @@
                 <ul class="dropdown-menu">
                     <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
-                    <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open</a>
+                    <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open <small class="shortcut pull-right">ctrl-shift-o</small></a>
                     </li>
                     <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
                     <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li><a href="#help" title="Help" ng-click="help()"><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-?</small></a></li>
                 </ul>
             </li>
         </ul>
@@ -150,7 +153,7 @@
                     <div class="form-group">
                         <label class="control-label" for="kanbanNameFormField">Kanban name</label>
                         <div>
-                            <select name="selectedToOpen" ng-model="selectedToOpen" class="form-control" required ng-options="name for name in allKanbans">
+                            <select name="selectedToOpen" ng-model="selectedToOpen" class="form-control" required ng-options="name for name in allKanbans" focus-me="selectedToOpen">
                             </select>
                        </div>
                     </div>
@@ -177,7 +180,7 @@
                         <div class="form-group">
                             <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
                             <div>
-                                <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7">
+                                <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7" >
                                 </textarea>
                             </div>
                         </div>

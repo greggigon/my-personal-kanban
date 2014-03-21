@@ -42,7 +42,7 @@ describe("Kanban Repository", function(){
 
 	it("should not decrypt the kanban from Cloud that was not encrypted", function(){
 		localStorage.setItem('myPersonalKanban', null);
-		var jsonKanban = angular.toJson({"kanbans":{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,
+		var kanban = {"kanbans":{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,
 			"columns":[
 				{"name":"Not started","cards":[{"name":"This little piggy went to lunch","color":"CCD0FC"},{"name":"Foo bar","color":"FCE4D4"}]},
 				{"name":"In progress","cards":[{"name":"another on a bit longer text this time","color":"FAFFA1"},{"name":"And another one","color":"94D6FF"}]},
@@ -50,9 +50,10 @@ describe("Kanban Repository", function(){
 			},
 			"lastUsed":"Stuff to do at home",
 			"theme":"default-dark",
-			"lastUpdated":1391554268110});
+			"lastUpdated":1391554268110};
+		var jsonKanban = angular.toJson(kanban);
 
-		repository.saveDownloadedKanban(jsonKanban, 1391554268110);
+		repository.saveDownloadedKanban(kanban, 1391554268110);
 		var fromStorage = localStorage.getItem('myPersonalKanban');
 
 		expect(fromStorage).toBe(jsonKanban);

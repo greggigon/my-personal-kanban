@@ -255,6 +255,7 @@ module.exports = function (grunt) {
             'bower_components/angular/**/*.min.js',
             'bower_components/angular-sanitize/**/*.min.js',
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
+            'bower_components/angular-ui-utils/ui-utils.min.js',
             'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
             'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',

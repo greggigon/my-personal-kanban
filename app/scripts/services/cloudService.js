@@ -2,6 +2,7 @@
 
 angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout, cryptoService) {
 	return {
+		cloudAddress: 'http://localhost:8080',
 		settings: {notLoaded: true},
 		loadSettings: function() {
 			var settings = localStorage.getItem('myPersonalKanban.cloudSettings');
@@ -25,7 +26,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				this.loadSettings();
 			}
 			var params = {kanbanKey: this.settings.kanbanKey, action: 'get'};
-			return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
+			return $http.jsonp(this.cloudAddress + '/service/kanban?callback=JSON_CALLBACK', {params: params});
 		},
 
 		uploadKanban: function(kanban){
@@ -45,23 +46,24 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			function sendStart(numberOfFragments) {
 				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', fragments: numberOfFragments};
 				
-				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
+				return $http.jsonp(self.cloudAddress + '/service/kanban?callback=JSON_CALLBACK', {params: params});
 			};
 
 			function sendChunk(chunk, chunkNumber){
 				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', chunk: chunk, chunkNumber:chunkNumber};
 
-				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params});
+				return $http.jsonp(self.cloudAddress + '/service/kanban?callback=JSON_CALLBACK', {params: params});
 			};
 
 			function checkKanbanValidity(kanban){
 				var hash = cryptoService.md5Hash(kanban);
 				var params = {kanbanKey: self.settings.kanbanKey, action: 'put', hash: hash};
 
-				return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params: params}); 
+				return $http.jsonp(self.cloudAddress + '/service/kanban?callback=JSON_CALLBACK', {params: params}); 
 			};
 
-			var kanbanInChunks = splitSlice(kanban, 1000);
+			var encryptetKanban = cryptoService.encrypt(kanban);
+			var kanbanInChunks = splitSlice(encryptetKanban, 1000);
 
 			var promise = sendStart(kanbanInChunks.length);
 			angular.forEach(kanbanInChunks, function(value, index){
@@ -72,7 +74,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 
 
 			return promise.then(function(){
-				return checkKanbanValidity(kanban);
+				return checkKanbanValidity(encryptetKanban);
 			});
 		},
 
@@ -81,10 +83,6 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				this.loadSettings();
 			}
 			return this.settings.kanbanKey != undefined && this.settings.kanbanKey != '';
-		},
-
-		validateKanbanKey: function(kanbanKey){
-			return $http.jsonp('http://localhost:8080/service/kanban?callback=JSON_CALLBACK', {params:{action:'key', kanbanKey: kanbanKey}});
 		}
 	};
 });

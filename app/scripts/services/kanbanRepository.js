@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function (cloudService) {
+angular.module('mpk').factory('kanbanRepository', function (cloudService, cryptoService) {
   return {
     kanbansByName : {},
     lastUsed : '',
@@ -94,7 +94,10 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService) {
     },
 
     saveDownloadedKanban: function(kanban, lastUpdated){
-      var fromCloud = angular.fromJson(kanban); 
+      if (kanban.lastIndexOf('kanban') < 0){
+        kanban = cryptoService.decrypt(kanban);
+      }
+      var fromCloud = angular.fromJson(kanban);
       this.kanbansByName = fromCloud.kanbans;
       this.lastUsed = fromCloud.lastUsed;
       this.theme = fromCloud.theme;

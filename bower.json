@@ -1,6 +1,6 @@
 {
   "name": "my-personal-kanban",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "dependencies": {
     "angular": "1.2.12",
     "jquery": "2.1.0",

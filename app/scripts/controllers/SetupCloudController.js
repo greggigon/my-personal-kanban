@@ -10,7 +10,7 @@ var SetupCloudController = function($scope, $modalInstance, cloudService, showCo
 
 	$scope.saveSettings = function(){
 		if ($scope.model.kanbanKey != undefined && $scope.model.kanbanKey.length != 0){
-			var settings = {kanbanKey: $scope.model.kanbanKey, encryptionKey: $scope.model.cloudEncryptionKey};
+			var settings = {kanbanKey: $scope.model.kanbanKey, encryptionKey: $scope.model.encryptionKey};
 
 			cloudService.saveSettings(settings);
 

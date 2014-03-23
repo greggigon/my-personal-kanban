@@ -3,15 +3,18 @@
 angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout, cryptoService) {
 	return {
 		cloudAddress: 'http://localhost:8080',
-		settings: {notLoaded: true},
+		settings: {notLoaded: true, encryptionKey: 'my-random-key'},
 		loadSettings: function() {
 			var settings = localStorage.getItem('myPersonalKanban.cloudSettings');
 			if (settings == undefined){
-				this.settings = {notSetup: true};
+				this.settings = {notSetup: true, encryptionKey: 'my-random-key'};
 				return this.settings;
 			}
 			this.settings = angular.fromJson(settings);
 			this.settings.notSetup = false;
+			if (this.settings.encryptionKey == undefined){
+				this.settings.encryptionKey = 'my-random-key';
+			}
 			return this.settings;
 		},
 
@@ -62,7 +65,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 				return $http.jsonp(self.cloudAddress + '/service/kanban?callback=JSON_CALLBACK', {params: params}); 
 			};
 
-			var encryptetKanban = cryptoService.encrypt(kanban);
+			var encryptetKanban = cryptoService.encrypt(kanban, this.settings.encryptionKey);
 			var kanbanInChunks = splitSlice(encryptetKanban, 1000);
 
 			var promise = sendStart(kanbanInChunks.length);

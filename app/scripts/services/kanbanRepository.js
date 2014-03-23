@@ -95,7 +95,7 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService, crypto
 
     saveDownloadedKanban: function(kanban, lastUpdated){
       if (typeof(kanban) == 'string'){
-        kanban = cryptoService.decrypt(kanban);
+        kanban = cryptoService.decrypt(kanban, cloudService.settings.encryptionKey);
       }
       var fromCloud = angular.fromJson(kanban);
       this.kanbansByName = fromCloud.kanbans;

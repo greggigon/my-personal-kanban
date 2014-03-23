@@ -291,6 +291,16 @@
                 <div class="alert alert-info" ng-hide="model.showConfigurationError">
                   <p>If you need to retrieve your kanban key or generate a new one go to <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="cloudEncryptionKey">Cloud encryption key:</label>
+                    <div>
+                      <input type="text" name="cloudEncryptionKey" id="cloudEncryptionKey" class="kanbanKey form-control" ng-model="model.encryptionKey"/>
+                    </div>
+                </div>
+                <div class="alert alert-info">
+                  <p>This key will be used to Encrypt your Kanban when uploading into Cloud and Decrypt when downloading. It can be any number of characters.</p>
+                  <p><small>If you make changes to this key, make sure to download latest Kanban from Cloud first and upload after.</small></p> 
+                </div>
               </div>              
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" ng-click="close()">Close</button>

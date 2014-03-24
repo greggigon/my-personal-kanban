@@ -308,6 +308,19 @@
               </div>
             </form>
           </script>
+
+          <script type="text/ng-template" id="HelpModal.html">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
+                <h3>Help</h3>
+              </div>
+              <div class="modal-body">
+                <p>placeholder</p>
+              </div>              
+              <div class="modal-footer">
+                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
+              </div>
+          </script>
     </section>
 </div>
 <footer>
@@ -346,6 +359,7 @@
         <script src="scripts/controllers/CloudMenuController.js"></script>
         <script src="scripts/controllers/SwitchThemeController.js"></script>  
         <script src="scripts/controllers/SetupCloudController.js"></script>
+        <script src="scripts/controllers/HelpController.js"></script>
 
         <script src="scripts/directives/colorSelector.js"></script>
         <script src="scripts/directives/focusMe.js"></script>

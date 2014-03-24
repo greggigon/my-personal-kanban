@@ -54,6 +54,13 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 		});
 	};
 
+	$scope.help = function(){
+		var modalInstance = $modal.open({
+			templateUrl: 'HelpModal.html',
+			controller: 'HelpController'
+		});
+	};
+
 	$scope.$on('TriggerOpen', function(){
 		$scope.openKanban();
 	});

@@ -89,8 +89,11 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	};
 
 	$scope.openKanbanShortcut = function($event){
-		console.log($event);
 		$scope.$broadcast('TriggerOpen');
+	};
+
+	$scope.openHelpShortcut = function($event){
+		$scope.$broadcast('TriggerHelp');
 	};
 	
 	// <-------- Handling different events in this block ---------------> //

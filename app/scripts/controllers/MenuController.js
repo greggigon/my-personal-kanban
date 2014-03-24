@@ -57,11 +57,16 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 	$scope.help = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'HelpModal.html',
-			controller: 'HelpController'
+			controller: 'HelpController',
+			windowClass: 'help'
 		});
 	};
 
 	$scope.$on('TriggerOpen', function(){
 		$scope.openKanban();
+	});
+
+	$scope.$on('TriggerHelp', function(){
+		$scope.help();
 	});
 };

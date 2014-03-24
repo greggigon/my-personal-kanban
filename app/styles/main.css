@@ -36,3 +36,6 @@ input.kanbanKey {
 .colorBox { cursor: pointer; }
 
 .shortcut { color: #aaa; padding-top: 2px;}
+
+div.help > div.modal-dialog { width: 90%; }
+div.help div.modal-body { overflow: scroll;}

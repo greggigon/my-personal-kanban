@@ -2,9 +2,12 @@
 
 describe("Kanban Repository", function(){
 
-	var repository;
+	var repository, cloud;
 
 	beforeEach(module('mpk'));
+	beforeEach(inject(['cloudService', function(cloudService){
+		cloud = cloudService;
+	}]));
 	beforeEach(inject(['kanbanRepository', function(kanbanRepository){
 		repository = kanbanRepository;
 
@@ -67,4 +70,16 @@ describe("Kanban Repository", function(){
 		var expectedBan = angular.toJson({"kanbans":{"Test ban":{"name":"Test ban","numberOfColumns":3,"columns":[{"name":"Column 1","cards":[{"name":"New test task","details":"§ &^$\n° ´ § ä ü ß","color":"FFFFFF"}]},{"name":"Column 2","cards":[]},{"name":"Column 3","cards":[]}]}},"lastUsed":"Test ban","theme":"default-dark","lastUpdated":1391554268110});
 		expect(fromStorage).toBe(expectedBan);
 	});
+	
+	it('should throw error when downloaded Kanban is not decrypted with the right key and not persist it', function(){
+		localStorage.setItem('myPersonalKanban', null);
+		var encryptedBan = 'U2FsdGVkX18bbMSeYEb7GR/k2QIII59Hdyq20etZ2Glj+ameC0DP38bf0LdHAb1lBEYPzNTZkulpFNMwDyAv7BfTdUHjli1aFHBJCuggyS8SDNJENVwo5WFyeyQo2Mf+IaB1SXa8GHkvn+TTLMA/whzyepzZrdyFsKwq2br6T+DQT11X4NSoPKgesiX/844xsav606hx/YwXhuYtiEZE2Sb4e4nUGjU1APHCS7DFXosKBExTGyUJwxJ9Tqps56VUqS1OTffFEf4ax8AA8OdhvAIveakyzY5AnVBsqtNtYn5AgUAAE0joZgQZcfIOqPl9PKwYn4tPQszVz7D0/dheTovQs2AOXMoaD/mhHUBRiBXsMIbMYPjwgDNrnDGTy0olXcI2t7Qudb8B4UQCeMVCeuOM0THLiKLdRkwaae+wZE8PaDRR+ieHk6ymvfw+9txLfA=='
+		cloud.settings.encryptionKey = 'dupa';
+		
+		var result = repository.saveDownloadedKanban(encryptedBan, 1391554268110);
+		//DownloadFinishedWithError
+		expect(result.success).toBe(false);
+		expect(result.message).toBe("Looks like Kanban saved in the cloud was persisted with different encryption key. You'll need to use old key to download your Kanban. Set it up in the Cloud Setup menu.");
+	});
+
 });

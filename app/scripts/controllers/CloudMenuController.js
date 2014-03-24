@@ -38,8 +38,12 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 		var promise = kanbanRepository.download();
 		promise.success(function(data){
 			if (data.success){
-				kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated);
-				$scope.$emit('DownloadFinished');
+				var saveResult = kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated);
+				if (saveResult.success){
+					$scope.$emit('DownloadFinished');
+				} else {
+					$scope.$emit('DownloadFinishedWithError', saveResult.message);
+				}
 			} else {
 				$scope.$emit('DownloadFinishedWithError', data.error);
 			}

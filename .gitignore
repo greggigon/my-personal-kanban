@@ -7,3 +7,4 @@ node_modules/
 images/.DS_Store
 stories_summary.txt
 README.md
+bower_components/

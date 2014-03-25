@@ -39,3 +39,4 @@ input.kanbanKey {
 
 div.help > div.modal-dialog { width: 90%; }
 div.help div.modal-body { overflow: scroll;}
+.version { color: #aaa; }

@@ -345,6 +345,14 @@ module.exports = function (grunt) {
           to: 'https://my-personal-kanban.appspot.com' 
         }]
       },
+      'version': {
+        src: ['<%= yeoman.dist %>/*.html'],
+        dest: '<%= yeoman.dist %>/', 
+        replacements: [{
+          from: '@version@',
+          to: APP_VERSION
+        }]
+      }
     }
   
   });
@@ -385,6 +393,7 @@ module.exports = function (grunt) {
     'usemin',
     'replace:localhost_to_remote_in_js',
     'replace:localhost_to_remote_in_html',
+    'replace:version',
     'compress'
   ]);
 

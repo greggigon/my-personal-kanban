@@ -1,4 +1,4 @@
-			Copyright (c) 2014 Grzegorz (Greg) Gigon
+ 			Copyright (c) 2014 Grzegorz (Greg) Gigon
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

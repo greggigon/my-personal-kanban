@@ -285,11 +285,11 @@
                     <div>
                       <input type="text" name="kanbanKey" id="kanbanKey" ng-model="model.kanbanKey" required class="kanbanKey form-control" placeholder="Cloud Kanban key" valid-key />
                       <span class="text-danger" ng-show="cloudSettings.kanbanKey.$error.validKey">Provided key is invalid</span>
-                      <span class="text-danger" ng-show="cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Unable to validate key. You might not be connected to the Internet or unable to access <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></span>
+                      <span class="text-danger" ng-show="cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Unable to validate key. You might not be connected to the Internet or Network or unable to access <a href="http://my-personal-kanban.appspot.com" target="blank" ng-hide="model.useLocalCloud">http://my-personal-kanban.appspot.com</a> <a href="model.localCloudUrl">{{model.localCloudUrl}}</a></span>
 
                    </div>
                 </div>
-                <div class="alert alert-info" ng-hide="model.showConfigurationError">
+                <div class="alert alert-info" ng-hide="model.showConfigurationError || model.useLocalCloud">
                   <p>If you need to retrieve your kanban key or generate a new one go to <a href="http://my-personal-kanban.appspot.com" target="blank">http://my-personal-kanban.appspot.com</a></p>
                 </div>
                 <div class="form-group">
@@ -302,11 +302,34 @@
                   <p>This key will be used to Encrypt your Kanban when uploading into Cloud and Decrypt when downloading. It can be any number of characters.</p>
                   <p><small>If you make changes to this key, make sure to download latest Kanban from Cloud first and upload after.</small></p> 
                 </div>
-              </div>              
+              
+                <div class="form-group">
+                  <label class="control-label">Local Cloud:</label>
+                  <div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" ng-model="model.useLocalCloud"> Use own Local Cloud
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-show="model.useLocalCloud">
+                    <label class="control-label" for="localCloudUrl">Local Cloud URL:</label>
+                    <div>
+                      <input type="text" name="localCloudUrl" id="localCloudUrl" class="form-control" ng-model="model.localCloudUrl" required />
+                    </div>
+                </div>
+                <div class="alert alert-info" ng-show="model.useLocalCloud">
+                  <p><small>You need to specify a valid URL for your Local Cloud service. Please provide service endpoint (eg. http://localhost:8080/service). If the URL is valid your Kanban key should validate.</small></p> 
+                </div>
+              </div>  
+
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-disabled="cloudSettings.kanbanKey.$error.validKey || cloudSettings.kanbanKey.$error.validKeyUnableToVerify">Save settings</button>
+                <button class="btn btn-primary" type="submit" ng-disabled="cloudSettings.kanbanKey.$error.validKey">Save settings</button>
               </div>
+
             </form>
           </script>
 

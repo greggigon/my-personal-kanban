@@ -10,7 +10,8 @@ var SetupCloudController = function($scope, $modalInstance, cloudService, showCo
 
 	$scope.saveSettings = function(){
 		if ($scope.model.kanbanKey != undefined && $scope.model.kanbanKey.length != 0){
-			var settings = {kanbanKey: $scope.model.kanbanKey, encryptionKey: $scope.model.encryptionKey};
+			var settings = {kanbanKey: $scope.model.kanbanKey, encryptionKey: $scope.model.encryptionKey,
+							useLocalCloud: $scope.model.useLocalCloud, localCloudUrl: $scope.model.localCloudUrl};
 
 			cloudService.saveSettings(settings);
 
@@ -23,6 +24,9 @@ var SetupCloudController = function($scope, $modalInstance, cloudService, showCo
 	if (!settings.notSetup){
 		$scope.model.kanbanKey = settings.kanbanKey;
 		$scope.model.encryptionKey = settings.encryptionKey;
+		$scope.model.useLocalCloud = settings.useLocalCloud;
+		$scope.model.localCloudUrl = settings.localCloudUrl;
 	}
 
+	$scope.$watch('model.localCloudUrl', function(){ console.log($scope.cloudSettings)});
 };

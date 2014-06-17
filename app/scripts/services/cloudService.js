@@ -15,6 +15,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			if (this.settings.encryptionKey == undefined){
 				this.settings.encryptionKey = 'my-random-key';
 			}
+			
 			return this.settings;
 		},
 

@@ -15,13 +15,17 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 			if (this.settings.encryptionKey == undefined){
 				this.settings.encryptionKey = 'my-random-key';
 			}
-			
+			if (this.settings.useLocalCloud){
+				this.cloudAddress = this.settings.localCloudUrl;
+			}
+
 			return this.settings;
 		},
 
 		saveSettings: function(settings){
 			this.settings = settings;
 			localStorage.setItem('myPersonalKanban.cloudSettings', angular.toJson(this.settings, false));
+			this.loadSettings();
 			return this.settings;
 		},
 

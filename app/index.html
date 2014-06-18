@@ -321,7 +321,7 @@
                     </div>
                 </div>
                 <div class="alert alert-info" ng-show="model.useLocalCloud">
-                  <p><small>You need to specify a valid URL for your Local Cloud service. Please provide service endpoint (eg. http://localhost:8080/service). If the URL is valid your Kanban key should validate.</small></p> 
+                  <p><small>You need to specify a valid URL for your Local Cloud service. Please provide hostname with port only (eg. http://localhost:8080). If the URL is valid your Kanban key should validate when you save Cloud settings.</small></p> 
                 </div>
               </div>  
 
@@ -361,7 +361,8 @@
                     You will need to create your <strong>cloud Kanban key</strong>. Follow instructions on <strong>Cloud -> Setup</strong>.<br />
                     Your Kanban in the Cloud <strong>is stored Encrypted</strong>, that's why you should setup <strong>Encryption Key</strong>. The Encryption algorithm is <a href="http://en.wikipedia.org/wiki/Rabbit_(cipher)" target="blank" title="Rabbit encryption algorithm">Rabbit</a>.<br />
                     You can <strong>upload Kanban</strong> by selecting <strong>Cloud -> Upload</strong> from the menu <br />.
-                    You can <strong>download Kanban</strong> by selecting <strong>Cloud -> Download</strong> from the menu.
+                    You can <strong>download Kanban</strong> by selecting <strong>Cloud -> Download</strong> from the menu. <br /><br />
+                    You can also use your own Local Cloud. There is server implementation provided at: <a href="https://github.com/greggigon/my-personal-kanban-server" target="blank">https://github.com/greggigon/my-personal-kanban-server</a>. Just select the option and provide URL for the Local Cloud service <strong>Cloud -> Setup -> Use own Local Cloud</strong>.
                   </small>
                 </p>
               </div>              

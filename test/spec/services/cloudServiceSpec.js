@@ -14,6 +14,8 @@ describe("Cloud service", function(){
 
 		expect(settings.useLocalCloud).toBeFalsy();
 		expect(settings.localCloudUrl).toBeUndefined();
+
+		expect(cloud.cloudAddress).toBe('http://localhost:8080')
 	});
 
 	it("should returned persisted values for local cloud settings", function(){
@@ -26,5 +28,6 @@ describe("Cloud service", function(){
 		
 		expect(settings.useLocalCloud).toBeTruthy();
 		expect(settings.localCloudUrl).toBe('the-awesome-url');
+		expect(cloud.cloudAddress).toBe('the-awesome-url');
 	});
 });

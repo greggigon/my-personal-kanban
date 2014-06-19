@@ -54,8 +54,6 @@
                 <ul class="dropdown-menu">
                     <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
-                    <li><a href="#open" title="Open saved Kanban board" ng-click="openKanban()"><i class="glyphicon glyphicon-folder-open"></i> Open <small class="shortcut pull-right">ctrl-shift-o</small></a>
-                    </li>
                     <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
                     <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
                     <li role="presentation" class="divider"></li>
@@ -78,6 +76,13 @@
           <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
           <span id="message" class="">{{infoMessage}}</span>
           <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
+        </div>
+        <div id="quickSwitch" class="pull-right form-group">
+          <form>
+            <select ng-model="switchTo" ng-options="name for name in switchToList" ng-change="switchToKanban(switchTo)">
+              <option>Switch to ...</option>
+            </select>
+          </form>
         </div>
       </div>
     </div>
@@ -144,28 +149,7 @@
             </form>
           </script> 
            
-          <script type="text/ng-template" id="OpenKanban.html">
-            <form ng-submit="open()" name="openKanbanForm" class="noMargin">
-              <div class="modal-header">
-                <button type="button" class="close" ng-click="close()">&times;</button>
-                <h4 class="modal-title" id="openKanbanLabel">Open another Kanban</h4>
-              </div>
-              <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                        <div>
-                            <select name="selectedToOpen" ng-model="selectedToOpen" class="form-control" required ng-options="name for name in allKanbans" focus-me="selectedToOpen">
-                            </select>
-                       </div>
-                    </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit">Open</button>
-              </div>
-            </form>
-          </script>
-            <script type="text/ng-template" id="NewKanbanCard.html">
+          <script type="text/ng-template" id="NewKanbanCard.html">
               <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
                   <div class="modal-header">
                     <button type="button" class="close" ng-click="close()">&times;</button>
@@ -198,6 +182,7 @@
                   </div>
               </form>
         </script>
+
         <script type="text/ng-template" id="OpenCard.html">
               <form ng-submit="update()" class="noMargin" name="cardDetails">
                   <div class="modal-header">
@@ -348,7 +333,7 @@
                     <strong>Cards are created</strong> with <strong>title</strong> and possible longer <strong>description</strong>. You can also <strong>select different colour</strong> for the card if you would like to categorize them somehow. Description will <strong>keep the new line formating</strong> and add <strong>clickable links</strong> if you include any. <br />
                     You can <strong>open Card details</strong> by clicking on <strong>card title</strong>.You can <strong>edit Card details</strong> once opened.<br />
                     You can <strong>drag card between columns</strong> and move them <strong>up and down</strong> column list.<br /><br />
-                    You can have <strong>multiple Kanbans</strong> and open/switch them from the <strong>Kanban -> Open</strong> menu or by <strong>pressing <abbr title="Ctrl-Shift-o when browser window is selected">Ctrl-Shift-o</abbr></strong> on keyboard. <br /> 
+                    You can have <strong>multiple Kanbans</strong> and open/switch them from the <strong>Switch to ...</strong> dropdown, next to <strong>Cloud Menu</strong>. <br /> 
                       You can <strong>select different style</strong> of Kanban board from <strong>Kanban -> Theme</strong> menu.<br />
                       You can <strong>delete</strong> entire Kanban by selecting <strong>Kanban -> Delete</strong> from the menu.<br />
                       Your Kanbans are automatically <strong>saved</strong> in your <strong>browser storage</strong>. 

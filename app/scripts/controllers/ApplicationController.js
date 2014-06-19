@@ -3,19 +3,21 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
 	// <-------- Handling different events in this block ---------------> //
-	$scope.$on('ChangeCurrentKanban', function(){
+	$scope.$on('NewKanbanAdded', function(){
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
 	});
 
-	$scope.$on('Open', function(event, args){
+	function openKanban(event, args){
 		$scope.kanban = kanbanRepository.get(args.kanbanName);
 
 		kanbanRepository.setLastUsed(args.kanbanName);
 		$scope.newName = args.kanbanName;
 		kanbanRepository.save();
-	});
+	}
+
+	$scope.$on('Open', openKanban);
 
 	$scope.$on('KanbanDeleted', function(){
 		$scope.kanban = undefined;
@@ -95,6 +97,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.openHelpShortcut = function($event){
 		$scope.$broadcast('TriggerHelp');
 	};
+
+	$scope.switchToKanban = function(kanbanName){
+		openKanban(null, {kanbanName: kanbanName});
+	};
 	
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
@@ -109,6 +115,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.kanban = currentKanban;
 	$scope.allKanbans = Object.keys(kanbanRepository.all());
 	$scope.selectedToOpen = $scope.newName = currentKanban.name;
+
+	$scope.switchToList = $scope.allKanbans.slice(0);
+	$scope.switchToList.splice(0, 0, 'Switch to ...');
+	$scope.switchTo = 'Switch to ...';
 
 	$scope.$watch('kanban', function(){
 		kanbanRepository.save();

@@ -44,7 +44,9 @@ describe('Application controller', function(){
 		expect(scope.editingName).toBeTruthy();
 	});
 
-
+	it("should add switch to option to Switch Menu", function(){
+		expect(scope.switchToList.length).toBe(scope.allKanbans.length+1);
+	});
 
 
 	var validSampleKanban = {"kanbans":{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,

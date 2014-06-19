@@ -9,24 +9,7 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 
 		modalInstance.result.then(function(created){
 			if (created){
-				$scope.$emit('ChangeCurrentKanban');
-			}
-		});
-	};
-
-	$scope.openKanban = function(){
-
-		var modalInstance = $modal.open({
-			templateUrl: 'OpenKanban.html',
-			controller: 'OpenKanbanController',
-			resolve: {
-				allKanbans: function(){ return $scope.allKanbans; },
-				currentKanban: function(){ return $scope.kanban; }
-			}
-		});
-		modalInstance.result.then(function(toOpen){
-			if(toOpen){
-				$scope.$emit('Open', {kanbanName: toOpen});
+				$scope.$emit('NewKanbanAdded');
 			}
 		});
 	};

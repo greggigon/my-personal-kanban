@@ -11,19 +11,14 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
 
-	function openKanban(event, args){
-		$scope.kanban = kanbanRepository.get(args.kanbanName);
-
-		kanbanRepository.setLastUsed(args.kanbanName);
-		$scope.newName = args.kanbanName;
-		kanbanRepository.save();
-	}
-
-	$scope.$on('Open', openKanban);
-
 	$scope.$on('KanbanDeleted', function(){
 		$scope.kanban = undefined;
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
+		if ($scope.allKanbans.length > 0){
+			$scope.switchToKanban($scope.allKanbans[0]);
+		}
+		$scope.switchToList = $scope.allKanbans.slice(0);
+		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
 
 	$scope.$on('UploadStarted', function(){
@@ -97,7 +92,13 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	};
 
 	$scope.switchToKanban = function(kanbanName){
-		openKanban(null, {kanbanName: kanbanName});
+		if (kanbanName == 'Switch to ...') return;
+		$scope.kanban = kanbanRepository.get(kanbanName);
+
+		kanbanRepository.setLastUsed(kanbanName);
+		$scope.newName = kanbanName;
+		kanbanRepository.save();
+		$scope.switchTo = 'Switch to ...';
 	};
 	
 	// <-------- Handling different events in this block ---------------> //

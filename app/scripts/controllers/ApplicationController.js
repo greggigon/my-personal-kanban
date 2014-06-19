@@ -94,10 +94,6 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.$broadcast('TriggerOpen');
 	};
 
-	$scope.openHelpShortcut = function($event){
-		$scope.$broadcast('TriggerHelp');
-	};
-
 	$scope.switchToKanban = function(kanbanName){
 		openKanban(null, {kanbanName: kanbanName});
 	};

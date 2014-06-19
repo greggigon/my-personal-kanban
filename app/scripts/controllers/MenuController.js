@@ -45,10 +45,6 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 		});
 	};
 
-	$scope.$on('TriggerOpen', function(){
-		$scope.openKanban();
-	});
-
 	$scope.$on('TriggerHelp', function(){
 		$scope.help();
 	});

@@ -7,6 +7,8 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
+		$scope.switchToList = $scope.allKanbans.slice(0);
+		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
 
 	function openKanban(event, args){

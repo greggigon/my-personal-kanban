@@ -127,22 +127,22 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                      <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                      <div>
-                        <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
-                      </div>
+                    <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                    <div>
+                      <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
                     </div>
-                    <div class="form-group">
-                      <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-                      <div>
-                        <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
-                          <option>2</option>
-                          <option selected="selected">3</option>
-                          <option>4</option>
-                          <option>6</option>
-                        </select>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+                    <div>
+                      <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
+                        <option>2</option>
+                        <option selected="selected">3</option>
+                        <option>4</option>
+                        <option>6</option>
+                      </select>
                     </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" ng-click="closeNewKanban()">Close</button>
@@ -327,9 +327,22 @@
                 <h4 class="modal-title">Select Kanban to Export</h4>
               </div>
               <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label" for="kanbanTheme">{{model.allKanbanNames}} - {{model.currentKanban}}</label>
-                </div>
+                  <div class="form-group">
+                    <label class="control-label" for="kanbanToExport">To export:</label>
+                    <div>
+                      <select id="kanbanToExport" ng-model="model.selectedKanban" class="form-control"
+                        ng-options="name for name in model.allKanbanNames">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" for="fileFormat">File format:</label>
+                    <div>
+                      <select id="fileFormat" ng-model="model.fileFormat" class="form-control"
+                        ng-options="name for name in model.fileFormats">
+                      </select>
+                    </div>
+                  </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" ng-click="close()">Close</button>

@@ -57,6 +57,8 @@
                     <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
                     <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
                     <li role="presentation" class="divider"></li>
+                    <li><a href="#export" title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)"><i class="glyphicon glyphicon-save"></i> Export</a></li>
+                    <li role="presentation" class="divider"></li>
                     <li><a href="#help" title="Help" ng-click="help()"><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
                 </ul>
             </li>
@@ -318,6 +320,24 @@
             </form>
           </script>
 
+          <script type="text/ng-template" id="ExportModal.html">
+            <form ng-submit="exportKanban()" name="exportKanban" class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Select Kanban to Export</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="kanbanTheme">{{model.allKanbanNames}} - {{model.currentKanban}}</label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-primary" type="submit" ng-click="exportKanban()">Export</button>
+              </div>
+            </form>
+          </script>
+
           <script type="text/ng-template" id="HelpModal.html">
               <div class="modal-header">
                 <button type="button" class="close" ng-click="close()">&times;</button>
@@ -394,6 +414,8 @@
         <script src="scripts/controllers/SwitchThemeController.js"></script>  
         <script src="scripts/controllers/SetupCloudController.js"></script>
         <script src="scripts/controllers/HelpController.js"></script>
+        <script src="scripts/controllers/ExportController.js"></script>
+
 
         <script src="scripts/directives/colorSelector.js"></script>
         <script src="scripts/directives/focusMe.js"></script>

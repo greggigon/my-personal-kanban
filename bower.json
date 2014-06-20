@@ -8,7 +8,8 @@
     "jquery-ui": "1.10.3",
     "angular-ui-utils": "0.1.1",
     "angular-sanitize": "1.2.12",
-    "spinjs": "~1.3.2"
+    "spinjs": "~1.3.2",
+    "FileSaver": ""
   },
   "devDependencies": {
     "angular-mocks": "1.2.12"

@@ -48,4 +48,16 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 	$scope.$on('TriggerHelp', function(){
 		$scope.help();
 	});
+
+	$scope.export = function(allKanbans, currentKanban){
+		var modalInstance = $modal.open({
+			templateUrl: 'ExportModal.html',
+			controller: 'ExportController',
+			resolve: { 
+				allKanbanNames: function(){ return allKanbans; },
+				currentKanban: function(){ return currentKanban; }
+			}
+		});
+
+	};
 };

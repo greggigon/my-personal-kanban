@@ -1,6 +1,6 @@
 'use strict';
 
-var ExportController = function ($scope, $modalInstance, kanbanRepository, allKanbanNames, currentKanban) {
+var ExportController = function ($scope, $modalInstance, kanbanRepository, fileService, allKanbanNames, currentKanban) {
 	$scope.model = {exportAll: false};
 	$scope.model.allKanbanNames = allKanbanNames;
 	$scope.model.selectedKanban = currentKanban;
@@ -22,7 +22,8 @@ var ExportController = function ($scope, $modalInstance, kanbanRepository, allKa
 			toExport = new Blob([angular.toJson(kanban, true)], {type: 'application/json;charset=utf-8'});
 		}
 
-		saveAs(toExport, fileName);
+		fileService.saveBlob(toExport, fileName);
+		
 		$modalInstance.close();
 	};
 

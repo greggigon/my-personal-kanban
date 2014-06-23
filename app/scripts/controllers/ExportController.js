@@ -1,7 +1,7 @@
 'use strict';
 
 var ExportController = function ($scope, $modalInstance, kanbanRepository, allKanbanNames, currentKanban) {
-	$scope.model = {fileFormat: 'json', fileFormats: ['json', 'csv']};
+	$scope.model = {exportAll: false};
 	$scope.model.allKanbanNames = allKanbanNames;
 	$scope.model.selectedKanban = currentKanban;
 
@@ -9,5 +9,21 @@ var ExportController = function ($scope, $modalInstance, kanbanRepository, allKa
 		$modalInstance.close();
 	};
 
-	
+	$scope.doExport = function(){
+		var toExport = null;
+		var fileName = $scope.model.selectedKanban + '-export.json';
+		
+		if ($scope.model.exportAll){
+			var kanbans = kanbanRepository.all();
+			toExport = new Blob([angular.toJson(kanbans, true)], {type: 'application/json;charset=utf-8'});
+			fileName = 'all-kanbans-export.json';
+		} else {
+			var kanban = kanbanRepository.get($scope.model.selectedKanban);
+			toExport = new Blob([angular.toJson(kanban, true)], {type: 'application/json;charset=utf-8'});
+		}
+
+		saveAs(toExport, fileName);
+		$modalInstance.close();
+	};
+
 }

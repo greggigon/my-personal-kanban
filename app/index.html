@@ -321,32 +321,33 @@
           </script>
 
           <script type="text/ng-template" id="ExportModal.html">
-            <form ng-submit="exportKanban()" name="exportKanban" class="noMargin">
+            <form name="exportKanban" class="noMargin">
               <div class="modal-header">
                 <button type="button" class="close" ng-click="close()">&times;</button>
                 <h4 class="modal-title">Select Kanban to Export</h4>
               </div>
               <div class="modal-body">
-                  <div class="form-group">
-                    <label class="control-label" for="kanbanToExport">To export:</label>
-                    <div>
-                      <select id="kanbanToExport" ng-model="model.selectedKanban" class="form-control"
-                        ng-options="name for name in model.allKanbanNames">
-                      </select>
+                <div class="form-group">
+                  <label class="control-label" for="kanbanToExport">To export:</label>
+                  <div>
+                    <select id="kanbanToExport" ng-model="model.selectedKanban" class="form-control"
+                      ng-options="name for name in model.allKanbanNames" ng-disabled="model.exportAll">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" ng-model="model.exportAll"> Export all Kanbans
+                      </label>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="control-label" for="fileFormat">File format:</label>
-                    <div>
-                      <select id="fileFormat" ng-model="model.fileFormat" class="form-control"
-                        ng-options="name for name in model.fileFormats">
-                      </select>
-                    </div>
-                  </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-click="exportKanban()">Export</button>
+                <button class="btn btn-primary" type="submit" ng-click="doExport()">Export</button>
               </div>
             </form>
           </script>
@@ -396,13 +397,14 @@
 </footer>
 
         <script src="bower_components/jquery/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
         <script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
         <script src="bower_components/spinjs/spin.js"></script>
+        <script src="bower_components/FileSaver/FileSaver.js"></script>
         <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->

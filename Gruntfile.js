@@ -259,7 +259,8 @@ module.exports = function (grunt) {
             'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
             'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',
-            'bower_components/spinjs/spin.js'
+            'bower_components/spinjs/spin.js',
+            'bower_components/FileSaver/FileSaver.js'
           ]
         }, {
           expand: true,

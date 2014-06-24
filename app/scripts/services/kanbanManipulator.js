@@ -19,6 +19,13 @@ angular.module('mpk').factory('kanbanManipulator', function () {
           col.cards.splice(col.cards.indexOf(card), 1);
         }
       });
+    },
+    archiveCard: function(kanban, column, card){
+      if (kanban.archived == undefined){
+        kanban.archived = [];
+      }
+      kanban.archived.push({card: card, archivedOn: new Date()})
+      this.removeCardFromColumn(kanban, column, card);
     }
   };
 });

@@ -52,4 +52,8 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 
 		return last(kanban.columns).name == column;
 	};
+
+	$scope.archive = function(kanban, column, card){
+		return kanbanManipulator.archiveCard(kanban, column, card);
+	}
 };

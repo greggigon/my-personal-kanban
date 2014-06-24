@@ -3,7 +3,8 @@ function Kanban(name, numberOfColumns) {
 	return {
 		name: name,
 		numberOfColumns: numberOfColumns,
-		columns: []
+		columns: [],
+		arvhived: [],
 	};
 }
 

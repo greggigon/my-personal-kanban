@@ -44,4 +44,12 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 	$scope.colorFor = function(card){
 		return (card.color !== undefined && card.color !== '') ? card.color : $scope.colorOptions[0];
 	};
+
+	$scope.isLastColumn = function(column, kanban){
+		function last(coll){
+			return coll[coll.length - 1];
+		}
+
+		return last(kanban.columns).name == column;
+	};
 };

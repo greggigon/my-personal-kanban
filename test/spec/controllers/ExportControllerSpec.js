@@ -21,7 +21,6 @@ describe('Export controller', function(){
 
 
 	it('should export single Kanban', function(){
-		// we need to spy on the fileService
 		scope.model.exportAll = false;
 		scope.model.selectedKanban = 'foobar';
 

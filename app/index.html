@@ -359,6 +359,31 @@
                 <h4 class="modal-title">Cards archive</h4>
               </div>
               <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <div>
+                      <input type="text" name="filterByName" placeholder="Filter by card name ..." ng-model="model.filterByName" class="form-control" />
+                    </div>
+                  </div>
+                </form>
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Archived on</th>
+                      <th>Card</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                    <tr ng-repeat="archivedCard in model.kanban.archived | archiveByCardName:model.filterByName">
+                      <td></td>
+                      <td>{{formatDate(archivedCard.archivedOn)}}</td>
+                      <td>{{archivedCard.card.name}}</td>
+                      <td>{{archivedCard.card.details}}</td>
+                    </tr>
+                  <tbody>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default" type="button" ng-click="close()">Close</button>
@@ -451,6 +476,7 @@
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
         <script src="scripts/filters/cardDetails.js"></script>
+        <script src="scripts/filters/archiveByCardName.js"></script>
         <script src="scripts/services/cryptoService.js"></script>
         <script src="scripts/directives/spin.js"></script>
         <script src="scripts/directives/validKey.js"></script>

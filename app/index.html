@@ -19,8 +19,7 @@
         <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
 </head>
 <body ng-app="mpk" ng-controller="ApplicationController" 
-          ui-keyup="{'ctrl-shift-72':'openHelpShortcut($event)'}"
-          >
+          ui-keyup="{'ctrl-shift-72':'openHelpShortcut($event)'}">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -56,6 +55,7 @@
                     </li>
                     <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
                     <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                    <li><a href="#browseArchive" title="Open archive" ng-click="openArchive(kanban)"><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
                     <li><a href="#export" title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)"><i class="glyphicon glyphicon-save"></i> Export</a></li>
                     <li role="presentation" class="divider"></li>
@@ -353,6 +353,18 @@
             </form>
           </script>
 
+          <script type="text/ng-template" id="ArchiveModal.html">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Cards archive</h4>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
+              </div>
+          </script>
+
           <script type="text/ng-template" id="HelpModal.html">
               <div class="modal-header">
                 <button type="button" class="close" ng-click="close()">&times;</button>
@@ -432,6 +444,7 @@
         <script src="scripts/controllers/SetupCloudController.js"></script>
         <script src="scripts/controllers/HelpController.js"></script>
         <script src="scripts/controllers/ExportController.js"></script>
+        <script src="scripts/controllers/ArchiveController.js"></script>
 
 
         <script src="scripts/directives/colorSelector.js"></script>

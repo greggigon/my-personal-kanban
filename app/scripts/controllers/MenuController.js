@@ -58,6 +58,16 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 				currentKanban: function(){ return currentKanban; }
 			}
 		});
+	};
 
+	$scope.openArchive = function(currentKanban){
+		$modal.open({
+			templateUrl: 'ArchiveModal.html',
+			controller: 'ArchiveController',
+			windowClass: 'archive',
+			resolve: {
+				kanban: function(){ return currentKanban; }
+			}
+		})
 	};
 };

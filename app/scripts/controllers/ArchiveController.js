@@ -20,10 +20,19 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 	$scope.unarchiveSelected = function(){
 		angular.forEach($scope.model.archived, function(archivedWithSelection){
 			if (archivedWithSelection.selected){
-				kanbanManipulator.unarchiveCard($scope.model.kanban, archivedWithSelection.original);
 				$scope.model.archived.splice($scope.model.archived.indexOf(archivedWithSelection), 1);
+				kanbanManipulator.unarchiveCard($scope.model.kanban, archivedWithSelection.original);
 			}
-		})
+		});
+	};
+
+	$scope.deleteSelected = function(){
+		angular.forEach($scope.model.archived, function(archivedWithSelection){
+			if (archivedWithSelection.selected){
+				$scope.model.archived.splice($scope.model.archived.indexOf(archivedWithSelection), 1);
+				kanbanManipulator.removeFromArchive($scope.model.kanban, archivedWithSelection.original);
+			}
+		});
 	};
 
 	$scope.close = function(){

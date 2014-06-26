@@ -358,10 +358,10 @@
                 <button type="button" class="close" ng-click="close()">&times;</button>
                 <h4 class="modal-title">Cards archive</h4>
               </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <div>
+              <div class="modal-body" style="max-height: 480px; overflow: scroll;">
+                <form class="form-horizontal" role="form">
+                  <div class="form-group has-success">
+                    <div class="col-md-offset-9 col-md-3">
                       <input type="text" name="filterByName" placeholder="Filter by card name ..." ng-model="model.filterByName" class="form-control" />
                     </div>
                   </div>
@@ -370,13 +370,13 @@
                   <thead>
                     <tr>
                       <th></th>
-                      <th>Archived on</th>
-                      <th>Card</th>
-                      <th>Description</th>
+                      <th style="width: 25%">Archived on</th>
+                      <th style="width: 30%">Card title</th>
+                      <th style="width: 40%">Description</th>
                     </tr>
                   </thead>
                     <tr ng-repeat="archivedCard in model.kanban.archived | archiveByCardName:model.filterByName">
-                      <td></td>
+                      <td><input type="checkbox" ng-model="model.selectedCards" /></td>
                       <td>{{formatDate(archivedCard.archivedOn)}}</td>
                       <td>{{archivedCard.card.name}}</td>
                       <td>{{archivedCard.card.details}}</td>

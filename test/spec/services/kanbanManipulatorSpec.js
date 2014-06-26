@@ -66,4 +66,32 @@ describe("Kanban manipulator", function(){
 		expect(column.cards.length).toBe(1);
 		expect(kanban.archived.length).toBe(0);
 	});
+
+	it('should permamently delete archived card', function(){
+		var card = new KanbanCard('Foo bar', '', '');
+		var column = {"name": "Done", "cards": []};
+		var archivedCard = {archivedOn: new Date(), card: card};
+		var kanban = {
+		  "name": "Stuff to do",
+		  "numberOfColumns": 3,
+		  "columns": [
+		    {
+		      "name": "Not started",
+		      "cards": [
+		      ]
+		    },
+		    {
+		      "name": "In progress",
+		      "cards": [
+		      ]
+		    },
+		    column
+		  ],
+		  "archived": [archivedCard]
+		};
+		manipulator.removeFromArchive(kanban, archivedCard);
+
+		expect(kanban.archived.length).toBe(0);
+		expect(column.cards.length).toBe(0);
+	})
 });

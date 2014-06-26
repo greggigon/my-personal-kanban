@@ -34,12 +34,12 @@ angular.module('mpk').factory('kanbanManipulator', function () {
       function lastColumn(kanban){
         return kanban.columns[kanban.columns.length - 1];
       }
-      kanban.archived.splice(kanban.archived.indexOf(archivedCard), 1); 
+      this.removeFromArchive(kanban, archivedCard);
       lastColumn(kanban).cards.push(archivedCard.card);     
     },
 
-    removeFromArchive: function(kanban, card){
-
+    removeFromArchive: function(kanban, archivedCard){
+      kanban.archived.splice(kanban.archived.indexOf(archivedCard), 1); 
     }
   };
 });

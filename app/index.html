@@ -366,17 +366,17 @@
                     </div>
                   </div>
                 </form>
-                <table class="table table-striped table-bordered">
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th></th>
                       <th style="width: 25%">Archived on</th>
-                      <th style="width: 30%">Card title</th>
+                      <th style="width: 33%">Card title</th>
                       <th style="width: 40%">Description</th>
                     </tr>
                   </thead>
-                    <tr ng-repeat="archivedCard in model.kanban.archived | archiveByCardName:model.filterByName">
-                      <td><input type="checkbox" ng-model="model.selectedCards" /></td>
+                    <tr ng-repeat="archivedCard in model.archived | archiveByCardName:model.filterByName">
+                      <td><input type="checkbox" name="selectedCards[]" value="archivedCard.card.name" ng-model="archivedCard.selected" /></td>
                       <td>{{formatDate(archivedCard.archivedOn)}}</td>
                       <td>{{archivedCard.card.name}}</td>
                       <td>{{archivedCard.card.details}}</td>
@@ -384,9 +384,14 @@
                   <tbody>
                   </tbody>
                 </table>
+                <div>
+
+                </div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
+                  <button class="btn btn-warning pull-left">Un-archive selected</button>
+                  <button class="btn btn-danger pull-left">Delete selected</button>
+                  <button class="btn btn-default" type="button" ng-click="close()">Close</button>
               </div>
           </script>
 

@@ -13,6 +13,7 @@ angular.module('mpk').factory('kanbanManipulator', function () {
         }
       });
     },
+
     removeCardFromColumn: function(kanban, column, card){
       angular.forEach(kanban.columns, function(col){
         if (col.name === column.name){
@@ -20,12 +21,25 @@ angular.module('mpk').factory('kanbanManipulator', function () {
         }
       });
     },
+
     archiveCard: function(kanban, column, card){
       if (kanban.archived == undefined){
         kanban.archived = [];
       }
       kanban.archived.push({card: card, archivedOn: new Date()})
       this.removeCardFromColumn(kanban, column, card);
+    },
+
+    unarchiveCard: function(kanban, archivedCard){
+      function lastColumn(kanban){
+        return kanban.columns[kanban.columns.length - 1];
+      }
+      kanban.archived.splice(kanban.archived.indexOf(archivedCard), 1); 
+      lastColumn(kanban).cards.push(archivedCard.card);     
+    },
+
+    removeFromArchive: function(kanban, card){
+
     }
   };
 });

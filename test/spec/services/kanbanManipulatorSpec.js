@@ -37,4 +37,33 @@ describe("Kanban manipulator", function(){
 		expect(kanban.archived[0].card).toBe(card);
 		expect(kanban.archived[0].archivedOn).toBeDefined();
 	});
+
+	it('should unarchive card into last column in Kanban', function(){
+		var card = new KanbanCard('Foo bar', '', '');
+		var column = {"name": "Done", "cards": []};
+		var archivedCard = {archivedOn: new Date(), card: card};
+		var kanban = {
+		  "name": "Stuff to do",
+		  "numberOfColumns": 3,
+		  "columns": [
+		    {
+		      "name": "Not started",
+		      "cards": [
+		      ]
+		    },
+		    {
+		      "name": "In progress",
+		      "cards": [
+		      ]
+		    },
+		    column
+		  ],
+		  "archived": [archivedCard]
+		};
+
+		manipulator.unarchiveCard(kanban, archivedCard);
+
+		expect(column.cards.length).toBe(1);
+		expect(kanban.archived.length).toBe(0);
+	});
 });

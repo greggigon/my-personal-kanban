@@ -100,6 +100,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		kanbanRepository.save();
 		$scope.switchTo = 'Switch to ...';
 	};
+
+	$scope.openHelpShortcut = function($event){
+ 		$scope.$broadcast('TriggerHelp');
+ 	};
 	
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};

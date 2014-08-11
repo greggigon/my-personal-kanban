@@ -4,7 +4,7 @@ function Kanban(name, numberOfColumns) {
 		name: name,
 		numberOfColumns: numberOfColumns,
 		columns: [],
-		arvhived: [],
+		archived: [],
 	};
 }
 

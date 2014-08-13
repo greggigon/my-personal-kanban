@@ -303,7 +303,7 @@
                 <div class="form-group" ng-show="model.useLocalCloud">
                     <label class="control-label" for="localCloudUrl">Local Cloud URL:</label>
                     <div>
-                      <input type="text" name="localCloudUrl" id="localCloudUrl" class="form-control" ng-model="model.localCloudUrl" required />
+                      <input type="text" name="localCloudUrl" id="localCloudUrl" class="form-control" ng-model="model.localCloudUrl" ng-required="model.useLocalCloud" />
                     </div>
                 </div>
                 <div class="alert alert-info" ng-show="model.useLocalCloud">
@@ -444,7 +444,7 @@
 
         <script src="bower_components/jquery/jquery.min.js"></script>
         <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>

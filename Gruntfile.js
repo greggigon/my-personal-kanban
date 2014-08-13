@@ -253,6 +253,7 @@ module.exports = function (grunt) {
             'styles/themes/*.css',
             'scripts/themes.js',
             'bower_components/angular/**/*.min.js',
+            'bower_components/angular-route/**/*.min.js',
             'bower_components/angular-sanitize/**/*.min.js',
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
             'bower_components/angular-ui-utils/ui-utils.min.js',

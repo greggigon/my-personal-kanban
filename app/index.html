@@ -31,12 +31,12 @@
   <div class="navbar-inner">
     <div class="container">
       <div class="navbar-header col-md-3">
-        <span id="kanbanName" class="navbar-brand" ng-model="kanban" ng-hide="editingName"><a href="#renameKanban" class="renameKanban" ng-click="editingKanbanName()">{{kanban.name}}</a></span>
+        <span id="kanbanName" class="navbar-brand" ng-model="kanban" ng-hide="editingName"><a class="renameKanban" ng-click="editingKanbanName()">{{kanban.name}}</a></span>
         <div ng-show="editingName" class="pull-left">
           <form ng-submit="rename()" >
             <div class="input-group">
               <span class="input-group-addon">
-                <a href="#cancel" ng-click="editingName=false"><i class="glyphicon glyphicon-tasks"></i></a>
+                <a ng-click="editingName=false"><i class="glyphicon glyphicon-tasks"></i></a>
               </span>
               <input type="text" name="kanbanName" ng-model="newName" class="form-control" />
             </div>
@@ -46,33 +46,33 @@
       <div class="col-md-9">
         <ul class="nav navbar-nav pull-right" id="menu" ng-controller="MenuController">
             <li class="dropdown">
-                <a href="#kanbanMenu" class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#newKanban" class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                    <li><a class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
-                    <li><a href="#delete" title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
-                    <li><a href="#theme" title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
-                    <li><a href="#browseArchive" title="Open archive" ng-click="openArchive(kanban)"><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
+                    <li><a title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
+                    <li><a title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                    <li><a title="Open archive" ng-click="openArchive(kanban)"><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a href="#export" title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)"><i class="glyphicon glyphicon-save"></i> Export</a></li>
+                    <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)"><i class="glyphicon glyphicon-save"></i> Export</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a href="#help" title="Help" ng-click="help()"><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
+                    <li><a title="Help" ng-click="help()"><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
                 </ul>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right" id="cloudMenu" ng-controller="CloudMenuController">
           <li class="dropdown"> 
-            <a href="#cloudMenu" class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#cloudSetup" ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
-              <li><a href="#upload" ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
-              <li><a href="#download" ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
+              <li><a ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
+              <li><a ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
+              <li><a ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
               <li><a href="http://localhost:8080/" target="blank"><i class="glyphicon glyphicon-hand-right"></i> Go to Cloud</a></li>
             </ul>
           </li>
         </ul>
         <div id="info" class="nav pull-right" ng-show="showInfo">
-          <span id="error" class="error" ng-show="showError"><a href="#close" ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
+          <span id="error" class="error" ng-show="showError"><a ng-click="showInfo=false;showError=false;errorMessage=''">{{errorMessage}}</a></span>
           <span id="message" class="">{{infoMessage}}</span>
           <span id="spinner" class="pull-right" spin="spinConfig" spin-if="showSpinner"></span>
         </div>
@@ -94,20 +94,20 @@
             <div class="col-md-{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}" >
                 <div class="column">
                   <div class="columnHeader">
-                      <a href="#addCard" title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="glyphicon glyphicon-plus"></i></a>
-                      <a href="#changeColumnName" title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-tasks"></i></a>
+                      <a title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="glyphicon glyphicon-plus"></i></a>
+                      <a title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-tasks"></i></a>
                       <span ng-hide="editing">{{column.name}} ({{column.cards.length}})</span>
                       <form ng-show="editing" ng-submit="editing = false">
                           <div class="input-group">
-                              <span class="input-group-addon"><a href="#cancel" ng-click="editing = false"><i class="glyphicon glyphicon-tasks"></i></a></span>
+                              <span class="input-group-addon"><a ng-click="editing = false"><i class="glyphicon glyphicon-tasks"></i></a></span>
                               <input class="form-control" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
                           </div>
                       </form>
                   </div>
                   <ul class="cards" ui-sortable="{connectWith: '#kanban ul.cards'}" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
                       <li class="card" ng-repeat="card in column.cards" style="background-color: #{{colorFor(card)}};">
-                          <a href="#deleteCard" class="pull-right" ng-click="delete(card, column)"><i class="glyphicon glyphicon-remove"></i></a>
-                          <a href="#archiveCard" class="pull-right" title="Archive" ng-click="archive(kanban, column, card)" ng-show="isLastColumn(column.name, kanban)"><i class="glyphicon glyphicon-folder-close"></i></a>
+                          <a class="pull-right" ng-click="delete(card, column)"><i class="glyphicon glyphicon-remove"></i></a>
+                          <a class="pull-right" title="Archive" ng-click="archive(kanban, column, card)" ng-show="isLastColumn(column.name, kanban)"><i class="glyphicon glyphicon-folder-close"></i></a>
                           <a ng-click="openCardDetails(card)"><span tooltip-popup-delay='2000' tooltip='{{details(card)}}'>{{card.name}}</span></a>
                       </li>
                   </ul>
@@ -197,8 +197,8 @@
                               <ng-form ng-submit="editingTitle = false">
                               <div>
                                 <input name="cardTitle" type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="cardInputs" ng-disabled="!editingTitle" focus-me />
-                                <a href="#editTitle" title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
-                                <a href="#editTitle" title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
+                                <a title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
+                                <a title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
                               </ng-form>
                               </div>
                             </div>
@@ -211,8 +211,8 @@
                                 </textarea>
                                 <div class="cardDetails cardInputs pull-left" ng-show="!editDetails" ng-bind-html="details|linky|cardDetails"></div>
 
-                                <a href="#editDetails" title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
-                                <a href="#editDetails" title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
+                                <a title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
+                                <a title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
                             </div>
                         </div>
                         <div class="form-group">

@@ -84,8 +84,11 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.rename = function(){
 		kanbanRepository.renameLastUsedTo($scope.newName);
 		kanbanRepository.save();
+		
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.editingName = false;
+
+		$scope.switchToKanban($scope.newName);
 	};
 
 	$scope.openKanbanShortcut = function($event){

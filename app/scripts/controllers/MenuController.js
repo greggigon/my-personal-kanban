@@ -1,15 +1,16 @@
 'use strict';
 
-var MenuController = function ($scope, kanbanRepository, $modal, $timeout) {
+var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $rootScope) {
 	$scope.newKanban = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'NewKanbanModal.html',
 			controller: 'NewKanbanController'
 		});
 
+		// This is a work around AngularUI breaking the $scope hierarchy
 		modalInstance.result.then(function(created){
 			if (created){
-				$timeout(function(){$scope.$emit('NewKanbanAdded');});
+				$rootScope.$broadcast('NewKanbanAdded');
 			}
 		});
 	};
@@ -25,7 +26,6 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout) {
 				kanbanRepository.setLastUsed(undefined);
 			}
 			$scope.$emit('KanbanDeleted');
-			$scope.openKanban();
 		}
 		return false;
 	};

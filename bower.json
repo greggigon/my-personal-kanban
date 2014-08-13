@@ -8,6 +8,7 @@
     "jquery-ui": "1.11.0",
     "angular-ui-utils": "0.1.1",
     "angular-sanitize": "1.2.21",
+    "angular-route": "1.2.21",
     "spinjs": "~2.0.1",
     "FileSaver": ""
   },

@@ -18,18 +18,15 @@
         
         <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
 </head>
-<body ng-app="mpk" ng-controller="ApplicationController" 
-          ui-keyup="{'ctrl-shift-72':'openHelpShortcut($event)'}">
-    <!--[if lt IE 7]>
+<body ng-app="mpk" ui-keyup="{'ctrl-shift-72':'openHelpShortcut($event)'}">
+  <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+<div ng-view>
+</div>
 
-    <!--[if lt IE 9]>
-      <script src="bower_components/es5-shim/es5-shim.js"></script>
-      <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
+<script type="text/ng-template" id="kanban.html">
 
-    <!-- Add your site or application content here -->
 <header class="navbar navbar-fixed-top" role="navigation" id="headerMenu">
   <div class="navbar-inner">
     <div class="container">
@@ -118,6 +115,7 @@
             </div>
         </div>
     </div>
+  </script>
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
         <script type="text/ng-template" id="NewKanbanModal.html">
@@ -446,6 +444,7 @@
 
         <script src="bower_components/jquery/jquery.min.js"></script>
         <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>

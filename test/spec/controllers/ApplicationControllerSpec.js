@@ -18,7 +18,7 @@ describe('Application controller', function(){
 		themesProviderMock = {setCurrentTheme: function(){}};
 
 		scope = $rootScope.$new();
-		applicationController = $controller('ApplicationController', {$scope: scope, kanbanRepository: kanbanRepositoryMock, themesProvider: themesProviderMock, $window: window});
+		applicationController = $controller('ApplicationController', {$scope: scope, kanbanRepository: kanbanRepositoryMock, themesProvider: themesProviderMock, $window: window, $routeParams: {}});
 	}));
 
 	it("should change name of the Kanban to new name", function(){
@@ -47,7 +47,6 @@ describe('Application controller', function(){
 	it("should add switch to option to Switch Menu", function(){
 		expect(scope.switchToList.length).toBe(scope.allKanbans.length+1);
 	});
-
 
 	var validSampleKanban = {"kanbans":{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,
 		"columns":[

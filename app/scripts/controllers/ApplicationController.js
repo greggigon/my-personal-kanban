@@ -1,9 +1,10 @@
 'use strict';
-var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider) {
+var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider, $routeParams, $location) {
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
 	// <-------- Handling different events in this block ---------------> //
 	$scope.$on('NewKanbanAdded', function(){
+		console.log('New kanban added');
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
@@ -97,6 +98,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 		kanbanRepository.setLastUsed(kanbanName);
 		$scope.newName = kanbanName;
+		$location.path('/kanban/' + kanbanName);
 		kanbanRepository.save();
 		$scope.switchTo = 'Switch to ...';
 	};
@@ -111,8 +113,13 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	var currentKanban = new Kanban('Kanban name', 0);
 	var loadedRepo = kanbanRepository.load();
 
-	if (loadedRepo && kanbanRepository.getLastUsed() != undefined	) {
-		currentKanban = kanbanRepository.getLastUsed();
+	if (loadedRepo){
+		if ($routeParams.kanbanName != undefined && kanbanRepository.get($routeParams.kanbanName)) {
+			currentKanban = kanbanRepository.get($routeParams.kanbanName);
+		} else if (kanbanRepository.getLastUsed() != undefined	) {
+			currentKanban = kanbanRepository.getLastUsed();
+			$location.path('/kanban/' + currentKanban.name);
+		}
 	}
 
 	$scope.kanban = currentKanban;

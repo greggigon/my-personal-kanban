@@ -1,6 +1,6 @@
 'use strict';
 
-var MenuController = function ($scope, kanbanRepository, $modal) {
+var MenuController = function ($scope, kanbanRepository, $modal, $timeout) {
 	$scope.newKanban = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'NewKanbanModal.html',
@@ -9,7 +9,7 @@ var MenuController = function ($scope, kanbanRepository, $modal) {
 
 		modalInstance.result.then(function(created){
 			if (created){
-				$scope.$emit('NewKanbanAdded');
+				$timeout(function(){$scope.$emit('NewKanbanAdded');});
 			}
 		});
 	};

@@ -4,7 +4,6 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	// <-------- Handling different events in this block ---------------> //
 	$scope.$on('NewKanbanAdded', function(){
-		console.log('New kanban added');
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;

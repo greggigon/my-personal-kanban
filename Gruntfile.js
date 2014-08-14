@@ -17,6 +17,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
   require('grunt-text-replace')(grunt);
+  require('grunt-contrib-copy')(grunt);
 
   // configurable paths
   var yeomanConfig = {
@@ -252,12 +253,13 @@ module.exports = function (grunt) {
             'fonts/*',
             'styles/themes/*.css',
             'scripts/themes.js',
+         
             'bower_components/angular/**/*.min.js',
             'bower_components/angular-route/**/*.min.js',
             'bower_components/angular-sanitize/**/*.min.js',
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
             'bower_components/angular-ui-utils/ui-utils.min.js',
-            'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
+            'bower_components/jquery-ui/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
             'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',
             'bower_components/spinjs/spin.js',
@@ -277,7 +279,18 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      bower_components: {
+        expand: true,
+        cwd: 'bower_components',
+        dest: '<%= yeoman.app %>/bower_components',
+        dot: true,
+        src: ['**/*']
       }
+    },
+
+    copyBower: {
+
     },
     concurrent: {
       server: [

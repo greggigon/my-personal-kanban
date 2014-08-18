@@ -13,6 +13,7 @@
 
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/bootstrap.css">
+        <link rel="stylesheet" href="bower_components/spectrum/spectrum.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         
@@ -94,15 +95,9 @@
             <div class="col-md-{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}" >
                 <div class="column">
                   <div class="columnHeader">
+                     <a title="Column settings" ng-click="columnSettings(kanban, column)" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-wrench"></i></a>
                       <a title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="glyphicon glyphicon-plus"></i></a>
-                      <a title="Change column name" ng-click="editing = true" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-tasks"></i></a>
-                      <span ng-hide="editing">{{column.name}} ({{column.cards.length}})</span>
-                      <form ng-show="editing" ng-submit="editing = false">
-                          <div class="input-group">
-                              <span class="input-group-addon"><a ng-click="editing = false"><i class="glyphicon glyphicon-tasks"></i></a></span>
-                              <input class="form-control" type="text" ng-model="column.name" value="{{column.name}}" required focus-me="editing" />
-                          </div>
-                      </form>
+                      <span>{{column.name}} ({{column.cards.length}})</span>
                   </div>
                   <ul class="cards" ui-sortable="{connectWith: '#kanban ul.cards'}" sortable ng-model="column.cards" style="{{minHeightOfColumn}}">
                       <li class="card" ng-repeat="card in column.cards" style="background-color: #{{colorFor(card)}};">
@@ -182,6 +177,30 @@
                     <button type="submit" class="btn btn-primary">Add</button>
                   </div>
               </form>
+        </script>
+
+        <script type="text/ng-template" id="ColumnSettings.html">
+          <form ng-submit="update()" class="noMargin" name="columnSettings">
+
+            <div class="modal-header">
+              <button type="button" class="close" ng-click="close()">&times;</button>
+              <h4 class="modal-title">Settings for column: {{model.column.name}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label" for="columnName">Column name</label>
+                <div class="controls">
+                  <div>
+                    <input name="columnName" type="text" id="columnName" placeholder="Title on a card" ng-model="model.columnName" required class="form-control" />
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
         </script>
 
         <script type="text/ng-template" id="OpenCard.html">
@@ -448,6 +467,8 @@
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
         <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/spectrum/spectrum.js"></script>
+        <script src="bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js"></script>
         <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
         <script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
         <script src="bower_components/spinjs/spin.js"></script>
@@ -471,6 +492,7 @@
         <script src="scripts/controllers/MenuController.js"></script>
         <script src="scripts/controllers/NewKanbanController.js"></script>
         <script src="scripts/controllers/CardController.js"></script>
+        <script src="scripts/controllers/ColumnSettingsController.js"></script>
         <script src="scripts/controllers/NewKanbanCardController.js"></script>
         <script src="scripts/controllers/KanbanController.js"></script>
         <script src="scripts/controllers/CloudMenuController.js"></script>

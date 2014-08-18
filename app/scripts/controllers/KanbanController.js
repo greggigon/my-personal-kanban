@@ -55,5 +55,16 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 
 	$scope.archive = function(kanban, column, card){
 		return kanbanManipulator.archiveCard(kanban, column, card);
-	}
+	};
+
+	$scope.columnSettings = function(kanban, column){
+		$modal.open({
+			templateUrl: 'ColumnSettings.html',
+			controller: 'ColumnSettingsController',
+			resolve: {
+				kanban: function(){ return kanban; },
+				column: function(){ return column; }
+			}
+		});
+	};
 };

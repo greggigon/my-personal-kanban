@@ -5,13 +5,15 @@ function Kanban(name, numberOfColumns) {
 		numberOfColumns: numberOfColumns,
 		columns: [],
 		archived: [],
+		settings: {}
 	};
 }
 
 function KanbanColumn(name){
 	return {
 		name: name,
-		cards: []
+		cards: [],
+		settings: {}
 	};
 }
 

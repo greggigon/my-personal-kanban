@@ -93,7 +93,7 @@
     <div ng-model="kanban">
         <div id="columns" class="row">
             <div class="col-md-{{12/kanban.numberOfColumns}}" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}" >
-                <div class="column">
+                <div class="column" style="background-color: {{column.settings.color}}">
                   <div class="columnHeader">
                      <a title="Column settings" ng-click="columnSettings(kanban, column)" ng-model="column" ng-hide="editing"><i class="glyphicon glyphicon-wrench"></i></a>
                       <a title="Add card to column" class="pull-right" ng-click="addNewCard(column)"><i class="glyphicon glyphicon-plus"></i></a>
@@ -187,6 +187,7 @@
               <h4 class="modal-title">Settings for column: {{model.column.name}}</h4>
             </div>
             <div class="modal-body">
+
               <div class="form-group">
                 <label class="control-label" for="columnName">Column name</label>
                 <div class="controls">
@@ -194,7 +195,21 @@
                     <input name="columnName" type="text" id="columnName" placeholder="Title on a card" ng-model="model.columnName" required class="form-control" />
                   </div>
                 </div>
-            </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="columnColor">Column color</label>
+                <div class="controls">
+                  <div>
+                    <div class="col-md-3" style="padding-left: 0px;">
+                      <input type="text" name="colorHex" value="Theme Default" class="form-control" ng-model="model.color"/>
+                    </div>
+                    <spectrum-colorpicker ng-model="model.color" options="{allowEmpty: true}" format="hex" class="">
+                    </spectrum-colorpicker>
+                  </div>
+                </div>
+              </div>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" ng-click="close()">Close</button>

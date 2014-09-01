@@ -42,7 +42,9 @@ describe('Kanban controller', function(){
 		it('should return false if the column is not last', function(){
 			expect(scope.isLastColumn('In Progress', kanban)).toBeFalsy();
 			expect(scope.isLastColumn('Not started', kanban)).toBeFalsy();
-		})	
+		});
+
+			
 	})
 
 });

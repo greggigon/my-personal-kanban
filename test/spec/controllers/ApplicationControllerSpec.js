@@ -13,6 +13,8 @@ describe('Application controller', function(){
 			getTheme: function() { return 'default-dark'; },
 			renameLastUsedTo: renamer,
 			save: saver,
+			get: function(name) { return validSampleKanban.kanbans[name]; },
+			setLastUsed: function(kanban) { return kanban; },
 		};
 		window = $window;
 		themesProviderMock = {setCurrentTheme: function(){}};
@@ -48,12 +50,22 @@ describe('Application controller', function(){
 		expect(scope.switchToList.length).toBe(scope.allKanbans.length+1);
 	});
 
-	var validSampleKanban = {"kanbans":{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,
-		"columns":[
-			{"name":"Not started","cards":[{"name":"This little piggy went to lunch","color":"CCD0FC"},{"name":"Foo bar","color":"FCE4D4"}]},
-			{"name":"In progress","cards":[{"name":"another on a bit longer text this time","color":"FAFFA1"},{"name":"And another one","color":"94D6FF"}]},
-			{"name":"Done","cards":[{"name":"bar foo","color":"FCE4D4"},{"name":"Another on","color":"FCC19D"},{"name":"New one","color":"FC9AFB"}]}]},
+	var validSampleKanban = {"kanbans":
+		{"Stuff to do at home":{"name":"Stuff to do at home","numberOfColumns":3,
+			"columns":[
+				{"name":"Not started","cards":[{"name":"This little piggy went to lunch","color":"CCD0FC"},{"name":"Foo bar","color":"FCE4D4"}]},
+				{"name":"In progress","cards":[{"name":"another on a bit longer text this time","color":"FAFFA1"},{"name":"And another one","color":"94D6FF"}]},
+				{"name":"Done","cards":[{"name":"bar foo","color":"FCE4D4"},{"name":"Another on","color":"FCC19D"},{"name":"New one","color":"FC9AFB"}]}
+			]
+		}, 
+		"foobarboo":{"name":"foobarboo","numberOfColumns":3,
+			"columns":[
+				{"name":"Col 1","cards":[]},
+				{"name":"Col 2","cards":[]},
+				{"name":"Col 3","cards":[]},
+			]
+		}},
 		"lastUsed":"Stuff to do at home",
 		"theme":"default-dark",
-		"lastUpdated":"1391554268110"}};
+		"lastUpdated":"1391554268110"};
 });

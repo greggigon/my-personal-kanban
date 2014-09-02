@@ -1,6 +1,6 @@
 // Generated on 2013-09-12 using generator-angular 0.4.0
 'use strict';
-var APP_VERSION = '0.6.0';
+var APP_VERSION = '0.7.0';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
 var mountFolder = function (connect, dir) {
@@ -259,11 +259,14 @@ module.exports = function (grunt) {
             'bower_components/angular-sanitize/**/*.min.js',
             'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
             'bower_components/angular-ui-utils/ui-utils.min.js',
+            'bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js',
             'bower_components/jquery-ui/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
             'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',
             'bower_components/spinjs/spin.js',
-            'bower_components/FileSaver/FileSaver.js'
+            'bower_components/FileSaver/FileSaver.js',
+            'bower_components/spectrum/spectrum.js',
+
           ]
         }, {
           expand: true,

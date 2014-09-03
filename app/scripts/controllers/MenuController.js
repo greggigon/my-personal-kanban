@@ -27,8 +27,8 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 			kanbanRepository.remove($scope.kanban.name);
 			var all = allKanbanNames(kanbanRepository);
 
-			if (names.length > 0){
-				kanbanRepository.setLastUsed(names[0]);
+			if (all.length > 0){
+				kanbanRepository.setLastUsed(all[0]);
 			} else {
 				kanbanRepository.setLastUsed(undefined);
 			}

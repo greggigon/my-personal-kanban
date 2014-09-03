@@ -10,15 +10,18 @@ var NewKanbanController = function ($scope, $modalInstance, kanbanRepository, ka
 		if (!this.newKanbanForm.$valid){
 			return false;
 		}
-		if ($scope.model.useTemplate != ''){
-			// Create copy of Kanban from existing
-			// add to repository and set as last used
-			
-		}
+
 		var newKanban = new Kanban(this.kanbanName, this.numberOfColumns);
-		for (var i=1;i<parseInt(this.numberOfColumns)+1;i++){
-			kanbanManipulator.addColumn(newKanban, 'Column '+i);
+
+		if ($scope.model.useTemplate != ''){
+			var templateKanban = kanbanRepository.all()[$scope.model.useTemplate];
+			newKanban = kanbanManipulator.createNewFromTemplate(templateKanban, this.kanbanName);
+		} else {
+			for (var i=1;i<parseInt(this.numberOfColumns)+1;i++){
+				kanbanManipulator.addColumn(newKanban, 'Column '+i);
+			}
 		}
+
 		kanbanRepository.add(newKanban);
 
 		this.kanbanName = '';

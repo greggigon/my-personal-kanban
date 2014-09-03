@@ -40,6 +40,14 @@ angular.module('mpk').factory('kanbanManipulator', function () {
 
     removeFromArchive: function(kanban, archivedCard){
       kanban.archived.splice(kanban.archived.indexOf(archivedCard), 1); 
+    },
+
+    createNewFromTemplate: function(kanban, newName){
+      var newKanban = new Kanban(newName, kanban.columns.length);
+      angular.forEach(kanban.columns, function(col) {
+        newKanban.columns.push(new KanbanColumn(col.name, col.settings));
+      });
+      return newKanban;
     }
   };
 });

@@ -28,5 +28,4 @@ var SetupCloudController = function($scope, $modalInstance, cloudService, showCo
 		$scope.model.localCloudUrl = settings.localCloudUrl;
 	}
 
-	$scope.$watch('model.localCloudUrl', function(){ console.log($scope.cloudSettings)});
 };

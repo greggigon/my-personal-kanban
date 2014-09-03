@@ -17,6 +17,14 @@ function KanbanColumn(name){
 	};
 }
 
+function KanbanColumn(name, settings){
+	return {
+		name: name,
+		cards: [],
+		settings: settings
+	};
+}
+
 function KanbanCard(name, details, color){
 	this.name = name;
 	this.details = details;

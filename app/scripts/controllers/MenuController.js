@@ -1,10 +1,17 @@
 'use strict';
 
 var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $rootScope) {
+	function allKanbanNames(kanbanRepository){
+		return Object.keys(kanbanRepository.all());
+	}
+
 	$scope.newKanban = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'NewKanbanModal.html',
-			controller: 'NewKanbanController'
+			controller: 'NewKanbanController',
+			resolve: {
+				kanbanNames: function(){ return allKanbanNames(kanbanRepository); }
+			}
 		});
 
 		// This is a work around AngularUI breaking the $scope hierarchy
@@ -18,8 +25,8 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 	$scope.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);
-			var all = kanbanRepository.all();
-			var names = Object.keys(all);
+			var all = allKanbanNames(kanbanRepository);
+
 			if (names.length > 0){
 				kanbanRepository.setLastUsed(names[0]);
 			} else {

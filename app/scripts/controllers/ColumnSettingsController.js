@@ -2,6 +2,7 @@
 
 var ColumnSettingsController = function ($scope, $modalInstance, kanban, column) {
 	$scope.model = {column: column, kanban: kanban, columnName: column.name, color: ''};
+	
 	if (column.settings != undefined && column.settings.color != undefined){
 		$scope.model.color = column.settings.color;
 	}
@@ -20,5 +21,4 @@ var ColumnSettingsController = function ($scope, $modalInstance, kanban, column)
 
 		$modalInstance.close();
 	};
-
 };

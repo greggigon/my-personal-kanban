@@ -97,7 +97,6 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	$scope.switchToKanban = function(kanbanName){
 		if (kanbanName == 'Switch to ...') return;
-		console.log(kanbanRepository);		
 		$scope.kanban = kanbanRepository.get(kanbanName);
 
 		kanbanRepository.setLastUsed(kanbanName);

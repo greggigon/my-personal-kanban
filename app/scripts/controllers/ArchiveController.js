@@ -36,7 +36,6 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 	};
 
 	$scope.close = function(){
-		console.log($scope.model.archived);
 		$modalInstance.close();
 	};
 

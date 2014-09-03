@@ -49,15 +49,15 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="mpkNew" title="New Kanban board" ng-click="newKanban()"><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                    <li><a class="mpkNew" title="New Kanban board" ng-click="newKanban()" href=""><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
-                    <li><a title="Downloadelete Kanban from local storage" ng-click="delete()"><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
-                    <li><a title="Select Theme for the Kanban board" ng-click="selectTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
-                    <li><a title="Open archive" ng-click="openArchive(kanban)"><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
+                    <li><a title="Downloadelete Kanban from local storage" ng-click="delete()" href=""><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
+                    <li><a title="Select Theme for the Kanban board" ng-click="selectTheme()" href=""><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                    <li><a title="Open archive" ng-click="openArchive(kanban)" href=""><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)"><i class="glyphicon glyphicon-save"></i> Export</a></li>
+                    <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)" href=""><i class="glyphicon glyphicon-save"></i> Export</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a title="Help" ng-click="help()"><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
+                    <li><a title="Help" ng-click="help()" href=""><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
                 </ul>
             </li>
         </ul>
@@ -65,9 +65,9 @@
           <li class="dropdown"> 
             <a class="dropdown-toggle" data-toggle="dropdown">Cloud <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a ng-click="openCloudSetup()"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
-              <li><a ng-click="upload()"><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
-              <li><a ng-click="download()"><i class="glyphicon glyphicon-download"></i> Download</a></li>
+              <li><a ng-click="openCloudSetup()" href=""><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
+              <li><a ng-click="upload()" href=""><i class="glyphicon glyphicon-upload"></i> Upload</a></li>
+              <li><a ng-click="download()" href=""><i class="glyphicon glyphicon-download"></i> Download</a></li>
               <li><a href="http://localhost:8080/" target="blank"><i class="glyphicon glyphicon-hand-right"></i> Go to Cloud</a></li>
             </ul>
           </li>
@@ -136,6 +136,18 @@
                         <option>6</option>
                       </select>
                     </div>
+                  </div>
+                  <hr />
+                  <div class="form-group">
+                    <label for="fromTemplate">Use existing Kanban as template</label>
+                    <div>
+                      <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
+                        <option>Existing kanbans ...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="alert alert-info">
+                    <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
                   </div>
                 </div>
                 <div class="modal-footer">

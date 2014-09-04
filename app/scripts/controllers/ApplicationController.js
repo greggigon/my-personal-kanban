@@ -137,8 +137,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		kanbanRepository.save();
 	}, true);
 
-	var windowHeight = angular.element($window).height() - 110;
-	$scope.minHeightOfColumn =  'min-height:'+windowHeight+'px;';
+	$scope.columnHeight = angular.element($window).height() - 110;
 
 	$scope.triggerOpen = function(){
 		$scope.$broadcast('TriggerOpenKanban');

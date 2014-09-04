@@ -9,6 +9,6 @@ angular.module('mpk').filter('archiveByCardName', function () {
 				filtered.push(archivedCard);
 			}
 		});
-		return filtered;
+		return filtered.reverse();
 	};
 });

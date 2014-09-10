@@ -56,6 +56,7 @@
                     <li><a title="Open archive" ng-click="openArchive(kanban)" href=""><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
                     <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)" href=""><i class="glyphicon glyphicon-save"></i> Export</a></li>
+                    <li><a title="Import Kanban from file" ng-click="import()" href=""><i class="glyphicon glyphicon-open"></i> Import</a></li>
                     <li role="presentation" class="divider"></li>
                     <li><a title="Help" ng-click="help()" href=""><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
                 </ul>
@@ -397,6 +398,26 @@
             </form>
           </script>
 
+          <script type="text/ng-template" id="ImportModal.html">
+            <form name="importKanban" class="noMargin">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Import Kanban(s)</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="kanbanToExport">Select file:</label>
+                  <input type="file" id="kanbanFile" name="kanbanFile" read-file ng-model="model.file" ng-change="model.fileSelected=true"/>
+                </div>
+                <div class="alert alert-warning">If you import Kanban with the name that already exists, all the content of existing Kanban will be lost.</div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
+                <button class="btn btn-primary" type="submit" ng-click="import()" ng-disabled="model.file==''">Import</button>
+              </div>
+            </form>
+          </script>
+
           <script type="text/ng-template" id="ArchiveModal.html">
               <div class="modal-header">
                 <button type="button" class="close" ng-click="close()">&times;</button>
@@ -527,12 +548,14 @@
         <script src="scripts/controllers/SetupCloudController.js"></script>
         <script src="scripts/controllers/HelpController.js"></script>
         <script src="scripts/controllers/ExportController.js"></script>
+        <script src="scripts/controllers/ImportController.js"></script>
         <script src="scripts/controllers/ArchiveController.js"></script>
 
 
         <script src="scripts/directives/colorSelector.js"></script>
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
+        <script src="scripts/directives/file.js"></script>
         <script src="scripts/filters/cardDetails.js"></script>
         <script src="scripts/filters/archiveByCardName.js"></script>
         <script src="scripts/services/cryptoService.js"></script>

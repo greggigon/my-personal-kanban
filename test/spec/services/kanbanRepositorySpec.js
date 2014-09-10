@@ -82,4 +82,14 @@ describe("Kanban Repository", function(){
 		expect(result.message).toBe("Looks like Kanban saved in the cloud was persisted with different encryption key. You'll need to use old key to download your Kanban. Set it up in the Cloud Setup menu.");
 	});
 
+	it('should import kanbans', function(){
+		var kanbanToBeImported = {"Ban ban": {"name": "Ban ban", "numberOfColumns": 3, "columns":[{"name":"Column 1","cards":[{"name":"New test task","details":"§ &^$\n° ´ § ä ü ß","color":"FFFFFF"}]},{"name":"Column 2","cards":[]},{"name":"Column 3","cards":[]}]}}
+		var initialNumberOfKanbans = Object.keys(repository.all()).length;
+
+		repository.import(kanbanToBeImported);
+		var kanbansAfterImport = Object.keys(repository.all()).length;
+		
+		expect(kanbansAfterImport).toBe(initialNumberOfKanbans + 1);
+	});
+
 });

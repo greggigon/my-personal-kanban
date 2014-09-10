@@ -120,6 +120,16 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService, crypto
       this.kanbansByName[newName] = lastUsed;
       this.lastUsed = newName;
       return true;
+    },
+
+    import: function(kanbans){
+      var self = this;
+      angular.forEach(Object.keys(kanbans), function(kanbanName){
+        self.kanbansByName[kanbanName] = kanbans[kanbanName];
+      });
+      var names = Object.keys(kanbans);
+      this.setLastUsed(kanbans[names[0]]);
+      this.save();
     }
 
   };

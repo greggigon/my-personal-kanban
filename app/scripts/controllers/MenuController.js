@@ -67,6 +67,21 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 		});
 	};
 
+	$scope.import = function(){
+		var modalInstance = $modal.open({
+			templateUrl: 'ImportModal.html',
+			controller: 'ImportController',
+			resolve: {
+				kanbanRepository: function(){ return kanbanRepository; },
+			}
+		});
+		modalInstance.result.then(function(imported){
+			if (imported){
+				$rootScope.$broadcast('DownloadFinished');
+			}
+		});
+	};
+
 	$scope.openArchive = function(currentKanban){
 		$modal.open({
 			templateUrl: 'ArchiveModal.html',

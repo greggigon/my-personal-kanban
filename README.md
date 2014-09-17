@@ -7,7 +7,7 @@ It is a single page JavaScript application with very basic functionality.
 
 ## Download
 
-You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.6.0.zip?raw=true). Lastest version is 0.6.0 and includes new Cloud upload and download functionality.
+You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.7.0.zip?raw=true). Lastest version is 0.7.0 and includes new Cloud upload and download functionality.
 
 ## How to use it?
 
@@ -43,4 +43,4 @@ This application is the result of me doing so, while attempting to learn Angular
 
 If you want to help me with styling or anything else, please do get in touch.
 
-Any issues, raise it at github.
+Any issues, raise it on github.

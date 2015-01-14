@@ -14,10 +14,9 @@ var mountFolder = function (connect, dir) {
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-  require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
-  require('grunt-text-replace')(grunt);
-  require('grunt-contrib-copy')(grunt);
+  // require('grunt-text-replace')(grunt);
+  // require('grunt-contrib-copy')(grunt);
 
   // configurable paths
   var yeomanConfig = {
@@ -30,6 +29,7 @@ module.exports = function (grunt) {
   } catch (e) {}
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
       coffee: {
@@ -257,12 +257,9 @@ module.exports = function (grunt) {
             'bower_components/angular/**/*.min.js',
             'bower_components/angular-route/**/*.min.js',
             'bower_components/angular-sanitize/**/*.min.js',
-            'bower_components/angular-ui-bootstrap-bower/**/*.min.js',
-            'bower_components/angular-ui-utils/ui-utils.min.js',
             'bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js',
             'bower_components/jquery-ui/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
-            'bower_components/ichuan-bower-angular-ui-utils/ui-utils.min.js',
             'bower_components/spinjs/spin.js',
             'bower_components/FileSaver/FileSaver.js',
             'bower_components/spectrum/spectrum.js',
@@ -292,9 +289,6 @@ module.exports = function (grunt) {
       }
     },
 
-    copyBower: {
-
-    },
     concurrent: {
       server: [
         'coffee:dist',
@@ -374,6 +368,8 @@ module.exports = function (grunt) {
     }
   
   });
+
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {

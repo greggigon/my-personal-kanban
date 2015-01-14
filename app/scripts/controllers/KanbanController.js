@@ -68,3 +68,5 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 		});
 	};
 };
+mpkModule.controller('KanbanController', KanbanController);
+

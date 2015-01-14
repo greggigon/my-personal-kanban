@@ -6,20 +6,21 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 	}
 
 	$scope.newKanban = function(){
-		var modalInstance = $modal.open({
-			templateUrl: 'NewKanbanModal.html',
-			controller: 'NewKanbanController',
-			resolve: {
-				kanbanNames: function(){ return allKanbanNames(kanbanRepository); }
-			}
-		});
+		$scope.$parent.showNewKanban = true;
+		// var modalInstance = $modal.open({
+		// 	templateUrl: 'NewKanbanModal.html',
+		// 	controller: 'NewKanbanController',
+		// 	resolve: {
+		// 		kanbanNames: function(){ return allKanbanNames(kanbanRepository); }
+		// 	}
+		// });
 
-		// This is a work around AngularUI breaking the $scope hierarchy
-		modalInstance.result.then(function(created){
-			if (created){
-				$rootScope.$broadcast('NewKanbanAdded');
-			}
-		});
+		// // This is a work around AngularUI breaking the $scope hierarchy
+		// modalInstance.result.then(function(created){
+		// 	if (created){
+		// 		$rootScope.$broadcast('NewKanbanAdded');
+		// 	}
+		// });
 	};
 
 	$scope.delete = function(){
@@ -93,3 +94,4 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 		})
 	};
 };
+mpkModule.controller('MenuController', MenuController);

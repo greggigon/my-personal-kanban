@@ -12,14 +12,15 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/bootstrap.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
         <link rel="stylesheet" href="styles/spectrum.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         
         <link rel="stylesheet" href="styles/themes/default-bright.css" id="themeStylesheet">
 </head>
-<body ng-app="mpk" ui-keyup="{'ctrl-shift-72':'openHelpShortcut($event)'}">
+<body ng-app="mpk">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -45,11 +46,11 @@
         </div>
       </div>
       <div class="col-md-9">
-        <ul class="nav navbar-nav pull-right" id="menu" ng-controller="MenuController">
+        <ul class="nav navbar-nav pull-right" id="menu">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="mpkNew" title="New Kanban board" ng-click="newKanban()" href=""><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                    <li><a class="mpkNew" title="New Kanban board" ng-click="showNewKanban=true" href=""><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
                     <li><a title="Downloadelete Kanban from local storage" ng-click="delete()" href=""><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
                     <li><a title="Select Theme for the Kanban board" ng-click="selectTheme()" href=""><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
@@ -111,52 +112,52 @@
             </div>
         </div>
     </div>
+    <div ng-controller="NewKanbanController">
+      <mpk-modal title="New Kanban board" visible="showNewKanban">
+        <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+                <div>
+                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+                <div>
+                  <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
+                    <option>2</option>
+                    <option selected="selected">3</option>
+                    <option>4</option>
+                    <option>6</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="form-group">
+                <label for="fromTemplate">Use existing Kanban as template</label>
+                <div>
+                  <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
+                    <option>Existing kanbans ...</option>
+                  </select>
+                </div>
+              </div>
+              <div class="alert alert-info">
+                <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Create new</button>
+            </div>
+        </form>
+      </mpk-modal> 
+    </div>
   </script>
+
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
-        <script type="text/ng-template" id="NewKanbanModal.html">
-            <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
-                <div class="modal-header">
-                  <button type="button" class="close" ng-click="closeNewKanban()">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">New Kanban board</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                    <div>
-                      <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-                    <div>
-                      <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
-                        <option>2</option>
-                        <option selected="selected">3</option>
-                        <option>4</option>
-                        <option>6</option>
-                      </select>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="form-group">
-                    <label for="fromTemplate">Use existing Kanban as template</label>
-                    <div>
-                      <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
-                        <option>Existing kanbans ...</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="alert alert-info">
-                    <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" ng-click="closeNewKanban()">Close</button>
-                  <button type="submit" class="btn btn-primary" >Create new</button>
-                </div>
-            </form>
-          </script> 
+
            
           <script type="text/ng-template" id="NewKanbanCard.html">
               <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
@@ -510,17 +511,15 @@
 </footer>
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.min.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
-        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
         <script src="bower_components/spectrum/spectrum.js"></script>
         <script src="bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js"></script>
         <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-        <script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
         <script src="bower_components/spinjs/spin.js"></script>
-        <script src="bower_components/FileSaver/FileSaver.js"></script>
+        <script src="bower_components/FileSaver/FileSaver.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="scripts/themes.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -535,6 +534,7 @@
         <script src="scripts/services/kanbanManipulator.js"></script>
         <script src="scripts/services/themesProvider.js"></script>
         <script src="scripts/services/fileService.js"></script>
+        <script src="scripts/services/modalService.js"></script>
         
         <script src="scripts/controllers/ApplicationController.js"></script>
         <script src="scripts/controllers/MenuController.js"></script>
@@ -556,6 +556,7 @@
         <script src="scripts/directives/focusMe.js"></script>
         <script src="scripts/directives/sortable.js"></script>
         <script src="scripts/directives/file.js"></script>
+        <script src="scripts/directives/modal.js"></script>
         <script src="scripts/filters/cardDetails.js"></script>
         <script src="scripts/filters/archiveByCardName.js"></script>
         <script src="scripts/services/cryptoService.js"></script>

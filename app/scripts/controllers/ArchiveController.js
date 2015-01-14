@@ -40,3 +40,4 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 	};
 
 }
+mpkModule.controller('ArchiveController', ArchiveController);

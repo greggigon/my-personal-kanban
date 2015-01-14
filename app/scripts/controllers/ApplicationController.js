@@ -4,20 +4,11 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	// <-------- Handling different events in this block ---------------> //
 	$scope.$on('NewKanbanAdded', function(){
+		$scope.showNewKanban = false;
 		$scope.kanban = kanbanRepository.getLastUsed();
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.selectedToOpen = $scope.kanban.name;
 		$location.path('/kanban/' + $scope.kanban.name);
-		$scope.switchToList = $scope.allKanbans.slice(0);
-		$scope.switchToList.splice(0,0,'Switch to ...');
-	});
-
-	$scope.$on('KanbanDeleted', function(){
-		$scope.kanban = undefined;
-		$scope.allKanbans = Object.keys(kanbanRepository.all());
-		if ($scope.allKanbans.length > 0){
-			$scope.switchToKanban($scope.allKanbans[0]);
-		}
 		$scope.switchToList = $scope.allKanbans.slice(0);
 		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
@@ -74,6 +65,33 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.showSpinner = false;
 		$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
 	});
+
+	function allKanbanNames(kanbanRepository){
+		return Object.keys(kanbanRepository.all());
+	}
+	
+	$scope.delete = function(){
+		if (confirm('You sure you want to delete the entire Kanban?')){
+			kanbanRepository.remove($scope.kanban.name);
+			var all = allKanbanNames(kanbanRepository);
+
+			if (all.length > 0){
+				kanbanRepository.setLastUsed(all[0]);
+			} else {
+				kanbanRepository.setLastUsed(undefined);
+			}
+			$scope.kanban = undefined;
+			$scope.allKanbans = Object.keys(kanbanRepository.all());
+			
+			if ($scope.allKanbans.length > 0){
+				$scope.switchToKanban($scope.allKanbans[0]);
+			}
+			
+			$scope.switchToList = $scope.allKanbans.slice(0);
+			$scope.switchToList.splice(0,0,'Switch to ...');
+		}
+		return false;
+	};
 
 	$scope.editingKanbanName = function(){
 		$scope.editingName = true;
@@ -148,3 +166,5 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	}
 
 };
+
+mpkModule.controller('ApplicationController', ApplicationController);

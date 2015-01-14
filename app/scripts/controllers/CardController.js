@@ -35,3 +35,4 @@ var CardController = function ($scope, $modalInstance, colorOptions, card) {
 
 	initScope($scope, card, colorOptions);
 };
+mpkModule.controller('CardController', CardController);

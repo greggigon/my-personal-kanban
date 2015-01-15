@@ -66,10 +66,15 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
 	});
 
+	$scope.kanbanMenu = {};
+	$scope.kanbanMenu.openNewKanban = function(){ 
+		$scope.$broadcast('OpenNewKanban');
+	}
+
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());
 	}
-	
+
 	$scope.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);

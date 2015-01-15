@@ -50,16 +50,16 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">Kanban <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="mpkNew" title="New Kanban board" ng-click="showNewKanban=true" href=""><i class="glyphicon glyphicon-briefcase"></i> New</a>
+                    <li><a class="mpkNew" title="New Kanban board" ng-click="kanbanMenu.openNewKanban()" href=""><i class="glyphicon glyphicon-briefcase"></i> New</a>
                     </li>
                     <li><a title="Downloadelete Kanban from local storage" ng-click="delete()" href=""><i class="glyphicon glyphicon-remove-sign"></i> Delete</a></li>
-                    <li><a title="Select Theme for the Kanban board" ng-click="selectTheme()" href=""><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
+                    <li><a title="Select Theme for the Kanban board" ng-click="showSwitchTheme=true" href=""><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
                     <li><a title="Open archive" ng-click="openArchive(kanban)" href=""><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
                     <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)" href=""><i class="glyphicon glyphicon-save"></i> Export</a></li>
                     <li><a title="Import Kanban from file" ng-click="import()" href=""><i class="glyphicon glyphicon-open"></i> Import</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a title="Help" ng-click="help()" href=""><i class="glyphicon glyphicon-question-sign"></i> Help <small class="shortcut pull-right">ctrl-shift-h</small></a></li>
+                    <li><a title="Help" ng-click="showHelp=true" href=""><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
                 </ul>
             </li>
         </ul>
@@ -112,46 +112,106 @@
             </div>
         </div>
     </div>
-    <div ng-controller="NewKanbanController">
-      <mpk-modal title="New Kanban board" visible="showNewKanban">
-        <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
-            <div class="modal-body">
-              <div class="form-group">
-                <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-                <div>
-                  <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-                <div>
-                  <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
-                    <option>2</option>
-                    <option selected="selected">3</option>
-                    <option>4</option>
-                    <option>6</option>
+</div>
+
+<div ng-controller="NewKanbanController">
+  <mpk-modal title="New Kanban board" visible="showNewKanban">
+    <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+            <div>
+              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+            <div>
+              <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
+                <option>2</option>
+                <option selected="selected">3</option>
+                <option>4</option>
+                <option>6</option>
+              </select>
+            </div>
+          </div>
+          <hr />
+          <div class="form-group">
+            <label for="fromTemplate">Use existing Kanban as template</label>
+            <div>
+              <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
+                <option>Existing kanbans ...</option>
+              </select>
+            </div>
+          </div>
+          <div class="alert alert-info">
+            <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create new</button>
+        </div>
+    </form>
+  </mpk-modal> 
+</div>  
+
+    <!-- THIS IS THE HELP -->
+    <mpk-modal title="Help" visible="showHelp" width="90%">
+        <p><span class="version">My Personal Kanban Version: @version@</span> from <a href="http://greggigon.github.io/my-personal-kanban/" target="blank">http://greggigon.github.io/my-personal-kanban/</a></p>
+        <p>
+          <strong>Personal Kanban</strong><br />
+          <small>You can create <strong>new Kanban</strong> by selecting <strong>Kanban -> New</strong> from the Kanban menu. You can give it a name and select number of columns. You can also choose existing Kanban as a template for the new one.<br/>
+          Once Kanban is created you can <strong>rename</strong> it by <strong>clicking it's title</strong> in the top bar. You can add new cards to the columns by pressing <strong>&plus;</strong> in the top right of the column. <br />
+            You can give each <strong>column name</strong> and change it's colour by selecting <strong>Column settings icon</strong> next to it's name. <strong>(Number)</strong> next to column name indicates number of cards in the column.<br /><br />
+            <strong>Cards are created</strong> with <strong>title</strong> and possible longer <strong>description</strong>. You can also <strong>select different colour</strong> for the card if you would like to categorize them somehow. Description will <strong>keep the new line formating</strong> and add <strong>clickable links</strong> if you include any. <br />
+            You can <strong>open Card details</strong> by clicking on <strong>card title</strong>.You can <strong>edit Card details</strong> once opened.<br />
+            You can <strong>drag card between columns</strong> and move them <strong>up and down</strong> column list.<br /><br />
+            You can have <strong>multiple Kanbans</strong> and open/switch them from the <strong>Switch to ...</strong> dropdown, next to <strong>Cloud Menu</strong>. <br /> 
+              You can <strong>select different style</strong> of Kanban board from <strong>Kanban -> Theme</strong> menu.<br />
+              You can <strong>delete</strong> entire Kanban by selecting <strong>Kanban -> Delete</strong> from the menu.<br />
+              Your Kanbans are automatically <strong>saved</strong> in your <strong>browser storage</strong>. <br /><br />
+              If card is in the last colum you can Archive it. It will remove it from a Column but keep in Kanban. You can review
+              your archived Cards via <strong>Kanban -> Archives</strong> menu. <br />
+              You can also un-archive cards from Archive and permamently remove them.<br /><br />
+              You can <strong>Export</strong> one or all Kanbans by selecting <strong>Kanban -> Export</strong> menu.<br />
+              You can <strong>Import</strong> Kanban(s) from a JSON file. <strong>Not that Kanban with existing name, same as imported one will be replaced with the content of the new one.</strong><br /><br />
+          </small>
+        </p>
+        <p>
+          <strong>Cloud</strong><br />
+          <small>
+            You can use <strong>My Personal Kanban Cloud</strong> service that enables <strong>Upload and Download</strong> from Cloud. This service is offered free of charge. <br />
+            You will need to create your <strong>cloud Kanban key</strong>. Follow instructions on <strong>Cloud -> Setup</strong>.<br />
+            Your Kanban in the Cloud <strong>is stored Encrypted</strong>, that's why you should setup <strong>Encryption Key</strong>. The Encryption algorithm is <a href="http://en.wikipedia.org/wiki/Rabbit_(cipher)" target="blank" title="Rabbit encryption algorithm">Rabbit</a>.<br />
+            You can <strong>upload Kanban</strong> by selecting <strong>Cloud -> Upload</strong> from the menu <br />.
+            You can <strong>download Kanban</strong> by selecting <strong>Cloud -> Download</strong> from the menu. <br /><br />
+            You can also use your own Local Cloud. There is server implementation provided at: <a href="https://github.com/greggigon/my-personal-kanban-server" target="blank">https://github.com/greggigon/my-personal-kanban-server</a>. Just select the option and provide URL for the Local Cloud service <strong>Cloud -> Setup -> Use own Local Cloud</strong>.
+          </small>
+        </p>
+    </mpk-modal>
+
+    <div ng-controller="SwitchThemeController">
+      <mpk-modal title="Choose Kanban Theme" visible="showSwitchTheme">
+        <form ng-submit="switchTheme()" name="selectTheme" class="noMargin">
+            <div class="form-group">
+              <label class="control-label" for="kanbanTheme">Themes to choose from</label>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                  <select class="form-control" name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes" id="kanbanTheme">
                   </select>
                 </div>
-              </div>
-              <hr />
-              <div class="form-group">
-                <label for="fromTemplate">Use existing Kanban as template</label>
-                <div>
-                  <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
-                    <option>Existing kanbans ...</option>
-                  </select>
-                </div>
-              </div>
-              <div class="alert alert-info">
-                <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
-              </div>
+                <div class="col-md-5">
+                  <img src="img/themes/{{model.selectedTheme}}.jpg" width="250" class="thumbnail" style="border: 1px solid black"/>
+               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Create new</button>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Switch</button>
+          </div>
         </form>
-      </mpk-modal> 
+      </mpk-modal>
     </div>
   </script>
 
@@ -277,32 +337,7 @@
               </form>
         </script>
 
-        <script type="text/ng-template" id="SelectTheme.html">
-            <form ng-submit="switchTheme()" name="selectTheme" class="noMargin">
-              <div class="modal-header">
-                <button type="button" class="close" ng-click="close()">&times;</button>
-                <h4 class="modal-title" id="openKanbanLabel">Choose Kanban Theme</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label" for="kanbanTheme">Themes to choose from</label>
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                      <select class="form-control" name="selectedToOpen" ng-model="model.selectedTheme" required ng-options="t.css as t.name for t in model.themes" id="kanbanTheme">
-                      </select>
-                    </div>
-                    <div class="col-md-5">
-                      <img src="img/themes/{{model.selectedTheme}}.jpg" width="250" class="thumbnail" style="border: 1px solid black"/>
-                   </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-click="switchTheme()">Switch</button>
-              </div>
-            </form>
-          </script>
+        
 
           <script type="text/ng-template" id="SetupCloudModal.html">
             <form ng-submit="saveSettings()" name="cloudSettings" class="noMargin">
@@ -461,49 +496,7 @@
               </div>
           </script>
 
-          <script type="text/ng-template" id="HelpModal.html">
-              <div class="modal-header">
-                <button type="button" class="close" ng-click="close()">&times;</button>
-                <h4 class="modal-title">Help</h4>
-              </div>
-              <div class="modal-body">
-                <p><span class="version">My Personal Kanban Version: @version@</span> from <a href="http://greggigon.github.io/my-personal-kanban/" target="blank">http://greggigon.github.io/my-personal-kanban/</a></p>
-                <p>
-                  <strong>Personal Kanban</strong><br />
-                  <small>You can create <strong>new Kanban</strong> by selecting <strong>Kanban -> New</strong> from the Kanban menu. You can give it a name and select number of columns. You can also choose existing Kanban as a template for the new one.<br/>
-                  Once Kanban is created you can <strong>rename</strong> it by <strong>clicking it's title</strong> in the top bar. You can add new cards to the columns by pressing <strong>&plus;</strong> in the top right of the column. <br />
-                    You can give each <strong>column name</strong> and change it's colour by selecting <strong>Column settings icon</strong> next to it's name. <strong>(Number)</strong> next to column name indicates number of cards in the column.<br /><br />
-                    <strong>Cards are created</strong> with <strong>title</strong> and possible longer <strong>description</strong>. You can also <strong>select different colour</strong> for the card if you would like to categorize them somehow. Description will <strong>keep the new line formating</strong> and add <strong>clickable links</strong> if you include any. <br />
-                    You can <strong>open Card details</strong> by clicking on <strong>card title</strong>.You can <strong>edit Card details</strong> once opened.<br />
-                    You can <strong>drag card between columns</strong> and move them <strong>up and down</strong> column list.<br /><br />
-                    You can have <strong>multiple Kanbans</strong> and open/switch them from the <strong>Switch to ...</strong> dropdown, next to <strong>Cloud Menu</strong>. <br /> 
-                      You can <strong>select different style</strong> of Kanban board from <strong>Kanban -> Theme</strong> menu.<br />
-                      You can <strong>delete</strong> entire Kanban by selecting <strong>Kanban -> Delete</strong> from the menu.<br />
-                      Your Kanbans are automatically <strong>saved</strong> in your <strong>browser storage</strong>. <br /><br />
-                      If card is in the last colum you can Archive it. It will remove it from a Column but keep in Kanban. You can review
-                      your archived Cards via <strong>Kanban -> Archives</strong> menu. <br />
-                      You can also un-archive cards from Archive and permamently remove them.<br /><br />
-                      You can <strong>Export</strong> one or all Kanbans by selecting <strong>Kanban -> Export</strong> menu.<br />
-                      You can <strong>Import</strong> Kanban(s) from a JSON file. <strong>Not that Kanban with existing name, same as imported one will be replaced with the content of the new one.</strong><br /><br />
-                  </small>
-                </p>
-                <p>
-                  <strong>Cloud</strong><br />
-                  <small>
-                    You can use <strong>My Personal Kanban Cloud</strong> service that enables <strong>Upload and Download</strong> from Cloud. This service is offered free of charge. <br />
-                    You will need to create your <strong>cloud Kanban key</strong>. Follow instructions on <strong>Cloud -> Setup</strong>.<br />
-                    Your Kanban in the Cloud <strong>is stored Encrypted</strong>, that's why you should setup <strong>Encryption Key</strong>. The Encryption algorithm is <a href="http://en.wikipedia.org/wiki/Rabbit_(cipher)" target="blank" title="Rabbit encryption algorithm">Rabbit</a>.<br />
-                    You can <strong>upload Kanban</strong> by selecting <strong>Cloud -> Upload</strong> from the menu <br />.
-                    You can <strong>download Kanban</strong> by selecting <strong>Cloud -> Download</strong> from the menu. <br /><br />
-                    You can also use your own Local Cloud. There is server implementation provided at: <a href="https://github.com/greggigon/my-personal-kanban-server" target="blank">https://github.com/greggigon/my-personal-kanban-server</a>. Just select the option and provide URL for the Local Cloud service <strong>Cloud -> Setup -> Use own Local Cloud</strong>.
-                  </small>
-                </p>
-              </div>              
-              <div class="modal-footer">
-                <small class="pull-left">You can open this help anytime by pressing <abbr title="Ctrl-Shift-h when browser window is selected">Ctrl-Shift-h</abbr> on keyboard.</small>
-                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-              </div>
-          </script>
+          
     </section>
 </div>
 <footer>

@@ -5,57 +5,12 @@ var MenuController = function ($scope, kanbanRepository, $modal, $timeout, $root
 		return Object.keys(kanbanRepository.all());
 	}
 
-	$scope.newKanban = function(){
-		$scope.$parent.showNewKanban = true;
-		// var modalInstance = $modal.open({
-		// 	templateUrl: 'NewKanbanModal.html',
-		// 	controller: 'NewKanbanController',
-		// 	resolve: {
-		// 		kanbanNames: function(){ return allKanbanNames(kanbanRepository); }
-		// 	}
-		// });
-
-		// // This is a work around AngularUI breaking the $scope hierarchy
-		// modalInstance.result.then(function(created){
-		// 	if (created){
-		// 		$rootScope.$broadcast('NewKanbanAdded');
-		// 	}
-		// });
-	};
-
-	$scope.delete = function(){
-		if (confirm('You sure you want to delete the entire Kanban?')){
-			kanbanRepository.remove($scope.kanban.name);
-			var all = allKanbanNames(kanbanRepository);
-
-			if (all.length > 0){
-				kanbanRepository.setLastUsed(all[0]);
-			} else {
-				kanbanRepository.setLastUsed(undefined);
-			}
-			$scope.$emit('KanbanDeleted');
-		}
-		return false;
-	};
-
 	$scope.selectTheme = function(){
 		$modal.open({
 			templateUrl: 'SelectTheme.html',
 			controller: 'SwitchThemeController'
 		});
 	};
-
-	$scope.help = function(){
-		var modalInstance = $modal.open({
-			templateUrl: 'HelpModal.html',
-			controller: 'HelpController',
-			windowClass: 'help'
-		});
-	};
-
-	$scope.$on('TriggerHelp', function(){
-		$scope.help();
-	});
 
 	$scope.export = function(allKanbans, currentKanban){
 		var modalInstance = $modal.open({

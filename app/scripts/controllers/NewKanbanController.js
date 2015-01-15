@@ -6,6 +6,10 @@ var NewKanbanController = function ($scope, kanbanRepository, kanbanManipulator)
 	$scope.numberOfColumns = 3;
 	$scope.model.kanbanNames = {};
 
+	$scope.$on('OpenNewKanban', function(){
+		$scope.showNewKanban = true;
+	});
+
 	$scope.createNew = function(){
 		if (!this.newKanbanForm.$valid){
 			return false;

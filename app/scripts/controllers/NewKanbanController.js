@@ -4,10 +4,11 @@ var NewKanbanController = function ($scope, kanbanRepository, kanbanManipulator)
 	$scope.model = {useTemplate: ''};
 	$scope.kanbanName = '';
 	$scope.numberOfColumns = 3;
-	$scope.model.kanbanNames = {};
+	$scope.model.kanbanNames = [];
 
-	$scope.$on('OpenNewKanban', function(){
+	$scope.$on('OpenNewKanban', function(e, allKanbanNames){
 		$scope.showNewKanban = true;
+		$scope.model.kanbanNames = allKanbanNames;
 	});
 
 	$scope.createNew = function(){
@@ -32,7 +33,9 @@ var NewKanbanController = function ($scope, kanbanRepository, kanbanManipulator)
 		$scope.numberOfColumns = 3;
 		
 		kanbanRepository.setLastUsed(newKanban.name);
+
 		$scope.$emit('NewKanbanAdded');
+		$scope.showNewKanban = false;
 
 		return true;
 	};

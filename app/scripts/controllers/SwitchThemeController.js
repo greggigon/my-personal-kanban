@@ -14,8 +14,11 @@ var SwitchThemeController = function ($scope, themesProvider, kanbanRepository) 
 	$scope.switchTheme = function(){
 		themesProvider.setCurrentTheme($scope.model.selectedTheme);
 		kanbanRepository.setTheme($scope.model.selectedTheme);
-		$modalInstance.close();
 	};
+
+	$scope.$on('OpenSwitchTheme', function(){
+		$scope.showSwitchTheme = true;
+	});
 
 };
 

@@ -68,14 +68,9 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	$scope.kanbanMenu = {};
 	$scope.kanbanMenu.openNewKanban = function(){ 
-		$scope.$broadcast('OpenNewKanban');
-	}
-
-	function allKanbanNames(kanbanRepository){
-		return Object.keys(kanbanRepository.all());
-	}
-
-	$scope.delete = function(){
+		$scope.$broadcast('OpenNewKanban', allKanbanNames(kanbanRepository));
+	};
+	$scope.kanbanMenu.delete = function(){
 		if (confirm('You sure you want to delete the entire Kanban?')){
 			kanbanRepository.remove($scope.kanban.name);
 			var all = allKanbanNames(kanbanRepository);
@@ -97,6 +92,13 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		}
 		return false;
 	};
+	$scope.kanbanMenu.openSwitchTheme = function(){
+		$scope.$broadcast('OpenSwitchTheme', kanbanRepository.getTheme());
+	};
+
+	function allKanbanNames(kanbanRepository){
+		return Object.keys(kanbanRepository.all());
+	}
 
 	$scope.editingKanbanName = function(){
 		$scope.editingName = true;

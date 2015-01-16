@@ -3,7 +3,7 @@
 angular.module('mpk').directive('mpkModal', function () {
 	return {
       template: '<div class="modal fade">' + 
-          '<div class="modal-dialog" style="width: {{ width }}" >' + 
+          '<div class="modal-dialog" style="{{ style }}" >' + 
             '<div class="modal-content">' + 
               '<div class="modal-header">' + 
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
@@ -19,9 +19,9 @@ angular.module('mpk').directive('mpkModal', function () {
       scope: true,
       link: function postLink(scope, element, attrs) {
         scope.title = attrs.title;
-        scope.width = '';
+        scope.style = '';
         if (attrs.width){
-          scope.width = attrs.width;
+          scope.style = attrs.style;
         }
 
         scope.$watch(attrs.visible, function(value){

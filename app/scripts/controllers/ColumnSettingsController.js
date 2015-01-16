@@ -1,15 +1,16 @@
 'use strict';
 
-var ColumnSettingsController = function ($scope, $modalInstance, kanban, column) {
-	$scope.model = {column: column, kanban: kanban, columnName: column.name, color: ''};
-	
-	if (column.settings != undefined && column.settings.color != undefined){
-		$scope.model.color = column.settings.color;
-	}
+var ColumnSettingsController = function ($scope) {
+	$scope.model = {column: {}, kanban: {}, columnName: '', color: ''};
 
-	$scope.close = function(){
-		$modalInstance.close();
-	};
+	$scope.$on('OpenColumnSettings', function(e, kanban, column){
+		$scope.showColumnSettings = true;
+		if (column.settings != undefined && column.settings.color != undefined){
+			$scope.model.color = column.settings.color;
+		}
+		$scope.model = {column: column, kanban: kanban, columnName: column.name};
+	});
+	
 
 	$scope.update = function(){
 		var col = $scope.model.column;
@@ -18,7 +19,9 @@ var ColumnSettingsController = function ($scope, $modalInstance, kanban, column)
 			col.settings = {};
 		}
 		col.settings.color = $scope.model.color;
-
-		$modalInstance.close();
+		$scope.showColumnSettings = false;
+		return true;
 	};
 };
+
+angular.module('mpk').controller('ColumnSettingsController', ColumnSettingsController);

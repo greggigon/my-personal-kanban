@@ -1,6 +1,7 @@
 'use strict';
 
 var KanbanController = function ($scope, $modal, kanbanManipulator) {
+    
     $scope.addNewCard = function(column){
 		var modalInstance = $modal.open({
 			templateUrl: 'NewKanbanCard.html',
@@ -58,14 +59,7 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 	};
 
 	$scope.columnSettings = function(kanban, column){
-		$modal.open({
-			templateUrl: 'ColumnSettings.html',
-			controller: 'ColumnSettingsController',
-			resolve: {
-				kanban: function(){ return kanban; },
-				column: function(){ return column; }
-			}
-		});
+		$scope.$broadcast('OpenColumnSettings', kanban, column);
 	};
 };
 mpkModule.controller('KanbanController', KanbanController);

@@ -95,6 +95,9 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.kanbanMenu.openSwitchTheme = function(){
 		$scope.$broadcast('OpenSwitchTheme', kanbanRepository.getTheme());
 	};
+	$scope.kanbanMenu.openArchive = function (kanban){
+		$scope.$broadcast('OpenArchive', kanban);
+	};
 
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());

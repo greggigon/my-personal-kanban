@@ -1,6 +1,12 @@
 'use strict';
 
-var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipulator) {
+var ArchiveController = function ($scope, kanbanManipulator) {
+	$scope.model = {};
+
+	$scope.$on('OpenArchive', function(e, kanban){
+		$scope.model = { archived: prepareArchivedCardsForCheckboxes(kanban.archived), selectedCards: [], kanban: {}};
+		$scope.showArchive = true;
+	});
 
 	function prepareArchivedCardsForCheckboxes(archived){
 		var prepared = [];
@@ -10,7 +16,6 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 		return prepared;
 	}
 
-	$scope.model = { archived: prepareArchivedCardsForCheckboxes(kanban.archived), selectedCards: [], kanban: kanban};
 
 	$scope.formatDate = function(date){
 		var date = new Date(Date.parse(date));
@@ -33,10 +38,6 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 				kanbanManipulator.removeFromArchive($scope.model.kanban, archivedWithSelection.original);
 			}
 		});
-	};
-
-	$scope.close = function(){
-		$modalInstance.close();
 	};
 
 }

@@ -3,19 +3,7 @@
 var KanbanController = function ($scope, $modal, kanbanManipulator) {
     
     $scope.addNewCard = function(column){
-		var modalInstance = $modal.open({
-			templateUrl: 'NewKanbanCard.html',
-			controller: 'NewKanbanCardController',
-			resolve: {
-				colorOptions: function(){ return $scope.colorOptions; },
-				column: function(){ return column; }
-			}
-		});
-		modalInstance.result.then(function(cardDetails){
-		if (cardDetails){
-			kanbanManipulator.addCardToColumn($scope.kanban, cardDetails.column, cardDetails.title, cardDetails.details, cardDetails.color);
-			}
-		});
+		$scope.$broadcast('AddNewCard', column);
 	};
 
 	$scope.delete = function(card, column){

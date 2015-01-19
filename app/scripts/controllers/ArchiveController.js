@@ -1,10 +1,14 @@
 'use strict';
 
 var ArchiveController = function ($scope, kanbanManipulator) {
-	$scope.model = {};
+	$scope.model = {kanban: {}, archived: {}, selectedCards: []};
+	$scope.showArchive = false;
+
 
 	$scope.$on('OpenArchive', function(e, kanban){
-		$scope.model = { archived: prepareArchivedCardsForCheckboxes(kanban.archived), selectedCards: [], kanban: {}};
+		$scope.model.archived = prepareArchivedCardsForCheckboxes(kanban.archived);
+		$scope.model.kanban = kanban;
+		$scope.model.selectedCards = [];
 		$scope.showArchive = true;
 	});
 

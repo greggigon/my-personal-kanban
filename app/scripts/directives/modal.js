@@ -20,8 +20,8 @@ angular.module('mpk').directive('mpkModal', function () {
       link: function postLink(scope, element, attrs) {
         scope.title = attrs.title;
         scope.style = '';
-        if (attrs.width){
-          scope.style = attrs.style;
+        if (attrs.modalStyle){
+          scope.style = attrs.modalStyle;
         }
 
         scope.$watch(attrs.visible, function(value){

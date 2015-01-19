@@ -5,10 +5,10 @@ var ColumnSettingsController = function ($scope) {
 
 	$scope.$on('OpenColumnSettings', function(e, kanban, column){
 		$scope.showColumnSettings = true;
+		$scope.model = {column: column, kanban: kanban, columnName: column.name};
 		if (column.settings != undefined && column.settings.color != undefined){
 			$scope.model.color = column.settings.color;
 		}
-		$scope.model = {column: column, kanban: kanban, columnName: column.name};
 	});
 	
 

@@ -105,7 +105,7 @@
                       <li class="card" ng-repeat="card in column.cards" style="background-color: #{{colorFor(card)}};">
                           <a class="pull-right" ng-click="delete(card, column)"><i class="glyphicon glyphicon-remove"></i></a>
                           <a class="pull-right" title="Archive" ng-click="archive(kanban, column, card)" ng-show="isLastColumn(column.name, kanban)"><i class="glyphicon glyphicon-folder-close"></i></a>
-                          <a ng-click="openCardDetails(card)"><span tooltip-popup-delay='2000' tooltip='{{details(card)}}'>{{card.name}}</span></a>
+                          <a ng-click="openCardDetails(card)"><span tooltip-popup-delay='2000' tooltip='{{detailsFor(card)}}'>{{card.name}}</span></a>
                       </li>
                   </ul>
               </div>
@@ -113,7 +113,7 @@
         </div>
         <div ng-controller="ColumnSettingsController">
           <mpk-modal title="Column settings" visible="showColumnSettings">
-            <form ng-submit="update()" class="noMargin" name="columnSettings">
+            <form  class="noMargin" name="columnSettings">
                 <div class="form-group">
                   <label class="control-label" for="columnName">Column name</label>
                   <div class="controls">
@@ -135,12 +135,11 @@
                     </div>
                   </div>
                 </div>
-
+              </form>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" ng-click="update()">Update</button>
               </div>
-            </form>
           </mpk-modal>
         </div>
         <div ng-controller="NewKanbanCardController">
@@ -149,13 +148,13 @@
               <div class="form-group">
                   <label class="control-label" for="newCardTitle">Kanban card title</label>
                   <div>
-                    <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs form-control" name="cardTitle"/>
+                    <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="newCard.title" required focus-me class="cardInputs form-control" name="cardTitle"/>
                   </div>
               </div>
               <div class="form-group">
                   <label class="control-label" for="newCardDetails">More details <small>(optional)</small></label>
                   <div>
-                      <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7">
+                      <textarea id="newCardDetails" ng-model="newCard.details" class="cardInputs form-control" rows="7">
                       </textarea>
                   </div>
               </div>
@@ -163,33 +162,76 @@
                   <label class="control-label">Card color</label>
               </div>
               <div class="form-group">
-                  <color-selector options="colorOptions" ng-model="cardColor" prefix="newCardColor" class="colorSelector" show-hex-code="true"/>
+                  <color-selector options="colorOptions" ng-model="newCard.cardColor" prefix="newCardColor" class="colorSelector" show-hex-code="true"/>
               </div>
-             </form>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" ng-click="addNewCard()">Add</button>
-            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="addNewCard(newCard)">Add</button>
+              </div>
+            </form>
           </mpk-modal>
         </div>
+        <div ng-controller="CardController">
+          <mpk-modal title="Card details" visible="showCardDetails">
+              <form class="noMargin" name="cardDetails">
+                <div class="form-group">
+                    <label class="control-label" for="cardTitle">Kanban card title</label>
+                    <div class="controls">
+                      <ng-form ng-submit="editingTitle = false">
+                      <div class="input-group">
+                        <input name="cardTitle" type="text" id="cardTitle" placeholder="Title on a card" ng-model="card.name" required class="form-control" ng-disabled="!editingTitle" focus-me />
+                        <span class="input-group-btn">
+                          <a title="OK" class="btn btn-default" ng-click="editingTitle = false" ng-hide="!editingTitle"><i class="glyphicon glyphicon-ok"></i></a>
+                          <a title="Edit card title" class="btn btn-default" ng-click="editingTitle = true" ng-hide="editingTitle"><i class="glyphicon glyphicon-pencil"></i></a>
+                        </span>
+                      </ng-form>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cardTitle">Details</label>
+
+                    <div class="controls">
+                        <div class="input-group">
+                          <div class="form-control cardDetails cardInputs" ng-show="!editingDetails" ng-bind-html="card.details|linky|cardDetails"></div>
+                          <textarea id="details" ng-model="card.details" class="cardInputs form-control" rows="7" ng-show="editingDetails"></textarea>
+                          <span class="input-group-btn">
+                            <a title="OK" ng-click="editingDetails = false" ng-hide="!editingDetails" class="btn btn-default"><i class="glyphicon glyphicon-ok"></i></a>
+                            <a title="Edit card details" ng-click="editingDetails = true" ng-hide="editingDetails" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Card color</label>
+                </div>
+                <div class="form-group">
+                    <color-selector options="colorOptions" ng-model="card.color" prefix="editCardColor" class="colorSelector" show-hex-code="true" />
+                </div>
+              </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </mpk-modal>
+        </div>        
     </div>
 </div>
 
 <div ng-controller="NewKanbanController">
   <mpk-modal title="New Kanban board" visible="showNewKanban">
-    <form class="noMargin" ng-submit="createNew('#newKanban')" name="newKanbanForm">
+    <form class="noMargin" name="newKanbanForm">
         <div class="modal-body">
           <div class="form-group">
             <label class="control-label" for="kanbanNameFormField">Kanban name</label>
             <div>
-              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="kanbanName" required focus-me />
+              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="model.kanbanName" required focus-me />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label" for="numberOfColumnsField">Number of columns</label>
             <div>
-              <select id="numberOfColumnsField" ng-model="numberOfColumns" class="form-control">
+              <select id="numberOfColumnsField" ng-model="model.numberOfColumns" class="form-control">
                 <option>2</option>
                 <option selected="selected">3</option>
                 <option>4</option>
@@ -212,14 +254,14 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Create new</button>
+          <button type="submit" class="btn btn-primary" ng-click="createNew()">Create new</button>
         </div>
     </form>
   </mpk-modal> 
 </div>  
 
 <!-- THIS IS THE HELP -->
-<mpk-modal title="Help" visible="showHelp" style="width:90%">
+<mpk-modal title="Help" visible="showHelp" modal-style="width:90%">
     <p><span class="version">My Personal Kanban Version: @version@</span> from <a href="http://greggigon.github.io/my-personal-kanban/" target="blank">http://greggigon.github.io/my-personal-kanban/</a></p>
     <p>
       <strong>Personal Kanban</strong><br />
@@ -277,7 +319,7 @@
 </div>
 
 <div ng-controller="ArchiveController">
-  <mpk-modal title="Cards Archive" visible="showArchive" style="width: 90%;">
+  <mpk-modal title="Cards Archive" visible="showArchive" modal-style="width: 90%;">
     <form class="form-horizontal" role="form">
       <div class="form-group has-success">
         <div class="col-md-offset-9 col-md-3">
@@ -317,57 +359,6 @@
 
     <section id="kanbanOperations">
         <!-- this one is for the new card -->
-
-           
-
-
-
-        <script type="text/ng-template" id="OpenCard.html">
-              <form ng-submit="update()" class="noMargin" name="cardDetails">
-                  <div class="modal-header">
-                    <button type="button" class="close" ng-click="close()">&times;</button>
-                    <h4 class="modal-title">Card details</h4>
-                  </div>
-                  <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label" for="cardTitle">Kanban card title</label>
-                            <div class="controls">
-                              <ng-form ng-submit="editingTitle = false">
-                              <div>
-                                <input name="cardTitle" type="text" id="cardTitle" placeholder="Title on a card" ng-model="name" required class="cardInputs" ng-disabled="!editingTitle" focus-me />
-                                <a title="Edit card title" ng-click="editingTitle = true" ng-hide="editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
-                                <a title="OK" ng-click="editingTitle = false" ng-hide="!editingTitle" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
-                              </ng-form>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="cardTitle">Details</label>
-
-                            <div class="controls clearfix">
-                                <textarea id="details" ng-model="details" class="cardInputs" rows="7" ng-show="editDetails">
-                                </textarea>
-                                <div class="cardDetails cardInputs pull-left" ng-show="!editDetails" ng-bind-html="details|linky|cardDetails"></div>
-
-                                <a title="Edit card title" ng-click="editDetails = true" ng-hide="editDetails" class="btn pull-right"><i class="glyphicon glyphicon-pencil"></i></a>                              
-                                <a title="OK" ng-click="editDetails = false" ng-hide="!editDetails" class="btn pull-right"><i class="glyphicon glyphicon-ok"></i></a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Card color</label>
-                        </div>
-                        <div class="form-group">
-                            <color-selector options="colorOptions" ng-model="cardColor" prefix="editCardColor" class="colorSelector" show-hex-code="true" />
-                        </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                  </div>
-              </form>
-        </script>
-
-        
 
           <script type="text/ng-template" id="SetupCloudModal.html">
             <form ng-submit="saveSettings()" name="cloudSettings" class="noMargin">
@@ -496,7 +487,7 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.min.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/spectrum/spectrum.js"></script>
         <script src="bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js"></script>
         <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>

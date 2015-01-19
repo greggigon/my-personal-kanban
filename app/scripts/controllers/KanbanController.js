@@ -13,17 +13,10 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 	};
 
 	$scope.openCardDetails = function(card){
-		$modal.open({
-			templateUrl: 'OpenCard.html',
-			controller: 'CardController',
-			resolve: {
-				colorOptions: function(){ return $scope.colorOptions; },
-				card: function(){ return card; }
-			}
-		});
+		$scope.$broadcast('OpenCardDetails', card);
 	};
 
-	$scope.details = function(card){
+	$scope.detailsFor = function(card){
 		if (card.details !== undefined && card.details !== '') {
 			return card.details;
 		}

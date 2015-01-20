@@ -1,11 +1,13 @@
 'use strict';
 
-var ImportController = function ($scope, $modalInstance, kanbanRepository) {
+var ImportController = function ($scope, kanbanRepository) {
 	$scope.model = {file: '', readError: false, fileSelected: false};
+	$scope.showImportModal = false;
 
-	$scope.close = function(){
-		$modalInstance.close(false);
-	};
+	$scope.$on('OpenImport', function(){
+		$scope.model = {file: '', readError: false, fileSelected: false};
+		$scope.showImportModal = true;
+	})
 
 	$scope.import = function(){
 
@@ -24,7 +26,7 @@ var ImportController = function ($scope, $modalInstance, kanbanRepository) {
 				} else {
 					kanbanRepository.import(kanbanOrKanbans);
 				}
-				$modalInstance.close(true);
+				$scope.showImportModal = false;
 			} catch(exception) {
 				$scope.model.readError = true;
 			}
@@ -32,4 +34,6 @@ var ImportController = function ($scope, $modalInstance, kanbanRepository) {
 			$scope.model.readError = true;
 		}
 	};
-}
+};
+
+angular.module('mpk').controller('ImportController', ImportController);

@@ -100,7 +100,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	};
 	$scope.kanbanMenu.openExport = function(allKanbans, kanbanName){
 		$scope.$broadcast('OpenExport', allKanbans, kanbanName);
-	}
+	};
+	$scope.kanbanMenu.openImport = function(){
+		$scope.$broadcast('OpenImport');
+	};
 
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());

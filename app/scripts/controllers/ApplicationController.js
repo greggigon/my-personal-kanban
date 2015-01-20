@@ -98,6 +98,9 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.kanbanMenu.openArchive = function (kanban){
 		$scope.$broadcast('OpenArchive', kanban);
 	};
+	$scope.kanbanMenu.openExport = function(allKanbans, kanbanName){
+		$scope.$broadcast('OpenExport', allKanbans, kanbanName);
+	}
 
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());

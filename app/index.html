@@ -56,7 +56,7 @@
                     <li><a title="Select Theme for the Kanban board" ng-click="kanbanMenu.openSwitchTheme()"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
                     <li><a title="Open archive" ng-click="kanbanMenu.openArchive(kanban)"><i class="glyphicon glyphicon-folder-open"></i> Archives</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a title="Export Kanban to file" ng-click="export(allKanbans, kanban.name)" href=""><i class="glyphicon glyphicon-save"></i> Export</a></li>
+                    <li><a title="Export Kanban to file" ng-click="kanbanMenu.openExport(allKanbans, kanban.name)" href=""><i class="glyphicon glyphicon-save"></i> Export</a></li>
                     <li><a title="Import Kanban from file" ng-click="import()" href=""><i class="glyphicon glyphicon-open"></i> Import</a></li>
                     <li role="presentation" class="divider"></li>
                     <li><a title="Help" ng-click="showHelp=true" href=""><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
@@ -352,6 +352,34 @@
     </div>
 </div>
 
+<div ng-controller="ExportController">
+  <mpk-modal visible="showExportModal" title="Export Kanban">
+    <form name="exportKanban" class="noMargin">
+      <div class="form-group">
+        <label class="control-label" for="kanbanToExport">To export:</label>
+        <div>
+          <select id="kanbanToExport" ng-model="model.selectedKanban" class="form-control"
+            ng-options="name for name in model.allKanbanNames" ng-disabled="model.exportAll">
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="model.exportAll"> Export all Kanbans
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" type="submit" ng-click="doExport()">Export</button>
+      </div>
+    </form>
+  </script>
+</div>
+
 <!-- KANBAN Cards and Columns -->
 
 
@@ -423,37 +451,7 @@
             </form>
           </script>
 
-          <script type="text/ng-template" id="ExportModal.html">
-            <form name="exportKanban" class="noMargin">
-              <div class="modal-header">
-                <button type="button" class="close" ng-click="close()">&times;</button>
-                <h4 class="modal-title">Select Kanban to Export</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label class="control-label" for="kanbanToExport">To export:</label>
-                  <div>
-                    <select id="kanbanToExport" ng-model="model.selectedKanban" class="form-control"
-                      ng-options="name for name in model.allKanbanNames" ng-disabled="model.exportAll">
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" ng-model="model.exportAll"> Export all Kanbans
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-default" type="button" ng-click="close()">Close</button>
-                <button class="btn btn-primary" type="submit" ng-click="doExport()">Export</button>
-              </div>
-            </form>
-          </script>
+
 
           <script type="text/ng-template" id="ImportModal.html">
             <form name="importKanban" class="noMargin">

@@ -1,5 +1,5 @@
 'use strict';
-var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider, $routeParams, $location) {
+var ApplicationController = function ($scope, $window, kanbanRepository, themesProvider, $routeParams, $location, cloudService) {
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
 	// <-------- Handling different events in this block ---------------> //
@@ -13,63 +13,13 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
 
-	$scope.$on('UploadStarted', function(){
-		$scope.errorMessage = '';
-		$scope.showError = false;
-		$scope.infoMessage = 'Uploading Kanban ...';
-		$scope.showInfo = true;
-		$scope.showSpinner = true;
-	});
-
-	$scope.$on('UploadFinished', function(){
-		$scope.infoMessage = '';
-		$scope.showInfo = false;
-		$scope.showSpinner = false;
-	});
-
-	function handleErrorUploadDownload(event, errorMessage){
+	function handleErrorUploadDownload(errorMessage){
 		$scope.infoMessage = '';
 		$scope.showInfo = true;
 		$scope.showError = true;
 		$scope.showSpinner = false;
 		$scope.errorMessage = errorMessage;
 	}
-
-	$scope.$on('UploadFinishedWithErrors', handleErrorUploadDownload);
-
-	$scope.$on('UploadError', function(){
-		$scope.infoMessage = '';
-		$scope.showInfo = true;
-		$scope.showSpinner = false;
-		$scope.showError = true;
-		$scope.errorMessage = 'There was a problem uploading your Kanban.';
-	});
-
-	$scope.$on('DownloadStarted', function(){
-		$scope.infoMessage = 'Downloading your Kanban ...';
-		$scope.showSpinner = true;
-		$scope.showError = false;
-		$scope.errorMessage = '';
-	});
-
-	$scope.$on('DownloadFinished', function(){
-		if (kanbanRepository.getLastUsed() == undefined){
-			kanbanRepository.setLastUsed(allKanbanNames(kanbanRepository)[0]);
-			kanbanRepository.save();
-		}
-
-		$window.location.reload();
-	});
-
-	$scope.$on('DownloadFinishedWithError', handleErrorUploadDownload);
-
-	$scope.$on('DownloadError', function(){
-		$scope.infoMessage = '';
-		$scope.showInfo = true;
-		$scope.showError = true;
-		$scope.showSpinner = false;
-		$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
-	});
 
 	$scope.kanbanMenu = {};
 	$scope.cloudMenu = {};
@@ -113,8 +63,72 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 
 	$scope.cloudMenu.openCloudSetup = function(){
 		$scope.$broadcast('OpenCloudSetup');
-	}
+	};
+	$scope.cloudMenu.upload = function(){
+		if (!cloudService.isConfigurationValid()){
+			return $scope.openCloudSetup(true);
+		}
+		var promise = kanbanRepository.upload();
+		$scope.errorMessage = '';
+		$scope.showError = false;
+		$scope.infoMessage = 'Uploading Kanban ...';
+		$scope.showInfo = true;
+		$scope.showSpinner = true;
 
+		promise.then(function(result){
+			if (result.data.success){
+				kanbanRepository.setLastUpdated(result.data.lastUpdated).save();
+				$scope.infoMessage = '';
+				$scope.showInfo = false;
+				$scope.showSpinner = false;
+			} else {
+				handleErrorUploadDownload(result.data.error);
+				console.error(result);
+			}
+		}, function(errors){ 
+			$scope.infoMessage = '';
+			$scope.showInfo = true;
+			$scope.showSpinner = false;
+			$scope.showError = true;
+			$scope.errorMessage = 'There was a problem uploading your Kanban.';
+		});
+		return false;
+	};
+	$scope.cloudMenu.download = function(){
+		if (!cloudService.isConfigurationValid()){
+			return $scope.openCloudSetup(true);
+		}
+		$scope.infoMessage = 'Downloading your Kanban ...';
+		$scope.showSpinner = true;
+		$scope.showError = false;
+		$scope.errorMessage = '';
+		var promise = kanbanRepository.download();
+		promise.success(function(data){
+			if (data.success){
+				var saveResult = kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated);
+				if (saveResult.success){
+					if (kanbanRepository.getLastUsed() == undefined){
+						kanbanRepository.setLastUsed(allKanbanNames(kanbanRepository)[0]);
+						kanbanRepository.save();
+					}
+
+					$window.location.reload();
+				} else {
+					handleErrorUploadDownload(saveResult.message);
+				}
+			} else {
+				handleErrorUploadDownload(data.error);
+			}
+		}).error(function(data, status, headers, config){
+			$scope.infoMessage = '';
+			$scope.showInfo = true;
+			$scope.showError = true;
+			$scope.showSpinner = false;
+			$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';		
+		});
+		return false;
+	};
+	
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());
 	}

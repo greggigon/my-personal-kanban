@@ -1,6 +1,6 @@
 'use strict';
 
-var KanbanController = function ($scope, $modal, kanbanManipulator) {
+var KanbanController = function ($scope, kanbanManipulator) {
     
     $scope.addNewCard = function(column){
 		$scope.$broadcast('AddNewCard', column);

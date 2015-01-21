@@ -72,6 +72,7 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	});
 
 	$scope.kanbanMenu = {};
+	$scope.cloudMenu = {};
 	$scope.kanbanMenu.openNewKanban = function(){ 
 		$scope.$broadcast('OpenNewKanban', allKanbanNames(kanbanRepository));
 	};
@@ -109,6 +110,10 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	$scope.kanbanMenu.openImport = function(){
 		$scope.$broadcast('OpenImport');
 	};
+
+	$scope.cloudMenu.openCloudSetup = function(){
+		$scope.$broadcast('OpenCloudSetup');
+	}
 
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());

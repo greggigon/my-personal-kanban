@@ -53,6 +53,11 @@ var ApplicationController = function ($scope, $window, kanbanRepository, themesP
 	});
 
 	$scope.$on('DownloadFinished', function(){
+		if (kanbanRepository.getLastUsed() == undefined){
+			kanbanRepository.setLastUsed(allKanbanNames(kanbanRepository)[0]);
+			kanbanRepository.save();
+		}
+
 		$window.location.reload();
 	});
 

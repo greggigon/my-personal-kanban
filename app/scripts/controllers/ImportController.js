@@ -26,6 +26,7 @@ var ImportController = function ($scope, kanbanRepository) {
 				} else {
 					kanbanRepository.import(kanbanOrKanbans);
 				}
+				$scope.$emit('DownloadFinished');
 				$scope.showImportModal = false;
 			} catch(exception) {
 				$scope.model.readError = true;
@@ -33,7 +34,9 @@ var ImportController = function ($scope, kanbanRepository) {
 		} else {
 			$scope.model.readError = true;
 		}
+		$scope.model.file = '';
 	};
+
 };
 
 angular.module('mpk').controller('ImportController', ImportController);

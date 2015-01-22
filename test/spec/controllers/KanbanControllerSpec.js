@@ -1,6 +1,7 @@
 describe('Kanban controller', function(){
-	var scope, kanbanController;
+	beforeEach(module('mpk'));
 
+	var scope, kanbanController;
 
 	beforeEach(inject(function($rootScope, $controller){
 		fileService = {saveBlob: function(blob, fileName){ }};

@@ -1,6 +1,6 @@
 // Generated on 2013-09-12 using generator-angular 0.4.0
 'use strict';
-var APP_VERSION = '0.7.0';
+var APP_VERSION = '0.8.0';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
 var mountFolder = function (connect, dir) {
@@ -15,6 +15,7 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function (grunt) {
   require('time-grunt')(grunt);
+  // require('grunt-contrib-clean')(grunt);
   // require('grunt-text-replace')(grunt);
   // require('grunt-contrib-copy')(grunt);
 
@@ -32,14 +33,6 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
       styles: {
         files: ['<%= yeoman.app %>/styles/*.css'],
         tasks: ['copy:styles', 'autoprefixer']
@@ -130,30 +123,6 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
-    },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
     },
     // not used since Uglify task does concat,
     // but still available if needed
@@ -291,15 +260,12 @@ module.exports = function (grunt) {
 
     concurrent: {
       server: [
-        'coffee:dist',
         'copy:styles'
       ],
       test: [
-        'coffee',
         'copy:styles'
       ],
       dist: [
-        'coffee',
         'copy:styles',
         'imagemin',
         'svgmin',
@@ -307,6 +273,9 @@ module.exports = function (grunt) {
       ]
     },
     karma: {
+      options: {
+        runnerPort: 9999
+      },
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
@@ -370,6 +339,11 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {

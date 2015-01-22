@@ -1,6 +1,6 @@
 'use strict';
 
-var ImportController = function ($scope, kanbanRepository) {
+angular.module('mpk').controller('ImportController', function ImportController($scope, kanbanRepository) {
 	$scope.model = {file: '', readError: false, fileSelected: false};
 	$scope.showImportModal = false;
 
@@ -34,9 +34,6 @@ var ImportController = function ($scope, kanbanRepository) {
 		} else {
 			$scope.model.readError = true;
 		}
-		$scope.model.file = '';
 	};
 
-};
-
-angular.module('mpk').controller('ImportController', ImportController);
+});

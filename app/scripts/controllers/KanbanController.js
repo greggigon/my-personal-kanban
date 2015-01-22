@@ -1,6 +1,6 @@
 'use strict';
 
-var KanbanController = function ($scope, kanbanManipulator) {
+angular.module('mpk').controller('KanbanController', function KanbanController($scope, kanbanManipulator) {
     
     $scope.addNewCard = function(column){
 		$scope.$broadcast('AddNewCard', column);
@@ -42,6 +42,5 @@ var KanbanController = function ($scope, kanbanManipulator) {
 	$scope.columnSettings = function(kanban, column){
 		$scope.$broadcast('OpenColumnSettings', kanban, column);
 	};
-};
-mpkModule.controller('KanbanController', KanbanController);
+});
 

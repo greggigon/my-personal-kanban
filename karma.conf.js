@@ -16,15 +16,16 @@ module.exports = function(config) {
       'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-sanitize/angular-sanitize.js',
-      'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
-      'app/bower_components/angular-ui-utils/ui-utils.js',
+      'app/bower_components/bootstrap/dist/js/bootstrap.js',
+
       'app/bower_components/spectrum/spectrum.js',
       'app/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js',
       'app/scripts/md5.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/controllers/*Spec.js',
+      'test/spec/services/*Spec.js'
     ],
 
     // list of files / patter  ns to exclude

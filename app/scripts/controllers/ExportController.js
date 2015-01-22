@@ -1,6 +1,6 @@
 'use strict';
 
-var ExportController = function ($scope, kanbanRepository, fileService) {
+angular.module('mpk').controller('ExportController', function ExportController($scope, kanbanRepository, fileService) {
 	$scope.model = {exportAll: false, allKanbanNames: [], selectedKanban: ''};
 	$scope.showExportModal = false;
 
@@ -30,6 +30,4 @@ var ExportController = function ($scope, kanbanRepository, fileService) {
 		return true;
 	};
 
-}
-
-angular.module('mpk').controller('ExportController', ExportController);
+});

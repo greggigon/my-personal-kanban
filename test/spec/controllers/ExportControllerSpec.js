@@ -1,26 +1,26 @@
 describe('Export controller', function(){
-	var scope, fileService, modalInstance;
+	var fileService, kanbanRepository;
+	var $controller, $rootScope;
+	beforeEach(module('mpk'));
 
-	beforeEach(inject(function($rootScope, $controller){
+	beforeEach(inject(function(_$rootScope_, _$controller_){
 		fileService = {saveBlob: function(blob, fileName){ }};
 		spyOn(fileService, 'saveBlob');
 
-		scope = $rootScope.$new();
-		modalInstance = {close: function(){}};
+		$controller = _$controller_;
+		$rootScope = _$rootScope_;
+
 		kanbanRepository = {get: function(){ return {kanban: 1}}, all: function(){ return [{kanban: 1}, {kanban: 2}]}};
 
-		exportController = $controller('ExportController', { 
-			$scope: scope, 
-			kanbanRepository: kanbanRepository, 
-			fileService: fileService, 
-			$modalInstance: modalInstance, 
-			allKanbanNames: [], 
-			currentKanban: ''});
 	}));
 
 
 
 	it('should export single Kanban', function(){
+		var scope = $rootScope.$new();
+		var controller = $controller('ExportController', {$scope: scope, fileService: fileService, kanbanRepository: kanbanRepository})
+		$rootScope.$broadcast('OpenExport', [], '');
+
 		scope.model.exportAll = false;
 		scope.model.selectedKanban = 'foobar';
 
@@ -32,6 +32,10 @@ describe('Export controller', function(){
 	});
 
 	it('should export all Kanbans', function(){
+		var scope = $rootScope.$new();
+		var controller = $controller('ExportController', {$scope: scope, fileService: fileService, kanbanRepository: kanbanRepository})
+		$rootScope.$broadcast('OpenExport', [], '');
+
 		scope.model.exportAll = true;
 
 		scope.doExport();

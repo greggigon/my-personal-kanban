@@ -1,7 +1,7 @@
 'use strict';
 
-var ArchiveController = function ($scope, kanbanManipulator) {
-	$scope.model = {kanban: {}, archived: {}, selectedCards: []};
+angular.module('mpk').controller('ArchiveController', function ArchiveController($scope, kanbanManipulator) {
+	$scope.model = {kanban: {}, archived: [], selectedCards: []};
 	$scope.showArchive = false;
 
 
@@ -44,5 +44,4 @@ var ArchiveController = function ($scope, kanbanManipulator) {
 		});
 	};
 
-}
-mpkModule.controller('ArchiveController', ArchiveController);
+});

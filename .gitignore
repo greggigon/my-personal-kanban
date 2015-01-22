@@ -11,3 +11,4 @@ app/bower_modules/
 .tmp/
 dist/
 bower_components/
+npm-*.log

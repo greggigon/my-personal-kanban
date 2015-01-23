@@ -126,9 +126,9 @@ module.exports = function (grunt) {
     },
     // not used since Uglify task does concat,
     // but still available if needed
-    /*concat: {
+    concat: {
       dist: {}
-    },*/
+    },
     rev: {
       dist: {
         files: {
@@ -224,13 +224,14 @@ module.exports = function (grunt) {
             'scripts/themes.js',
          
             'bower_components/angular/**/*.min.js',
+            'bower_components/bootstrap/dist/js/*.min.js',
             'bower_components/angular-route/**/*.min.js',
             'bower_components/angular-sanitize/**/*.min.js',
             'bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js',
             'bower_components/jquery-ui/jquery-ui.min.js',
             'bower_components/jquery/**/*.min.js',
             'bower_components/spinjs/spin.js',
-            'bower_components/FileSaver/FileSaver.js',
+            'bower_components/FileSaver/FileSaver.min.js',
             'bower_components/spectrum/spectrum.js',
 
           ]
@@ -267,8 +268,8 @@ module.exports = function (grunt) {
       ],
       dist: [
         'copy:styles',
-        'imagemin',
-        'svgmin',
+        // 'imagemin',
+        // 'svgmin',
         'htmlmin'
       ]
     },
@@ -341,9 +342,16 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-usemin');
+  grunt.loadNpmTasks('grunt-rev');
+  grunt.loadNpmTasks('grunt-text-replace');
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
@@ -374,15 +382,14 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'autoprefixer',
     'concat',
-    'copy:dist',
-    'ngmin',
-    'cssmin',
-    'rev',
-    'usemin',
-    'replace:localhost_to_remote_in_js',
-    'replace:localhost_to_remote_in_html',
-    'replace:version',
-    'compress'
+    // 'copy:dist'
+    // 'cssmin',
+    // 'rev',
+    // 'usemin',
+    // 'replace:localhost_to_remote_in_js',
+    // 'replace:localhost_to_remote_in_html',
+    // 'replace:version',
+    // 'compress'
   ]);
 
   grunt.registerTask('default', [

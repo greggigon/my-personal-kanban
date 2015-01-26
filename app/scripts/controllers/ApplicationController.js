@@ -198,6 +198,7 @@ angular.module('mpk').controller('ApplicationController',
 	}, true);
 
 	$scope.columnHeight = angular.element($window).height() - 110;
+	$scope.columnWidth = Math.round((100 / $scope.kanban.columns.length) * 100) / 100;
 
 	$scope.triggerOpen = function(){
 		$scope.$broadcast('TriggerOpenKanban');

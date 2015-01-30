@@ -1,7 +1,7 @@
 'use strict';
 
 var ColumnSettingsController = function ($scope) {
-	$scope.model = {column: {}, kanban: {}, columnName: '', color: ''};
+	$scope.model = {column: {}, kanban: {}, columnName: '', color: '', limit: ''};
 
 	$scope.$on('OpenColumnSettings', function(e, kanban, column){
 		$scope.showColumnSettings = true;
@@ -9,6 +9,7 @@ var ColumnSettingsController = function ($scope) {
 		if (column.settings != undefined && column.settings.color != undefined){
 			$scope.model.color = column.settings.color;
 		}
+		$scope.model.limit = column.settings.limit;
 	});
 	
 
@@ -19,6 +20,9 @@ var ColumnSettingsController = function ($scope) {
 			col.settings = {};
 		}
 		col.settings.color = $scope.model.color;
+		if ($scope.model.limit != ''){
+			col.settings.limit = $scope.model.limit;
+		}
 		$scope.showColumnSettings = false;
 		return true;
 	};

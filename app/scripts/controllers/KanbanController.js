@@ -23,6 +23,13 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 		return card.name;
 	};
 
+	$scope.columnLimitsTextFor = function(column){
+		if (column.settings.limit != '' && column.settings.limit != undefined){
+			return column.cards.length + " of " + column.settings.limit;
+		}
+		return column.cards.length;
+	};
+
 	$scope.colorFor = function(card){
 		return (card.color !== undefined && card.color !== '') ? card.color : $scope.colorOptions[0];
 	};

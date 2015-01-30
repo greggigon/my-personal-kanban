@@ -24,14 +24,14 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 	};
 
 	$scope.columnLimitsTextFor = function(column){
-		if (column.settings.limit != '' && column.settings.limit != undefined){
+		if (column.settings && column.settings.limit != '' && column.settings.limit != undefined){
 			return column.cards.length + " of " + column.settings.limit;
 		}
 		return column.cards.length;
 	};
 
 	$scope.columnLimitsReached = function(column){
-		if (column.settings.limit == '' || column.settings.limit == undefined){
+		if (column.settings == undefined || column.settings.limit == '' || column.settings.limit == undefined){
 			return false;
 		}
 		return column.settings.limit <= column.cards.length;

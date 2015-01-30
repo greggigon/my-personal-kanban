@@ -1,6 +1,5 @@
 // Generated on 2013-09-12 using generator-angular 0.4.0
 'use strict';
-var APP_VERSION = '0.8.0';
 
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
@@ -8,9 +7,11 @@ module.exports = function (grunt) {
 
 
   // configurable paths
+  var bowerConfig = require('./bower.json');
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    app: bowerConfig.appPath || 'app',
+    dist: 'dist',
+    version: bowerConfig.version
   };
 
   grunt.initConfig({
@@ -308,7 +309,7 @@ module.exports = function (grunt) {
     compress: {
       zip: {
         options: {
-          archive: 'my-personal-kanban-'+APP_VERSION+'.zip'
+          archive: 'my-personal-kanban-'+ appConfig.version +'.zip'
         },
         files: [{expand: true, cwd:'dist', src: ['**'], dest: 'my-personal-kanban'}]
       }
@@ -336,7 +337,7 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.dist %>/', 
         replacements: [{
           from: '@version@',
-          to: APP_VERSION
+          to: appConfig.version
         }]
       }
     }

@@ -30,6 +30,13 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 		return column.cards.length;
 	};
 
+	$scope.columnLimitsReached = function(column){
+		if (column.settings.limit == '' || column.settings.limit == undefined){
+			return false;
+		}
+		return column.settings.limit <= column.cards.length;
+	}
+
 	$scope.colorFor = function(card){
 		return (card.color !== undefined && card.color !== '') ? card.color : $scope.colorOptions[0];
 	};

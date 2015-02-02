@@ -22,7 +22,7 @@ input.kanbanKey {
 }
 
 .cards, .cards-no-sort { padding: 0px; margin: 0px; clear: both; overflow: scroll;}
-
+.card { white-space: normal;}
 #info {
   padding: 10px 15px;
   color: #8a8a8a;

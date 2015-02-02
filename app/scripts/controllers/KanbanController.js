@@ -56,5 +56,14 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 	$scope.columnSettings = function(kanban, column){
 		$scope.$broadcast('OpenColumnSettings', kanban, column);
 	};
+
+	$scope.sortableClassFor = function(column){
+		if (column.settings && column.settings.limit && column.settings.limit != ''){
+			if (column.settings.limit <= column.cards.length){
+				return 'cards-no-sort';
+			}
+		}
+		return 'cards';
+	};
 });
 

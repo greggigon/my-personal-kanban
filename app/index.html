@@ -122,7 +122,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-group">
             <label class="control-label" for="columnColor">Column color</label>
             <div class="controls">
@@ -130,7 +129,7 @@
                 <div class="col-md-3" style="padding-left: 0px;">
                   <input type="text" name="colorHex" value="Theme Default" class="form-control" ng-model="model.color"/>
                 </div>
-                <spectrum-colorpicker ng-model="model.color" options="{allowEmpty: true}" format="'hex'" class="">
+                <spectrum-colorpicker ng-model="model.color" options="{allowEmpty: true}" format="'hex'">
                 </spectrum-colorpicker>
               </div>
             </div>
@@ -138,12 +137,13 @@
           <div class="form-group">
             <label class="control-label" for="columnLimit">Card limit for this column</label>
             <div class="controls row">
-              <div class="col-md-3">
-                <input name="columnLimit" type="number" ng-model="model.limit" placeholder="Maximum number of cards in column" class="form-control " />
+              <div class="col-md-2">
+                <input name="columnLimit" type="number" ng-model="model.limit" class="form-control" />
               </div>
             </div>
           </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger pull-left">Delete column</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
@@ -180,6 +180,7 @@
       </form>
     </mpk-modal>
   </div>
+
   <div ng-controller="CardController">
     <mpk-modal title="Card details" visible="showCardDetails">
         <form class="noMargin" name="cardDetails">
@@ -228,32 +229,30 @@
 <div ng-controller="NewKanbanController">
   <mpk-modal title="New Kanban board" visible="showNewKanban">
     <form class="noMargin" name="newKanbanForm">
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label" for="kanbanNameFormField">Kanban name</label>
-            <div>
-              <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="model.kanbanName" required focus-me />
-            </div>
+        <div class="form-group">
+          <label class="control-label" for="kanbanNameFormField">Kanban name</label>
+          <div>
+            <input type="text" id="kanbanNameFormField" placeholder="Kanban name" class="form-control" ng-model="model.kanbanName" required focus-me />
           </div>
-          <div class="form-group">
-            <label class="control-label" for="numberOfColumnsField">Number of columns</label>
-            <div>
-              <select id="numberOfColumnsField" ng-model="model.numberOfColumns" class="form-control" ng-options="number for number in [2,3,4,5,6,7,8,9]">
-              </select>
-            </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="numberOfColumnsField">Number of columns</label>
+          <div>
+            <select id="numberOfColumnsField" ng-model="model.numberOfColumns" class="form-control" ng-options="number for number in [2,3,4,5,6,7,8,9]">
+            </select>
           </div>
-          <hr />
-          <div class="form-group">
-            <label for="fromTemplate">Use existing Kanban as template</label>
-            <div>
-              <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
-                <option>Existing kanbans ...</option>
-              </select>
-            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+          <label for="fromTemplate">Use existing Kanban as template</label>
+          <div>
+            <select id="fromTemplate" name="fromTemplate" ng-model="model.useTemplate" ng-options="name for name in model.kanbanNames" class="form-control">
+              <option>Existing kanbans ...</option>
+            </select>
           </div>
-          <div class="alert alert-info">
-            <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
-          </div>
+        </div>
+        <div class="alert alert-info">
+          <p>When using existing Kanban as template, <strong>number of columns</strong> and respective <strong>names</strong> will be used.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

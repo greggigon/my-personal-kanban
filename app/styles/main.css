@@ -44,3 +44,5 @@ div.help div.modal-body { overflow: scroll;}
 .version { color: #aaa; }
 
 div.archive > div.modal-dialog { width: 90%; }
+
+.modal-footer { padding-left: 0px; padding-right: 0px;}

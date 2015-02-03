@@ -9,7 +9,9 @@ var ColumnSettingsController = function ($scope) {
 		if (column.settings != undefined && column.settings.color != undefined){
 			$scope.model.color = column.settings.color;
 		}
-		$scope.model.limit = column.settings.limit;
+		if (column.settings && column.settings.limit){
+			$scope.model.limit = column.settings.limit;
+		}
 	});
 	
 

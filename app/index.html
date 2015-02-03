@@ -143,9 +143,10 @@
             </div>
           </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger pull-left">Delete column</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-danger pull-left" ng-hide="model.showWarning" ng-click="delete()">Delete column</button>
+            <button type="button" class="btn btn-danger pull-left" ng-show="model.showWarning" ng-click="delete()" ng-disabled="model.deleteDisabled">Click again to delete this column <i class="glyphicon glyphicon-exclamation-sign"></i></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
       </form>
     </mpk-modal>

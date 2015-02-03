@@ -1,11 +1,11 @@
 'use strict';
 
-var ColumnSettingsController = function ($scope) {
-	$scope.model = {column: {}, kanban: {}, columnName: '', color: '', limit: ''};
+var ColumnSettingsController = function ($scope, $timeout) {
+	$scope.model = {column: {}, kanban: {}, columnName: '', color: '', limit: '', showWarning: false, deleteDisabled: true};
 
 	$scope.$on('OpenColumnSettings', function(e, kanban, column){
 		$scope.showColumnSettings = true;
-		$scope.model = {column: column, kanban: kanban, columnName: column.name};
+		$scope.model = {column: column, kanban: kanban, columnName: column.name, showWarning: false, deleteDisabled: true};
 		if (column.settings != undefined && column.settings.color != undefined){
 			$scope.model.color = column.settings.color;
 		}
@@ -27,6 +27,16 @@ var ColumnSettingsController = function ($scope) {
 		}
 		$scope.showColumnSettings = false;
 		return true;
+	};
+
+	$scope.delete = function(){
+		if (!$scope.model.showWarning){
+			$scope.model.showWarning = true;
+			$timeout(function(){ $scope.model.deleteDisabled = false; }, 2000);
+		} else {
+			$scope.$emit('DeleteColumn', $scope.model.column);
+			$scope.showColumnSettings = false;
+		}
 	};
 };
 

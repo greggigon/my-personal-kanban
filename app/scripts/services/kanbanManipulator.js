@@ -48,6 +48,20 @@ angular.module('mpk').factory('kanbanManipulator', function () {
         newKanban.columns.push(new KanbanColumn(col.name, col.settings));
       });
       return newKanban;
+    },
+
+    removeColumn: function(kanban, column){
+      function columnIndex(kanban, column){
+        var theIndex;
+        angular.forEach(kanban.columns, function(col, index){
+          if (col === column) { theIndex = index; }
+        });
+        return theIndex;  
+      }
+      var indexOfColumn = columnIndex(kanban, column);
+      kanban.columns.splice(indexOfColumn, 1);
+      kanban.numberOfColumns--;
+      return kanban;
     }
   };
 });

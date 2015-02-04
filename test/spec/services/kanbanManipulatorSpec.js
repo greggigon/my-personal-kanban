@@ -130,4 +130,20 @@ describe("Kanban manipulator", function(){
 		expect(newKanban.columns[2].cards.length).toBe(0);
 		expect(newKanban.archived.length).toBe(0);
 	});
+
+	it('should delete column from Kanbana', function(){
+		var card = new KanbanCard('Foo bar', '', '');
+		var column1 = new KanbanColumn("Column");
+		var column2 = new KanbanColumn("Column");
+		column2.cards = [card];
+		
+		var kanban = new Kanban('foobar', 2);
+		kanban.columns = [column1, column2];
+
+		manipulator.removeColumn(kanban, column2);
+
+		expect(kanban.numberOfColumns).toBe(1);
+		expect(kanban.columns.length).toBe(1);
+		expect(kanban.columns[0].cards.length).toBe(0);
+	});
 });

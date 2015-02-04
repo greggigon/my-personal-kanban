@@ -67,7 +67,8 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 	};
 
 	$scope.$on('DeleteColumn', function(e, column){
-		console.log('Deleting column '  + column.name);
+		kanbanManipulator.removeColumn($scope.kanban, column);
+		$scope.$emit('ColumnRemoved');
 	});
 });
 

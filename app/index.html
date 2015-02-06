@@ -93,7 +93,7 @@
 </header>
 
 <div class="container-fluid" id="kanban" ng-controller="KanbanController">
-   <div id="columns" style="white-space: nowrap;" >
+   <div id="columns">
       <div style="width: {{columnWidth}}%;display: inline-block;" ng-repeat="column in kanban.columns" data-columnindex="{{$index}}" id="column{{$index}}">
           <div class="column" style="background-color: {{column.settings.color}}">
             <div class="columnHeader">

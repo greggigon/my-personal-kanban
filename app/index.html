@@ -144,8 +144,8 @@
           </div> 
           <hr />         
           <div class="form-group">
-            <button type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Add column to the left</button>
-            <button type="button" class="btn btn-sm btn-success pull-right">Add column to the right <i class="glyphicon glyphicon-arrow-right"></i></button>
+            <button type="button" class="btn btn-sm btn-success" ng-click="addColumn('left')"><i class="glyphicon glyphicon-arrow-left"></i> Add column to the left</button>
+            <button type="button" class="btn btn-sm btn-success pull-right" ng-click="addColumn('right')">Add column to the right <i class="glyphicon glyphicon-arrow-right"></i></button>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger pull-left" ng-hide="model.showWarning" ng-click="delete()">Delete column</button>

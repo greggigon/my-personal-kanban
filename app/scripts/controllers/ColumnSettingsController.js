@@ -38,6 +38,10 @@ var ColumnSettingsController = function ($scope, $timeout) {
 			$scope.showColumnSettings = false;
 		}
 	};
+
+	$scope.addColumn = function(direction){
+		$scope.$emit('AddColumn', $scope.model.column, direction);
+	}
 };
 
 angular.module('mpk').controller('ColumnSettingsController', ColumnSettingsController);

@@ -156,17 +156,17 @@ describe("Kanban manipulator", function(){
 
 		manipulator.addColumnNextToColumn(kanban, column1, 'left');
 		expect(kanban.columns.length).toBe(3);
-		expect(kanban.columns[0].name).toBe('New column');
+		expect(kanban.columns[0].name).toBe('New column 3');
 		expect(kanban.numberOfColumns).toBe(3);
 
 		manipulator.addColumnNextToColumn(kanban, column1, 'right');
 		expect(kanban.columns.length).toBe(4);
-		expect(kanban.columns[2].name).toBe('New column');
+		expect(kanban.columns[2].name).toBe('New column 4');
 		expect(kanban.numberOfColumns).toBe(4);
 
 		manipulator.addColumnNextToColumn(kanban, column2, 'right');
 		expect(kanban.columns.length).toBe(5);
-		expect(kanban.columns[4].name).toBe('New column');
+		expect(kanban.columns[4].name).toBe('New column 5');
 		expect(kanban.numberOfColumns).toBe(5);
 	});
 });

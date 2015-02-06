@@ -15,7 +15,7 @@ angular.module('mpk').controller('ApplicationController',
 		$scope.switchToList.splice(0,0,'Switch to ...');
 	});
 
-	$scope.$on('ColumnRemoved', function(){
+	$scope.$on('ColumnsChanged', function(){
 		$scope.columnWidth = Math.round((100 / $scope.kanban.columns.length) * 100) / 100;
 	});
 

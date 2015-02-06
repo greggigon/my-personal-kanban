@@ -68,9 +68,9 @@ angular.module('mpk').factory('kanbanManipulator', function () {
     addColumnNextToColumn: function(kanban, column, direction){
       var columnIndex = this.columnIndex(kanban, column);
       if (direction == 'left'){
-        kanban.columns.splice(columnIndex, 0, new KanbanColumn('New column'));
+        kanban.columns.splice(columnIndex, 0, new KanbanColumn('New column '+ (kanban.numberOfColumns + 1)));
       } else {
-        kanban.columns.splice(columnIndex+1, 0, new KanbanColumn('New column'));
+        kanban.columns.splice(columnIndex+1, 0, new KanbanColumn('New column '+ (kanban.numberOfColumns + 1)));
       }
       kanban.numberOfColumns++;
       return kanban;

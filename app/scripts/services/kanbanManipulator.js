@@ -2,6 +2,14 @@
 
 angular.module('mpk').factory('kanbanManipulator', function () {
   return {
+    columnIndex: function(kanban, column){
+      var theIndex;
+      angular.forEach(kanban.columns, function(col, index){
+        if (col === column) { theIndex = index; }
+      });
+      return theIndex;  
+    },
+
     addColumn: function(kanban, columnName){
       kanban.columns.push(new KanbanColumn(columnName));
     },
@@ -51,16 +59,20 @@ angular.module('mpk').factory('kanbanManipulator', function () {
     },
 
     removeColumn: function(kanban, column){
-      function columnIndex(kanban, column){
-        var theIndex;
-        angular.forEach(kanban.columns, function(col, index){
-          if (col === column) { theIndex = index; }
-        });
-        return theIndex;  
-      }
-      var indexOfColumn = columnIndex(kanban, column);
+      var indexOfColumn = this.columnIndex(kanban, column);
       kanban.columns.splice(indexOfColumn, 1);
       kanban.numberOfColumns--;
+      return kanban;
+    },
+
+    addColumnNextToColumn: function(kanban, column, direction){
+      var columnIndex = this.columnIndex(kanban, column);
+      if (direction == 'left'){
+        kanban.columns.splice(columnIndex, 0, new KanbanColumn('New column'));
+      } else {
+        kanban.columns.splice(columnIndex+1, 0, new KanbanColumn('New column'));
+      }
+      kanban.numberOfColumns++;
       return kanban;
     }
   };

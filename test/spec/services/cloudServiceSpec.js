@@ -7,6 +7,7 @@ describe("Cloud service", function(){
 	beforeEach(module('mpk'));
 	beforeEach(inject(['cloudService', function(cloudService){
 		cloud = cloudService;
+		localStorage.removeItem('myPersonalKanban.cloudSettings');
 	}]));
 
 	it("should provide default values for local cloud settings", function(){

@@ -141,8 +141,13 @@
                 <input name="columnLimit" type="number" ng-model="model.limit" class="form-control" />
               </div>
             </div>
+          </div> 
+          <hr />         
+          <div class="form-group">
+            <button type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-arrow-left"></i> Add column to the left</button>
+            <button type="button" class="btn btn-sm btn-success pull-right">Add column to the right <i class="glyphicon glyphicon-arrow-right"></i></button>
           </div>
-        <div class="modal-footer">
+          <div class="modal-footer">
             <button type="button" class="btn btn-danger pull-left" ng-hide="model.showWarning" ng-click="delete()">Delete column</button>
             <button type="button" class="btn btn-danger pull-left" ng-show="model.showWarning" ng-click="delete()" ng-disabled="model.deleteDisabled">Click again to delete this column <i class="glyphicon glyphicon-exclamation-sign"></i></button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

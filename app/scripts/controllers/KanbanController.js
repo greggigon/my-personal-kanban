@@ -74,6 +74,7 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 	$scope.$on('AddColumn', function(e, column, direction){
 		kanbanManipulator.addColumnNextToColumn($scope.kanban, column, direction);
 		$scope.$emit('ColumnsChanged');
+		$scope.$broadcast('CloseColumnSettings');
 	})
 });
 

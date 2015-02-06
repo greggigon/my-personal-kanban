@@ -13,6 +13,10 @@ var ColumnSettingsController = function ($scope, $timeout) {
 			$scope.model.limit = column.settings.limit;
 		}
 	});
+
+	$scope.$on('CloseColumnSettings', function(){
+		$scope.showColumnSettings = false;
+	});
 	
 
 	$scope.update = function(){

@@ -1,13 +1,16 @@
 'use strict';
 
-var ExportController = function ($scope, $modalInstance, kanbanRepository, fileService, allKanbanNames, currentKanban) {
-	$scope.model = {exportAll: false};
-	$scope.model.allKanbanNames = allKanbanNames;
-	$scope.model.selectedKanban = currentKanban;
+angular.module('mpk').controller('ExportController', function ExportController($scope, kanbanRepository, fileService) {
+	$scope.model = {exportAll: false, allKanbanNames: [], selectedKanban: ''};
+	$scope.showExportModal = false;
 
-	$scope.close = function(){
-		$modalInstance.close();
-	};
+	$scope.$on('OpenExport', function(e, allKanbanNames, current){
+		$scope.model.allKanbanNames = allKanbanNames;
+		$scope.model.selectedKanban = current;
+
+		$scope.showExportModal = true;
+	})
+
 
 	$scope.doExport = function(){
 		var toExport = null;
@@ -23,8 +26,8 @@ var ExportController = function ($scope, $modalInstance, kanbanRepository, fileS
 		}
 
 		fileService.saveBlob(toExport, fileName);
-		
-		$modalInstance.close();
+		$scope.showExportModal = false;
+		return true;
 	};
 
-}
+});

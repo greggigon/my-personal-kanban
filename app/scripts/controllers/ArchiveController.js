@@ -1,6 +1,16 @@
 'use strict';
 
-var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipulator) {
+angular.module('mpk').controller('ArchiveController', function ArchiveController($scope, kanbanManipulator) {
+	$scope.model = {kanban: {}, archived: [], selectedCards: []};
+	$scope.showArchive = false;
+
+
+	$scope.$on('OpenArchive', function(e, kanban){
+		$scope.model.archived = prepareArchivedCardsForCheckboxes(kanban.archived);
+		$scope.model.kanban = kanban;
+		$scope.model.selectedCards = [];
+		$scope.showArchive = true;
+	});
 
 	function prepareArchivedCardsForCheckboxes(archived){
 		var prepared = [];
@@ -10,7 +20,6 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 		return prepared;
 	}
 
-	$scope.model = { archived: prepareArchivedCardsForCheckboxes(kanban.archived), selectedCards: [], kanban: kanban};
 
 	$scope.formatDate = function(date){
 		var date = new Date(Date.parse(date));
@@ -35,8 +44,4 @@ var ArchiveController = function ($scope, $modalInstance, kanban, kanbanManipula
 		});
 	};
 
-	$scope.close = function(){
-		$modalInstance.close();
-	};
-
-}
+});

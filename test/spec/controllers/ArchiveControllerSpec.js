@@ -1,8 +1,11 @@
 describe('Export controller', function(){
-	var scope, kanbanManipulator, modalInstance;
-	var card, archivedCard, column, kanban;
+	beforeEach(module('mpk'));
 
-	beforeEach(inject(function($rootScope, $controller){
+	var scope, kanbanManipulator;
+	var card, archivedCard, column, kanban;
+	var $controller, $rootScope;
+
+	beforeEach(inject(function(_$rootScope_, _$controller_){
 		card = new KanbanCard('Foo bar', '', '');
 		archivedCard = {archivedOn: new Date(), card: card};
 		column = {"name": "Done", "cards": []};
@@ -24,6 +27,9 @@ describe('Export controller', function(){
 		  ],
 		  "archived": [archivedCard]
 		};
+		
+		$controller = _$controller_;
+		$rootScope = _$rootScope_;
 
 		kanbanManipulator = {
 			unarchiveCard: function(kanban, archivedCard){}, 
@@ -31,18 +37,15 @@ describe('Export controller', function(){
 
 		spyOn(kanbanManipulator, 'unarchiveCard');
 		spyOn(kanbanManipulator, 'removeFromArchive');
-		
-		scope = $rootScope.$new();
-		modalInstance = {close: function(){}};
-		
-		exportController = $controller('ArchiveController', { 
-			$scope: scope, 
-			$modalInstance: modalInstance, 
-			kanban: kanban, 
-			kanbanManipulator: kanbanManipulator});
 	}));
 
 	it('should prepare model with archived cards and selections', function(){
+		var scope = $rootScope.$new();
+		var controller = $controller('ArchiveController', { 
+			$scope: scope, 
+			kanbanManipulator: kanbanManipulator});
+		
+		$rootScope.$broadcast('OpenArchive', kanban);
 		expect(scope.model.archived).toBeDefined();
 		expect(scope.model.archived.length).toBe(1);
 		expect(scope.model.archived[0].selected).toBeFalsy();
@@ -50,6 +53,12 @@ describe('Export controller', function(){
 	});
 
 	it('should unarchive card', function(){
+		var scope = $rootScope.$new();
+		var controller = $controller('ArchiveController', { 
+			$scope: scope, 
+			kanbanManipulator: kanbanManipulator});
+		
+		$rootScope.$broadcast('OpenArchive', kanban);
 		scope.model.archived[0].selected = true;
 
 		expect(scope.model.archived.length).toBe(1);
@@ -61,6 +70,13 @@ describe('Export controller', function(){
 	});
 
 	it('should remove card from archive', function(){
+		var scope = $rootScope.$new();
+		var controller = $controller('ArchiveController', { 
+			$scope: scope, 
+			kanbanManipulator: kanbanManipulator});
+
+		$rootScope.$broadcast('OpenArchive', kanban);
+
 		scope.model.archived[0].selected = true;
 		expect(scope.model.archived.length).toBe(1);
 

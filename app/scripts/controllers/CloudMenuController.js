@@ -53,3 +53,5 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 		return false;
 	};
 };
+mpkModule.controller('CloudMenuController', CloudMenuController);
+

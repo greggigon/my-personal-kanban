@@ -1,25 +1,31 @@
 'use strict';
 
-var NewKanbanCardController = function ($scope, $modalInstance, kanbanManipulator, colorOptions, column) {
-	function initScope(scope, colorOptions){
-		scope.kanbanColumnName = column.name;
-		scope.column = column;
-		scope.title = '';
-		scope.details = '';
-		scope.cardColor = colorOptions[0];
-		scope.colorOptions = colorOptions;
-	}
+var NewKanbanCardController = function ($scope, kanbanManipulator) {
+	$scope.master = {title: '', details: '', cardColor: $scope.colorOptions[0]};
+	$scope.newCard = {};
 
-	$scope.addNewCard = function(){
+	$scope.$on('AddNewCard', function(e, column){
+		$scope.kanbanColumnName = column.name;
+		$scope.column = column;
+		$scope.newCard = angular.copy($scope.master);
+
+		$scope.showNewCard = true;
+	});
+
+
+	$scope.addNewCard = function(newCard){
 		if (!this.newCardForm.$valid){
 			return false;
 		}
-		$modalInstance.close({title: this.title, column: column, details: this.details, color: this.cardColor});
+		kanbanManipulator.addCardToColumn($scope.kanban, $scope.column, newCard.title, newCard.details, newCard.cardColor);
+		$scope.newCard = angular.copy($scope.master);
+
+		
+		$scope.showNewCard = false;
+
+		return true;
 	};
 
-	$scope.close = function(){
-		$modalInstance.close();
-	};
-
-	initScope($scope, colorOptions);
 };
+
+angular.module('mpk').controller('NewKanbanCardController', NewKanbanCardController);

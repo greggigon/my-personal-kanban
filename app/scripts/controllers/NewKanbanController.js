@@ -1,42 +1,46 @@
 'use strict';
 
-var NewKanbanController = function ($scope, $modalInstance, kanbanRepository, kanbanManipulator, kanbanNames){
-	$scope.numberOfColumns = 3;
-	$scope.kanbanName = '';
-	$scope.model = {useTemplate: ''};
-	$scope.model.kanbanNames = kanbanNames;
+var NewKanbanController = function ($scope, kanbanRepository, kanbanManipulator){
+	$scope.model = {};
+
+	$scope.$on('OpenNewKanban', function(e, allKanbanNames){
+		$scope.model.kanbanNames = allKanbanNames;
+		$scope.model.kanbanName = '';
+		$scope.model.numberOfColumns = 3;
+		$scope.model.useTemplate = '';
+
+		$scope.showNewKanban = true;
+	});
 
 	$scope.createNew = function(){
 		if (!this.newKanbanForm.$valid){
 			return false;
 		}
 
-		var newKanban = new Kanban(this.kanbanName, this.numberOfColumns);
+		var newKanban = new Kanban($scope.model.kanbanName, $scope.model.numberOfColumns);
 
 		if ($scope.model.useTemplate != ''){
 			var templateKanban = kanbanRepository.all()[$scope.model.useTemplate];
-			newKanban = kanbanManipulator.createNewFromTemplate(templateKanban, this.kanbanName);
+			newKanban = kanbanManipulator.createNewFromTemplate(templateKanban, $scope.model.kanbanName);
 		} else {
-			for (var i=1;i<parseInt(this.numberOfColumns)+1;i++){
+			for (var i=1;i<parseInt($scope.model.numberOfColumns)+1;i++){
 				kanbanManipulator.addColumn(newKanban, 'Column '+i);
 			}
 		}
 
 		kanbanRepository.add(newKanban);
 
-		this.kanbanName = '';
-		this.numberOfColumns = 3;
+		$scope.kanbanName = '';
+		$scope.numberOfColumns = 3;
 		
 		kanbanRepository.setLastUsed(newKanban.name);
-		$modalInstance.close(true);
+
+		$scope.$emit('NewKanbanAdded');
+		$scope.showNewKanban = false;
 
 		return true;
 	};
 
-
-	$scope.closeNewKanban = function(){
-		$scope.numberOfColumns = 3;
-		$scope.kanbanName = '';
-		$modalInstance.close();
-	};
 };
+
+angular.module('mpk').controller('NewKanbanController', NewKanbanController);

@@ -1,5 +1,7 @@
 		
 describe('Application controller', function(){
+	beforeEach(module('mpk'));
+	
 	var scope, applicationController, kanbanRepositoryMock, themesProviderMock, window;
 	var renamer, saver;
 

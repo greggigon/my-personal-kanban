@@ -21,8 +21,8 @@ input.kanbanKey {
 	font-size: 1.5em;
 }
 
-.cards { padding: 0px;}
-
+.cards, .cards-no-sort { padding: 0px; margin: 0px; clear: both; overflow: scroll;}
+.card { white-space: normal;}
 #info {
   padding: 10px 15px;
   color: #8a8a8a;
@@ -44,3 +44,5 @@ div.help div.modal-body { overflow: scroll;}
 .version { color: #aaa; }
 
 div.archive > div.modal-dialog { width: 90%; }
+
+.modal-footer { padding-left: 0px; padding-right: 0px;}

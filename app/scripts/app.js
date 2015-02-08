@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('mpk', ['ui.bootstrap', 'ngSanitize', 'ui.utils', 'ngRoute', 'angularSpectrumColorpicker'])
-.config(function($routeProvider, $locationProvider) {
+var mpkModule = angular.module('mpk', ['ngSanitize', 'ngRoute', 'angularSpectrumColorpicker']);
+
+mpkModule.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 	  	.when('/kanban', {
 			templateUrl: 'kanban.html',
@@ -14,4 +15,4 @@ angular.module('mpk', ['ui.bootstrap', 'ngSanitize', 'ui.utils', 'ngRoute', 'ang
 		.otherwise({
 			redirectTo: '/kanban'
 		});
-});;
+});

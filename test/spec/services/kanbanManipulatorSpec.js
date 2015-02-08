@@ -130,4 +130,43 @@ describe("Kanban manipulator", function(){
 		expect(newKanban.columns[2].cards.length).toBe(0);
 		expect(newKanban.archived.length).toBe(0);
 	});
+
+	it('should delete column from Kanbana', function(){
+		var card = new KanbanCard('Foo bar', '', '');
+		var column1 = new KanbanColumn("Column");
+		var column2 = new KanbanColumn("Column");
+		column2.cards = [card];
+		
+		var kanban = new Kanban('foobar', 2);
+		kanban.columns = [column1, column2];
+
+		manipulator.removeColumn(kanban, column2);
+
+		expect(kanban.numberOfColumns).toBe(1);
+		expect(kanban.columns.length).toBe(1);
+		expect(kanban.columns[0].cards.length).toBe(0);
+	});
+
+	it('should add column at specific position', function(){
+		var card = new KanbanCard('Foo bar', '', '');
+		var column1 = new KanbanColumn("Column 1");
+		var column2 = new KanbanColumn("Column 2");
+		var kanban = new Kanban('foobar', 2);
+		kanban.columns = [column1, column2];
+
+		manipulator.addColumnNextToColumn(kanban, column1, 'left');
+		expect(kanban.columns.length).toBe(3);
+		expect(kanban.columns[0].name).toBe('New column 3');
+		expect(kanban.numberOfColumns).toBe(3);
+
+		manipulator.addColumnNextToColumn(kanban, column1, 'right');
+		expect(kanban.columns.length).toBe(4);
+		expect(kanban.columns[2].name).toBe('New column 4');
+		expect(kanban.numberOfColumns).toBe(4);
+
+		manipulator.addColumnNextToColumn(kanban, column2, 'right');
+		expect(kanban.columns.length).toBe(5);
+		expect(kanban.columns[4].name).toBe('New column 5');
+		expect(kanban.numberOfColumns).toBe(5);
+	});
 });

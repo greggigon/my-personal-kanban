@@ -1,20 +1,9 @@
 'use strict';
 
-var KanbanController = function ($scope, $modal, kanbanManipulator) {
+angular.module('mpk').controller('KanbanController', function KanbanController($scope, kanbanManipulator) {
+    
     $scope.addNewCard = function(column){
-		var modalInstance = $modal.open({
-			templateUrl: 'NewKanbanCard.html',
-			controller: 'NewKanbanCardController',
-			resolve: {
-				colorOptions: function(){ return $scope.colorOptions; },
-				column: function(){ return column; }
-			}
-		});
-		modalInstance.result.then(function(cardDetails){
-		if (cardDetails){
-			kanbanManipulator.addCardToColumn($scope.kanban, cardDetails.column, cardDetails.title, cardDetails.details, cardDetails.color);
-			}
-		});
+		$scope.$broadcast('AddNewCard', column);
 	};
 
 	$scope.delete = function(card, column){
@@ -24,22 +13,29 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 	};
 
 	$scope.openCardDetails = function(card){
-		$modal.open({
-			templateUrl: 'OpenCard.html',
-			controller: 'CardController',
-			resolve: {
-				colorOptions: function(){ return $scope.colorOptions; },
-				card: function(){ return card; }
-			}
-		});
+		$scope.$broadcast('OpenCardDetails', card);
 	};
 
-	$scope.details = function(card){
+	$scope.detailsFor = function(card){
 		if (card.details !== undefined && card.details !== '') {
 			return card.details;
 		}
 		return card.name;
 	};
+
+	$scope.columnLimitsTextFor = function(column){
+		if (column.settings && column.settings.limit != '' && column.settings.limit != undefined){
+			return column.cards.length + " of " + column.settings.limit;
+		}
+		return column.cards.length;
+	};
+
+	$scope.columnLimitsReached = function(column){
+		if (column.settings == undefined || column.settings.limit == '' || column.settings.limit == undefined){
+			return false;
+		}
+		return column.settings.limit <= column.cards.length;
+	}
 
 	$scope.colorFor = function(card){
 		return (card.color !== undefined && card.color !== '') ? card.color : $scope.colorOptions[0];
@@ -58,13 +54,27 @@ var KanbanController = function ($scope, $modal, kanbanManipulator) {
 	};
 
 	$scope.columnSettings = function(kanban, column){
-		$modal.open({
-			templateUrl: 'ColumnSettings.html',
-			controller: 'ColumnSettingsController',
-			resolve: {
-				kanban: function(){ return kanban; },
-				column: function(){ return column; }
-			}
-		});
+		$scope.$broadcast('OpenColumnSettings', kanban, column);
 	};
-};
+
+	$scope.sortableClassFor = function(column){
+		if (column.settings && column.settings.limit && column.settings.limit != ''){
+			if (column.settings.limit <= column.cards.length){
+				return 'cards-no-sort';
+			}
+		}
+		return 'cards';
+	};
+
+	$scope.$on('DeleteColumn', function(e, column){
+		kanbanManipulator.removeColumn($scope.kanban, column);
+		$scope.$emit('ColumnsChanged');
+	});
+
+	$scope.$on('AddColumn', function(e, column, direction){
+		kanbanManipulator.addColumnNextToColumn($scope.kanban, column, direction);
+		$scope.$emit('ColumnsChanged');
+		$scope.$broadcast('CloseColumnSettings');
+	})
+});
+

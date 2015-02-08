@@ -4,6 +4,7 @@ angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout
 	return {
 		cloudAddress: 'http://localhost:8080',
 		settings: {notLoaded: true, encryptionKey: 'my-random-key'},
+		
 		loadSettings: function() {
 			var settings = localStorage.getItem('myPersonalKanban.cloudSettings');
 			if (settings == undefined){

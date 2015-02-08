@@ -7,7 +7,7 @@ It is a single page JavaScript application with very basic functionality.
 
 ## Download
 
-You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.7.0.zip?raw=true). Lastest version is 0.7.0 and includes new Cloud upload and download functionality.
+You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.8.0.zip?raw=true). Lastest version is 0.8.0 and includes new features.
 
 ## How to use it?
 
@@ -19,7 +19,7 @@ There is no need to be connected to Internet to use it. You can run it in any mo
 
 The functionality is very simple and basic. For a short screencast demo you can navigate to [Github pages](http://greggigon.github.io/my-personal-kanban/) .
 
-Kanban boards with 2,3,4 and 6 columns, name columns and delete kanban.
+Kanban boards with 2 to 10 columns, name columns and delete kanban.
 
 You can add cards to columns and drag them between columns as well as remove them.
 

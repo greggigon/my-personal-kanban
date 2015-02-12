@@ -7,7 +7,7 @@ It is a single page JavaScript application with very basic functionality.
 
 ## Download
 
-You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.8.0.zip?raw=true). Lastest version is 0.8.0 and includes new features.
+You can get latest release zip [at this link](https://github.com/greggigon/my-personal-kanban/blob/master/my-personal-kanban-0.8.1.zip?raw=true). Lastest version is 0.8.1 and includes new features.
 
 ## How to use it?
 

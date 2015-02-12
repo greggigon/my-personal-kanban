@@ -21,7 +21,7 @@ input.kanbanKey {
 	font-size: 1.5em;
 }
 
-.cards, .cards-no-sort { padding: 0px; margin: 0px; clear: both; overflow: scroll;}
+.cards, .cards-no-sort { padding: 0px; margin: 0px; clear: both; overflow: auto;}
 .card { white-space: normal;}
 #info {
   padding: 10px 15px;

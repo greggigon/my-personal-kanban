@@ -30,7 +30,7 @@ body { background-color: #bbb; }
     margin: 2px;
     cursor: move;
 }
-.cards { margin: 0px;}
+.cards { margin: 0px; overflow:auto;}
 .card a { color: #444; }
 .card a:hover { text-decoration: none; cursor: pointer; color: #777;}
 
@@ -45,6 +45,7 @@ body { background-color: #bbb; }
     box-shadow: rgba(0, 0, 0, 0.7) 0px 1px 10px 0px;
 }
 .column a { color: #444; }
+
 .columnHeader { 
     margin: 10px 0px;
     padding: 0px 3px;

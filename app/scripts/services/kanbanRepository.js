@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function (cloudService, cryptoService) {
+angular.module('mpk').factory('kanbanRepository', function (cryptoService) {
   return {
     kanbansByName : {},
     lastUsed : '',
@@ -73,13 +73,6 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService, crypto
       return this.theme;
     },
 
-    /**
-    * returns the Promise from the chained calls (just in case I freaking forget)
-    */
-    upload: function(){
-      return cloudService.uploadKanban(this.prepareSerializedKanbans());
-    },
-
     setLastUpdated: function(updated){
       this.lastUpdated = updated;
       return this;
@@ -89,14 +82,10 @@ angular.module('mpk').factory('kanbanRepository', function (cloudService, crypto
       return this.lastUpdated;
     },
 
-    download: function(){
-      return cloudService.downloadKanban();
-    },
-
-    saveDownloadedKanban: function(kanban, lastUpdated){
+    saveDownloadedKanban: function(kanban, lastUpdated, encryptionKey){
       if (typeof(kanban) == 'string'){
         try {
-          kanban = cryptoService.decrypt(kanban, cloudService.settings.encryptionKey);
+          kanban = cryptoService.decrypt(kanban, encryptionKey);
         }catch (ex){
           console.debug(ex);
           return {success: false, message: "Looks like Kanban saved in the cloud was persisted with different encryption key. You'll need to use old key to download your Kanban. Set it up in the Cloud Setup menu."};

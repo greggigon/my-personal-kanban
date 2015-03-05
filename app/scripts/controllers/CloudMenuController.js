@@ -14,7 +14,9 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 		if (!cloudService.isConfigurationValid()){
 			return $scope.openCloudSetup(true);
 		}
-		var promise = kanbanRepository.upload();
+		var serializedKanbans = kanbanRepository.prepareSerializedKanbans();
+		var promise = cloudService.upload(serializedKanbans);
+
 		$scope.$emit('UploadStarted');
 		promise.then(function(result){
 			if (result.data.success){
@@ -35,10 +37,10 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 			return $scope.openCloudSetup(true);
 		}
 		$scope.$emit('DownloadStarted');
-		var promise = kanbanRepository.download();
+		var promise = cloudService.download();
 		promise.success(function(data){
 			if (data.success){
-				var saveResult = kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated);
+				var saveResult = kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated, cloudService.settings.encryptionKey);
 				if (saveResult.success){
 					$scope.$emit('DownloadFinished');
 				} else {

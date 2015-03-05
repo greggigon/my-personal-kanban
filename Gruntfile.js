@@ -248,7 +248,8 @@ module.exports = function (grunt) {
             'scripts/themes.js',
             'styles/themes/**/*.css',
             'img/**/*',
-         
+            
+            'bower_components/mpk.model/src/*.js',
             'bower_components/angular/**/*.min.js',
             'bower_components/bootstrap/dist/js/*.min.js',
             'bower_components/bootstrap/dist/css/*.min.css',

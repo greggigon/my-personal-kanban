@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('kanbanRepository', function (cryptoService) {
+angular.module('mpk').factory('kanbanRepository', function () {
   return {
     kanbansByName : {},
     lastUsed : '',
@@ -82,22 +82,13 @@ angular.module('mpk').factory('kanbanRepository', function (cryptoService) {
       return this.lastUpdated;
     },
 
-    saveDownloadedKanban: function(kanban, lastUpdated, encryptionKey){
-      if (typeof(kanban) == 'string'){
-        try {
-          kanban = cryptoService.decrypt(kanban, encryptionKey);
-        }catch (ex){
-          console.debug(ex);
-          return {success: false, message: "Looks like Kanban saved in the cloud was persisted with different encryption key. You'll need to use old key to download your Kanban. Set it up in the Cloud Setup menu."};
-        }
-      }
+    saveDownloadedKanban: function(kanban, lastUpdated){
       var fromCloud = angular.fromJson(kanban);
       this.kanbansByName = fromCloud.kanbans;
       this.lastUsed = fromCloud.lastUsed;
       this.theme = fromCloud.theme;
       this.lastUpdated = lastUpdated;
       this.save();
-
       return {success: true}; 
     },
 

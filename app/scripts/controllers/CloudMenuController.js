@@ -1,6 +1,6 @@
 'use strict';
 
-var CloudMenuController = function($scope, $modal, kanbanRepository, cloudService){
+var CloudMenuController = function($scope, $modal, kanbanRepository, cloudService, cryptoService){
 	$scope.openCloudSetup = function(showConfigurationError){
 		var modalInstance = $modal.open({
 			templateUrl: 'SetupCloudModal.html',
@@ -40,12 +40,17 @@ var CloudMenuController = function($scope, $modal, kanbanRepository, cloudServic
 		var promise = cloudService.download();
 		promise.success(function(data){
 			if (data.success){
-				var saveResult = kanbanRepository.saveDownloadedKanban(data.kanban, data.lastUpdated, cloudService.settings.encryptionKey);
-				if (saveResult.success){
-					$scope.$emit('DownloadFinished');
-				} else {
-					$scope.$emit('DownloadFinishedWithError', saveResult.message);
-				}
+				if (typeof(data.kanban) == 'string'){
+			        try {
+			          	var decryptedKanban = cryptoService.decrypt(data.kanban, cloudService.settings.encryptionKey);
+						kanbanRepository.saveDownloadedKanban(decryptedKanban, data.lastUpdated);
+						$scope.$emit('DownloadFinished');
+			        } catch (ex){
+			        	console.debug(ex);
+			        	$scope.$emit('DownloadFinishedWithError', "Looks like Kanban saved in the cloud was persisted with different encryption key. You'll need to use old key to download your Kanban. Set it up in the Cloud Setup menu.");
+			        	return false;
+			        }
+			    }
 			} else {
 				$scope.$emit('DownloadFinishedWithError', data.error);
 			}

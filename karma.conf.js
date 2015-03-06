@@ -20,6 +20,7 @@ module.exports = function(config) {
 
       'app/bower_components/spectrum/spectrum.js',
       'app/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js',
+      'app/bower_components/mpk.*/src/*.js',
       'app/scripts/md5.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',

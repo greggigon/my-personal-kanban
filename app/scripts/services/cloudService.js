@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').factory('cloudService', function($http, $log, $q, $timeout, cryptoService) {
+angular.module('mpk').factory('cloudService', function($http, $log, cryptoService) {
 	return {
 		cloudAddress: 'http://localhost:8080',
 		settings: {notLoaded: true, encryptionKey: 'my-random-key'},

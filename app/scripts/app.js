@@ -1,6 +1,7 @@
 'use strict';
 
-var mpkModule = angular.module('mpk', ['ngSanitize', 'ngRoute', 'angularSpectrumColorpicker']);
+var mpkModules = ['mpk.storage'];
+var mpkModule = angular.module('mpk', mpkModules.concat(['ngSanitize', 'ngRoute', 'angularSpectrumColorpicker']));
 
 mpkModule.config(function($routeProvider, $locationProvider) {
 	$routeProvider

@@ -467,21 +467,23 @@
 
 </script>
 <footer></footer>
-
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/angular-route/angular-route.min.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/spinjs/spin.js"></script>
+        <script src="bower_components/FileSaver/FileSaver.js"></script>
         <script src="bower_components/spectrum/spectrum.js"></script>
         <script src="bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js"></script>
-        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-        <script src="bower_components/spinjs/spin.js"></script>
-        <script src="bower_components/FileSaver/FileSaver.min.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="scripts/themes.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/mpk.model/src/model.js"></script>
+        <script src="bower_components/mpk.model/src/kanbanManipulator.js"></script>
+        <script src="bower_components/mpk.local-storage.browser/src/kanbanRepository.js"></script>
+        <!-- endbower -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script type="text/javascript" src="bower_components/mpk.model/src/model.js"></script>
 
         <script src="scripts/md5.js"></script>
         <script src="scripts/rabbit.js"></script>
@@ -489,8 +491,7 @@
 
         <script src="scripts/app.js"></script>
         <script src="scripts/services/cloudService.js"></script>        
-        <script src="bower_components/mpk.local-storage.browser/src/kanbanRepository.js"></script>
-        <script src="bower_components/mpk.model/src/kanbanManipulator.js"></script>
+
         <script src="scripts/services/themesProvider.js"></script>
         <script src="scripts/services/fileService.js"></script>
         
@@ -517,6 +518,7 @@
         <script src="scripts/services/cryptoService.js"></script>
         <script src="scripts/directives/spin.js"></script>
         <script src="scripts/directives/validKey.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>

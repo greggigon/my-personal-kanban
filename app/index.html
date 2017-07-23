@@ -104,6 +104,7 @@
             <ul ng-class="sortableClassFor(column)" ui-sortable="{connectWith: '#kanban ul.cards'}" ng-model="column.cards" style="min-height:{{columnHeight}}px;max-height:{{columnHeight}}px;">
                 <li class="card" ng-repeat="card in column.cards" style="background-color: #{{colorFor(card)}};">
                     <a class="pull-right" ng-click="delete(card, column)"><i class="glyphicon glyphicon-remove"></i></a>
+                    <span style="margin-right:10px;" class="pull-right" ng-show="hasDetails(card)"><i class="glyphicon glyphicon-list-alt"></i></span>
                     <a class="pull-right" title="Archive" ng-click="archive(kanban, column, card)" ng-show="isLastColumn(column.name, kanban)"><i class="glyphicon glyphicon-folder-close"></i></a>
                     <a ng-click="openCardDetails(card)"><span>{{card.name}}</span></a>
                 </li>

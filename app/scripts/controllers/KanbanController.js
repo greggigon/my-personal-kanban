@@ -49,6 +49,15 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 		return last(kanban.columns).name == column;
 	};
 
+	$scope.hasDetails = function(card){
+		if (card.details !== undefined && card.details !== '') {
+			return true;
+		}
+		return false;
+
+	};
+
+
 	$scope.archive = function(kanban, column, card){
 		return kanbanManipulator.archiveCard(kanban, column, card);
 	};

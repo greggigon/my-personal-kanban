@@ -7,9 +7,9 @@ angular.module('mpk').controller('KanbanController', function KanbanController($
 	};
 
 	$scope.delete = function(card, column){
-		if (confirm('You sure?')){
-			kanbanManipulator.removeCardFromColumn($scope.kanban, column, card);
-		}
+		kanbanManipulator.removeCardFromColumn($scope.kanban, column, card);
+		// if (confirm('You sure?')){
+		// }
 	};
 
 	$scope.openCardDetails = function(card){

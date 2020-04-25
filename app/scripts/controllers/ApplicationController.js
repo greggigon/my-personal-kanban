@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mpk').controller('ApplicationController', 
+angular.module('mpk').controller('ApplicationController',
 	function ApplicationController($scope, $window, kanbanRepository, themesProvider, $routeParams, $location, cloudService) {
 	$scope.colorOptions = ['FFFFFF','DBDBDB','FFB5B5', 'FF9E9E', 'FCC7FC', 'FC9AFB', 'CCD0FC', '989FFA', 'CFFAFC', '9EFAFF', '94D6FF','C1F7C2', 'A2FCA3', 'FAFCD2', 'FAFFA1', 'FCE4D4', 'FCC19D'];
 
@@ -33,7 +33,7 @@ angular.module('mpk').controller('ApplicationController',
 
 	$scope.kanbanMenu = {};
 	$scope.cloudMenu = {};
-	$scope.kanbanMenu.openNewKanban = function(){ 
+	$scope.kanbanMenu.openNewKanban = function(){
 		$scope.$broadcast('OpenNewKanban', allKanbanNames(kanbanRepository));
 	};
 	$scope.kanbanMenu.delete = function(){
@@ -48,11 +48,11 @@ angular.module('mpk').controller('ApplicationController',
 			}
 			$scope.kanban = undefined;
 			$scope.allKanbans = Object.keys(kanbanRepository.all());
-			
+
 			if ($scope.allKanbans.length > 0){
 				$scope.switchToKanban($scope.allKanbans[0]);
 			}
-			
+
 			$scope.switchToList = $scope.allKanbans.slice(0);
 			$scope.switchToList.splice(0,0,'Switch to ...');
 		}
@@ -95,7 +95,7 @@ angular.module('mpk').controller('ApplicationController',
 				handleErrorUploadDownload(result.data.error);
 				console.error(result);
 			}
-		}, function(errors){ 
+		}, function(errors){
 			$scope.infoMessage = '';
 			$scope.showInfo = true;
 			$scope.showSpinner = false;
@@ -134,11 +134,11 @@ angular.module('mpk').controller('ApplicationController',
 			$scope.showInfo = true;
 			$scope.showError = true;
 			$scope.showSpinner = false;
-			$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';		
+			$scope.errorMessage = 'Problem Downloading your Kanban. Check Internet connectivity and try again.';
 		});
 		return false;
 	};
-	
+
 	function allKanbanNames(kanbanRepository){
 		return Object.keys(kanbanRepository.all());
 	}
@@ -148,11 +148,11 @@ angular.module('mpk').controller('ApplicationController',
 	};
 
 	$scope.editingName = false;
-	
+
 	$scope.rename = function(){
 		kanbanRepository.renameLastUsedTo($scope.newName);
 		kanbanRepository.save();
-		
+
 		$scope.allKanbans = Object.keys(kanbanRepository.all());
 		$scope.editingName = false;
 
@@ -177,7 +177,7 @@ angular.module('mpk').controller('ApplicationController',
 	$scope.openHelpShortcut = function($event){
  		$scope.$broadcast('TriggerHelp');
  	};
-	
+
 	// <-------- Handling different events in this block ---------------> //
 	$scope.spinConfig = {lines: 10, length: 3, width: 2, radius:5};
 
@@ -194,6 +194,7 @@ angular.module('mpk').controller('ApplicationController',
 	}
 
 	$scope.kanban = currentKanban;
+  document.title = currentKanban.name;
 	$scope.allKanbans = Object.keys(kanbanRepository.all());
 	$scope.selectedToOpen = $scope.newName = currentKanban.name;
 

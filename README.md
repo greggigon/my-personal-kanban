@@ -1,7 +1,7 @@
 My Personal Kanban (MPK)
 ==========================
 
-## THIS PROJECT IS NOW DEPRACATED AND NO LONGER SUPPORTED
+## THIS PROJECT IS NOW DEPRECATED AND NO LONGER SUPPORTED
 
 Please note that this project is no longer supported and now replaced by My Personal Kanban new version available at this repository: 
 [https://github.com/greggigon/mpk-desktop-app](https://github.com/greggigon/mpk-desktop-app).

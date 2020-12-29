@@ -1,9 +1,19 @@
 My Personal Kanban (MPK)
 ==========================
 
-This is a small and simple in-browser application that aspire to be offline Personal Kanban board.
+## THIS PROJECT IS NOW DEPRACATED AND NO LONGER SUPPORTED
 
-It is a single page JavaScript application with very basic functionality. 
+Please note that this project is no longer supported and now replaced by My Personal Kanban new version available at this repository: 
+[https://github.com/greggigon/mpk-desktop-app](https://github.com/greggigon/mpk-desktop-app).
+
+
+
+
+
+
+
+
+
 
 ## Download
 
